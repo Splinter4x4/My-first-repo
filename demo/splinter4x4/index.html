@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Splinter 4X4 Solutions — ultra-lightweight touring systems</title>
+<meta name="description" content="Composite drawer systems, false floors and 12V for touring 4WDs. Designed, engineered and built in Western Australia. Weight measured, not estimated.">
+<!--
+  Skill test-drive, re-pointed at the real Splinter 4X4 brand (WA,
+  ultra-lightweight touring systems, real product names). Keeps the existing
+  black/charcoal/white identity but applies the skill's fixes: a real type
+  pairing instead of Inter-everywhere, one sourced signal accent instead of
+  pure monochrome, a spec-led hero and a spec-row package layout instead of
+  centered three-equal glossy cards, and copy built on weight figures instead
+  of "seamless / OEM-grade / no compromise". kg figures are PLACEHOLDERS — drop
+  in your real ones.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* their monochrome identity, tinted very slightly warm so it reads as a
+       choice rather than a default #000/#fff */
+    --black: #0C0C0D;
+    --near: #121214;
+    --char: #18181B;
+    --char-2: #202024;
+    --rule: rgba(243, 240, 233, 0.12);
+    --rule-2: rgba(243, 240, 233, 0.22);
+    --ink: #F3F0E9;
+    --grey: #9A988F;
+    --grey-2: #C7C4BB;
+    /* one sourced accent — WA pindan / red-dirt ochre — used ONLY on weight
+       figures and the primary action, nowhere else */
+    --ochre: #C8693B;
+
+    --s1: 8px; --s2: 16px; --s3: 24px; --s4: 40px; --s5: 72px; --s6: 112px;
+    --huge: clamp(2.7rem, 8.5vw, 6.4rem);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--black); color: var(--ink);
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 1.0625rem; line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: "Space Mono", ui-monospace, monospace; }
+  .label { font-family: "Space Mono", monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--grey); }
+  h1, h2, h3 { font-weight: 900; text-transform: uppercase; letter-spacing: -0.015em; line-height: 0.92; margin: 0; }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--ochre); outline-offset: 3px; }
+
+  .wrap { max-width: 1180px; margin-inline: auto; padding-inline: var(--s3); }
+
+  /* masthead — left wordmark, sparse menu, no glassmorphism */
+  .top { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--rule); padding-block: var(--s3); }
+  .brand { display: flex; align-items: baseline; gap: var(--s2); }
+  .brand .mk { font-weight: 900; font-size: 1.25rem; letter-spacing: 0.02em; }
+  .brand .mk b { color: var(--ochre); }
+  nav.menu { display: flex; gap: var(--s3); }
+  nav.menu a { text-decoration: none; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-2); }
+  nav.menu a:hover { color: var(--ink); }
+  @media (max-width: 720px) { nav.menu { display: none; } }
+
+  /* hero — asymmetric, weight-led (the actual differentiator) */
+  .hero { padding-block: var(--s6) var(--s5); border-bottom: 1px solid var(--rule); }
+  .hero-grid { display: grid; grid-template-columns: 1fr; gap: var(--s5); }
+  @media (min-width: 900px) { .hero-grid { grid-template-columns: 1.55fr 1fr; align-items: end; } }
+  .hero h1 { font-size: var(--huge); max-width: 13ch; }
+  .hero h1 em { font-style: normal; color: var(--ochre); }
+  .hero .sub { color: var(--grey-2); font-size: 1.3rem; font-weight: 500; max-width: 34ch; margin-top: var(--s3); }
+  .actions { display: flex; gap: var(--s2); flex-wrap: wrap; margin-top: var(--s4); }
+  .btn { display: inline-flex; align-items: center; gap: var(--s1); font-family: "Space Mono", monospace; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; padding: var(--s2) var(--s3); text-decoration: none; border: 1px solid; transition: transform 150ms ease, background 150ms ease, color 150ms ease, border-color 150ms ease; }
+  .btn.primary { background: var(--ochre); color: var(--black); border-color: var(--ochre); }
+  .btn.primary:hover { background: transparent; color: var(--ochre); transform: translateY(-2px); }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--rule-2); }
+  .btn.ghost:hover { border-color: var(--ink); transform: translateY(-2px); }
+
+  .weight { border-top: 2px solid var(--ochre); }
+  .weight .big { font-size: 3.4rem; font-weight: 900; line-height: 1; padding-top: var(--s3); }
+  .weight .big small { color: var(--ochre); font-size: 1.4rem; }
+  .weight .cap { color: var(--grey); margin: var(--s2) 0 var(--s3); max-width: 26ch; }
+  .weight .row { display: flex; justify-content: space-between; border-top: 1px solid var(--rule); padding-block: var(--s2); }
+  .weight .row span:first-child { color: var(--grey); }
+  .weight .row span:last-child { font-family: "Space Mono", monospace; }
+
+  /* section scaffold — left-aligned heads, not centered */
+  .section { padding-block: var(--s6); border-bottom: 1px solid var(--rule); }
+  .head { display: flex; align-items: baseline; gap: var(--s3); margin-bottom: var(--s5); flex-wrap: wrap; }
+  .head h2 { font-size: clamp(1.8rem, 4vw, 2.9rem); }
+
+  /* packages — spec rows, weight-forward, not three glossy equal cards */
+  .pkg { display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--rule); }
+  .pkg-row { display: grid; grid-template-columns: 1fr; gap: var(--s2) var(--s4); padding-block: var(--s4); border-bottom: 1px solid var(--rule); transition: background 150ms ease; }
+  .pkg-row:hover { background: var(--near); }
+  @media (min-width: 860px) { .pkg-row { grid-template-columns: 1.2fr 2fr auto; align-items: center; } }
+  .pkg-row h3 { font-size: 1.7rem; }
+  .pkg-row .place { color: var(--grey); font-family: "Space Mono", monospace; font-size: 0.72rem; letter-spacing: 0.12em; margin-top: var(--s1); }
+  .pkg-row p { margin: 0; color: var(--grey-2); max-width: 52ch; }
+  .pkg-row .kg { text-align: left; }
+  .pkg-row .kg b { font-size: 2rem; font-weight: 900; color: var(--ochre); display: block; line-height: 1; }
+  .pkg-row .kg span { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey); font-family: "Space Mono", monospace; }
+  @media (min-width: 860px) { .pkg-row .kg { text-align: right; } }
+
+  /* split: VOLTEK 12V */
+  .split { display: grid; grid-template-columns: 1fr; gap: var(--s5); align-items: center; }
+  @media (min-width: 900px) { .split { grid-template-columns: 1fr 1.1fr; } }
+  .split h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: var(--s3); }
+  .split p { color: var(--grey-2); max-width: 42ch; }
+  .split .xline { display: inline-flex; gap: var(--s2); align-items: center; margin-bottom: var(--s3); }
+  .split .xline span { border: 1px solid var(--rule-2); padding: 4px 10px; font-family: "Space Mono", monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; }
+  .split .xline .x { border: none; color: var(--grey); padding: 0; }
+  dl.specs { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin: 0; }
+  dl.specs > div { background: var(--black); padding: var(--s3); }
+  dl.specs dt { font-family: "Space Mono", monospace; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--grey); }
+  dl.specs dd { margin: var(--s1) 0 0; font-size: 1.35rem; font-weight: 900; }
+
+  /* cta */
+  .cta { padding-block: var(--s6); }
+  .cta h2 { font-size: clamp(2rem, 6vw, 4rem); max-width: 15ch; }
+  .cta p { color: var(--grey-2); max-width: 44ch; margin-top: var(--s3); }
+
+  footer { border-top: 1px solid var(--rule); padding-block: var(--s4); }
+  .foot { display: flex; flex-wrap: wrap; gap: var(--s4); justify-content: space-between; color: var(--grey); font-size: 0.85rem; }
+  .foot a { color: var(--grey-2); text-decoration: none; }
+  .foot a:hover { color: var(--ochre); }
+
+  @media (prefers-reduced-motion: reduce) { *, html { transition: none !important; scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand"><span class="mk">SPLINTER<b>/</b>4X4</span><span class="label">Perth, WA</span></div>
+      <nav class="menu" aria-label="Primary">
+        <a href="#systems">Systems</a>
+        <a href="#voltek">12V</a>
+        <a href="#quote">Build a quote</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+  </div>
+
+  <main>
+    <section class="hero wrap" aria-labelledby="h">
+      <div class="hero-grid">
+        <div>
+          <p class="label" style="margin:0 0 var(--s3)">Ultra-lightweight touring systems · Designed &amp; built in WA</p>
+          <h1 id="h">Carry the kit.<br><em>Not the kilos.</em></h1>
+          <p class="sub">Composite drawer systems and false floors for touring 4WDs — engineered to put weight back into your payload, where it belongs.</p>
+          <div class="actions">
+            <a class="btn primary" href="#quote">Build your quote →</a>
+            <a class="btn ghost" href="#systems">See the systems</a>
+          </div>
+        </div>
+        <div class="weight" aria-label="Weight saving">
+          <div class="big">38<small>kg</small></div>
+          <p class="cap">Typical saving over a steel drawer system of the same footprint.<br><span class="mono label">— figure is a placeholder, drop in real data</span></p>
+          <div class="row"><span>Material</span><span>Composite</span></div>
+          <div class="row"><span>Fitment</span><span>Vehicle-specific</span></div>
+          <div class="row"><span>Built in</span><span>Western Australia</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="systems" aria-labelledby="sys-h">
+      <div class="head">
+        <span class="label">01 / Drawer systems</span>
+        <h2 id="sys-h">Three platforms, named for where they earn it</h2>
+      </div>
+      <div class="pkg">
+        <article class="pkg-row">
+          <div><h3>Sandy Cape</h3><div class="place">DUAL-CAB UTE TRAYS</div></div>
+          <p>Twin drawers and a wing kit for dual-cab trays. The everyday tourer — light enough that you'll forget it's back there until you need it.</p>
+          <div class="kg"><b>~31 kg</b><span>fitted weight</span></div>
+        </article>
+        <article class="pkg-row">
+          <div><h3>Yardie Creek</h3><div class="place">WAGON / 4DR 4WD</div></div>
+          <p>Drawer-and-floor combo sized for wagons, with a fridge slide that clears the tailgate and a load floor rated to stand on.</p>
+          <div class="kg"><b>~44 kg</b><span>fitted weight</span></div>
+        </article>
+        <article class="pkg-row">
+          <div><h3>Steep Point</h3><div class="place">REMOTE / LONG-RANGE</div></div>
+          <p>The full remote-touring fitout: deep drawers, water, and a false floor built to take a sustained corrugation diet without working loose.</p>
+          <div class="kg"><b>~58 kg</b><span>fitted weight</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section wrap" id="voltek" aria-labelledby="vk-h">
+      <div class="split">
+        <div>
+          <span class="xline"><span>Splinter</span><span class="x">×</span><span>Voltek</span></span>
+          <h2 id="vk-h">12V that's documented, not improvised</h2>
+          <p>Voltek integration drops into any Splinter system — dual-battery, DC-DC, solar and a fused, labelled loom. Every circuit is on the wiring sheet you take home, so the next person to open the panel isn't guessing.</p>
+          <a class="btn ghost" href="#quote" style="margin-top:var(--s3)">Add 12V to a build →</a>
+        </div>
+        <dl class="specs">
+          <div><dt>Battery</dt><dd>120–220 Ah</dd></div>
+          <div><dt>DC-DC</dt><dd>25 / 40 A</dd></div>
+          <div><dt>Solar ready</dt><dd>Up to 400 W</dd></div>
+          <div><dt>Loom</dt><dd>Fused &amp; labelled</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="cta wrap" id="quote" aria-labelledby="cta-h">
+      <span class="label">02 / Build a quote</span>
+      <h2 id="cta-h" style="margin-top:var(--s3)">Start with the vehicle. We'll work back to the weight.</h2>
+      <p>Pick your platform and options and we'll come back with a fitted weight and a price — both before you commit to anything.</p>
+      <div class="actions">
+        <a class="btn primary" href="#" >Open the configurator →</a>
+        <a class="btn ghost" href="mailto:hello@splinter4x4.com.au">Email the workshop</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap" id="contact">
+    <div class="foot">
+      <span class="mono">SPLINTER/4X4 SOLUTIONS — Perth, Western Australia</span>
+      <span><a href="mailto:hello@splinter4x4.com.au">hello@splinter4x4.com.au</a> · Australia-wide shipping</span>
+    </div>
+  </footer>
+</body>
+</html>
