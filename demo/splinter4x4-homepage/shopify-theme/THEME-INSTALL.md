@@ -58,6 +58,23 @@ Prices, "From" labels, images and sold-out states now come straight from your
 products. Edit a price in Shopify and the homepage updates itself — no code
 changes.
 
+## 5. Custom Quote page
+
+The theme also includes a **Splinter Custom Quote** section (`splinter-custom-quote.liquid`)
+— an on-brand enquiry form that uses Shopify's native contact form, so submissions
+arrive in your store notifications (no app needed).
+
+In the repackaged zip it's already wired to a `page.custom-quote` template. To use it:
+
+1. Admin → **Online Store → Pages** → open (or create) the **Custom Quote** page.
+2. In **Theme template**, choose **custom-quote**. Save.
+3. Optional: tweak the heading, sidebar and contact details in
+   **Customize → (the Custom Quote page) → Splinter Custom Quote**.
+
+Form submissions go to the email under **Settings → Notifications / Store details**.
+The extra fields (vehicle, supply/install, timeframe, what they're after) come
+through as labelled lines in the enquiry.
+
 ---
 
 ### Want a one-click install instead?
