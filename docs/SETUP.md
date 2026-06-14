@@ -16,18 +16,14 @@ These are connected as MCP integrations on the session. Nothing to do here.
 ## To add: Meta (Facebook/Instagram) Ads
 
 Until this is connected, `meta-ads` runs in **planning mode** (it can write copy
-and plans but can't see real spend/results). To get live ad data you need a Meta
-Marketing API connection. Two common paths:
+and plans but can't see real spend/results).
 
-1. **Via an automation hub (easiest, no code):** connect Meta Ads inside
-   **n8n** or **Activepieces** (both free/self-hostable) and have the adjutant
-   read results from there. Good if you also want scheduled automations.
-2. **Direct Meta Marketing API:** create a Meta app + access token with
-   `ads_read` (and `ads_management` if you want to make changes), then expose it
-   to the agent as an MCP tool.
+➡️ **Full step-by-step instructions are in [`META-ADS-SETUP.md`](META-ADS-SETUP.md).**
 
-Ask me ("help me connect Meta ads") and I'll walk you through whichever path you
-pick, step by step.
+Short version: the recommended path is the **official Meta Ads MCP connector**
+(`https://mcp.facebook.com/ads`) — add it in your Claude Code web Connectors
+settings and log in with your Meta business account. A token-based fallback is
+documented if the official connector isn't available to you.
 
 ## Adding more areas later
 

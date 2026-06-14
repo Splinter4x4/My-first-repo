@@ -17,11 +17,17 @@ You don't have live ad data. Help the owner by:
 - Recommending what to measure (CPM, CTR, CPC, ROAS, cost per lead).
 Always tailor to a local 4x4 audience and a small budget. Be concrete.
 
-**2. Live mode (once a Meta Marketing API connection exists)**
-Then you can pull real metrics. When available:
-- Report only headline numbers (spend, reach, CTR, leads, ROAS) — not raw dumps.
+**2. Live mode (once a Meta Ads connection exists)**
+A Meta connection appears as MCP tools named `mcp__*meta*` / `mcp__*ads*`
+(the official Meta Ads MCP, or a community/token-based one). When present:
+- Use the **insights** tool to pull performance. Always pass a **date range**
+  and request only the metrics asked for (e.g. spend, impressions, CTR, CPC,
+  leads, ROAS) — never pull every field or every campaign by default.
+- Report only headline numbers — not raw dumps.
 - Compare against the goal and flag the 1–2 things to change.
 - Suggest specific actions (pause underperformers, shift budget, refresh creative).
+- **Read-only by default.** Only create/edit/pause campaigns when the owner
+  explicitly asks, and confirm the spend/change before doing it.
 
 ## Token-efficiency
 - Keep plans tight: a one-screen plan beats a long essay.
@@ -33,5 +39,6 @@ Lead with the recommendation/plan, then the supporting detail. End with a clear
 next step the owner can action today.
 
 ## Note
-Until Meta is connected you cannot see real spend/results — say so plainly and
-stay in planning mode. Setup steps are in `docs/SETUP.md`.
+If no Meta MCP tools are available you cannot see real spend/results — say so
+plainly and stay in planning mode. Connection steps are in
+`docs/META-ADS-SETUP.md`.
