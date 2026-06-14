@@ -1,0 +1,274 @@
+{%- comment -%}
+  Splinter Homepage — a bespoke OS 2.0 section for the Ride theme.
+  Keeps the custom dark/red Splinter look, but renders real product objects
+  from collections you pick in the theme editor, so prices, images, product
+  links and sold-out states stay in sync with your store automatically.
+
+  Install: Online Store → Themes → Edit code → Sections → Add a new section
+  named `splinter-homepage`, paste this file. Then in Customize, add the
+  "Splinter Homepage" section to the home page and pick your collections on
+  each product group block.
+{%- endcomment -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<div class="sx" id="sx-{{ section.id }}">
+
+  {%- if section.settings.show_hero -%}
+    <section class="sx-hero" aria-label="Intro">
+      {%- if section.settings.hero_image -%}
+        {{ section.settings.hero_image | image_url: width: 2200 | image_tag:
+            class: 'sx-hero-bg', loading: 'eager', sizes: '100vw',
+            widths: '600,900,1200,1600,2200', alt: section.settings.hero_image.alt | default: 'Splinter 4X4 touring setup' }}
+      {%- endif -%}
+      <div class="sx-wrap sx-hero-inner">
+        {%- if section.settings.hero_eyebrow != blank -%}
+          <p class="sx-label">{{ section.settings.hero_eyebrow }}</p>
+        {%- endif -%}
+        <h1 class="sx-h1">{{ section.settings.hero_heading }}</h1>
+        {%- if section.settings.hero_sub != blank -%}
+          <p class="sx-sub">{{ section.settings.hero_sub }}</p>
+        {%- endif -%}
+        <div class="sx-actions">
+          {%- if section.settings.btn1_label != blank -%}
+            <a class="sx-btn sx-primary" href="{{ section.settings.btn1_link | default: '#' }}">{{ section.settings.btn1_label }}</a>
+          {%- endif -%}
+          {%- if section.settings.btn2_label != blank -%}
+            <a class="sx-btn sx-ghost" href="{{ section.settings.btn2_link | default: '#' }}">{{ section.settings.btn2_label }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </section>
+
+    {%- if section.settings.show_proof -%}
+      <section class="sx-proof" aria-label="At a glance"><div class="sx-wrap"><div class="sx-proof-row">
+        <div class="sx-cell"><b>{{ section.settings.proof_1 }}</b><span>{{ section.settings.proof_1b }}</span></div>
+        <div class="sx-cell"><b>{{ section.settings.proof_2 }}</b><span>{{ section.settings.proof_2b }}</span></div>
+        <div class="sx-cell"><b>{{ section.settings.proof_3 }}</b><span>{{ section.settings.proof_3b }}</span></div>
+        <div class="sx-cell"><b>{{ section.settings.proof_4 }}</b><span>{{ section.settings.proof_4b }}</span></div>
+      </div></div></section>
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+
+      {%- when 'product_group' -%}
+        <section class="sx-section sx-wrap" id="{{ block.settings.anchor | default: block.id }}" {{ block.shopify_attributes }}>
+          <div class="sx-head">
+            {%- if block.settings.label != blank -%}<span class="sx-label">{{ block.settings.label }}</span>{%- endif -%}
+            <h2 class="sx-h2">{{ block.settings.heading }}</h2>
+            {%- if block.settings.intro != blank -%}<p class="sx-intro">{{ block.settings.intro }}</p>{%- endif -%}
+          </div>
+
+          {%- assign coll = block.settings.collection -%}
+          {%- if coll != blank and coll.products_count > 0 -%}
+
+            {%- if block.settings.display == 'rows' -%}
+              <div class="sx-floors">
+                {%- for product in coll.products limit: block.settings.products_to_show -%}
+                  <a class="sx-floor" href="{{ product.url }}">
+                    <div><h3 class="sx-h3">{{ product.title | replace: '"', '' }}</h3>
+                      {%- if product.type != blank -%}<div class="sx-veh">{{ product.type }}</div>{%- endif -%}</div>
+                    <p>{{ product.description | strip_html | truncatewords: 22 }}</p>
+                    <div class="sx-price">{% if product.price_varies %}From {% endif %}{{ product.price | money_without_trailing_zeros }}<small>{% if product.available %}supply / install{% else %}sold out{% endif %}</small></div>
+                    <span class="sx-go">View →</span>
+                  </a>
+                {%- endfor -%}
+              </div>
+
+            {%- else -%}
+              <div class="sx-cards">
+                {%- for product in coll.products limit: block.settings.products_to_show -%}
+                  <a class="sx-card" href="{{ product.url }}">
+                    <div class="sx-ph">
+                      {%- if product.featured_media -%}
+                        {{ product.featured_media | image_url: width: 1000 | image_tag:
+                            loading: 'lazy', widths: '400,600,800,1000', sizes: '(min-width:1000px) 33vw, 100vw',
+                            alt: product.featured_media.alt | default: product.title }}
+                      {%- else -%}
+                        <div class="sx-noimg" aria-hidden="true"></div>
+                      {%- endif -%}
+                    </div>
+                    <div class="sx-card-body">
+                      <h3 class="sx-h3">{{ product.title | replace: '"', '' }}</h3>
+                      <p>{{ product.description | strip_html | truncatewords: 22 }}</p>
+                      <div class="sx-foot">
+                        <span class="sx-price">{% if product.price_varies %}From {% endif %}{{ product.price | money_without_trailing_zeros }}</span>
+                        <span class="sx-go">{% if product.available %}Configure{% else %}Sold out{% endif %} →</span>
+                      </div>
+                    </div>
+                  </a>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+          {%- else -%}
+            <p class="sx-empty">Pick a collection for this group in the theme editor.</p>
+          {%- endif -%}
+        </section>
+
+      {%- when 'cta' -%}
+        <section class="sx-section sx-wrap sx-cta" id="{{ block.settings.anchor | default: block.id }}" {{ block.shopify_attributes }}>
+          {%- if block.settings.label != blank -%}<span class="sx-label">{{ block.settings.label }}</span>{%- endif -%}
+          <h2 class="sx-h2 sx-cta-h">{{ block.settings.heading }}</h2>
+          {%- if block.settings.text != blank -%}<p class="sx-cta-p">{{ block.settings.text }}</p>{%- endif -%}
+          <div class="sx-actions">
+            {%- if block.settings.btn1_label != blank -%}<a class="sx-btn sx-primary" href="{{ block.settings.btn1_link | default: '#' }}">{{ block.settings.btn1_label }}</a>{%- endif -%}
+            {%- if block.settings.btn2_label != blank -%}<a class="sx-btn sx-ghost" href="{{ block.settings.btn2_link | default: '#' }}">{{ block.settings.btn2_label }}</a>{%- endif -%}
+          </div>
+        </section>
+
+    {%- endcase -%}
+  {%- endfor -%}
+</div>
+
+{%- style -%}
+  #sx-{{ section.id }}.sx {
+    --sx-bg:#0E0D0C; --sx-surface:#161312; --sx-surface2:#1E1A18;
+    --sx-rule:rgba(244,241,234,.12); --sx-rule2:rgba(244,241,234,.22);
+    --sx-ink:#F4F1EA; --sx-grey:#A8A097; --sx-grey2:#CFC9C0;
+    --sx-red:#D8392B; --sx-red-deep:#A4271D;
+    --sx-display:'Archivo',system-ui,sans-serif; --sx-mono:'Space Mono',ui-monospace,monospace;
+    --sx-s1:8px;--sx-s2:16px;--sx-s3:24px;--sx-s4:40px;--sx-s5:72px;--sx-s6:112px;
+    background:var(--sx-bg); color:var(--sx-ink); font-family:'Inter',system-ui,sans-serif;
+  }
+  .sx *{box-sizing:border-box;}
+  .sx a{text-decoration:none;color:inherit;}
+  .sx .sx-wrap{max-width:1200px;margin-inline:auto;padding-inline:var(--sx-s3);}
+  .sx h1,.sx h2,.sx h3{font-family:var(--sx-display);font-stretch:115%;font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:.92;margin:0;}
+  .sx .sx-label{font-family:var(--sx-mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--sx-grey);margin:0;}
+  .sx :focus-visible{outline:2px solid var(--sx-red);outline-offset:3px;}
+
+  .sx .sx-btn{display:inline-flex;align-items:center;gap:var(--sx-s1);font-family:var(--sx-mono);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.8rem;padding:14px 22px;border:1px solid;transition:transform .15s ease,background .15s ease,border-color .15s ease;}
+  .sx .sx-primary{background:var(--sx-red);color:#fff;border-color:var(--sx-red);}
+  .sx .sx-primary:hover{background:var(--sx-red-deep);border-color:var(--sx-red-deep);transform:translateY(-2px);}
+  .sx .sx-ghost{background:transparent;color:var(--sx-ink);border-color:var(--sx-rule2);}
+  .sx .sx-ghost:hover{border-color:var(--sx-ink);transform:translateY(-2px);}
+  .sx .sx-actions{display:flex;gap:var(--sx-s2);flex-wrap:wrap;margin-top:var(--sx-s4);}
+
+  .sx .sx-hero{position:relative;min-height:84vh;display:flex;align-items:flex-end;overflow:hidden;}
+  .sx .sx-hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+  .sx .sx-hero::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(14,13,12,.94),rgba(14,13,12,.6) 46%,rgba(14,13,12,.2));}
+  .sx .sx-hero-inner{position:relative;z-index:2;width:100%;padding-block:var(--sx-s6);}
+  .sx .sx-h1{font-size:clamp(2.6rem,8vw,6rem);max-width:15ch;}
+  .sx .sx-h1 em,.sx .sx-h1 strong{font-style:normal;font-weight:900;color:var(--sx-red);}
+  .sx .sx-sub{font-size:1.25rem;color:var(--sx-grey2);max-width:46ch;margin-top:var(--sx-s3);font-weight:500;}
+
+  .sx .sx-proof{border-bottom:1px solid var(--sx-rule);background:var(--sx-surface);}
+  .sx .sx-proof-row{display:grid;grid-template-columns:repeat(2,1fr);}
+  .sx .sx-cell{padding:var(--sx-s3);border-right:1px solid var(--sx-rule);border-top:1px solid var(--sx-rule);}
+  .sx .sx-cell b{font-family:var(--sx-display);font-stretch:115%;display:block;font-size:1.1rem;}
+  .sx .sx-cell span{font-family:var(--sx-mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sx-grey);}
+
+  .sx .sx-section{padding-block:var(--sx-s6);border-bottom:1px solid var(--sx-rule);}
+  .sx .sx-head{display:flex;align-items:baseline;gap:var(--sx-s3);flex-wrap:wrap;margin-bottom:var(--sx-s5);}
+  .sx .sx-h2{font-size:clamp(1.9rem,4.5vw,3.2rem);}
+  .sx .sx-intro{color:var(--sx-grey);max-width:42ch;margin:0;}
+  .sx .sx-empty{color:var(--sx-grey);font-family:var(--sx-mono);}
+
+  .sx .sx-cards{display:grid;gap:var(--sx-s3);grid-template-columns:1fr;}
+  .sx .sx-card{background:var(--sx-surface);border:1px solid var(--sx-rule);overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s ease,transform .15s ease;}
+  .sx .sx-card:hover{border-color:var(--sx-rule2);transform:translateY(-3px);}
+  .sx .sx-ph{aspect-ratio:16/10;overflow:hidden;background:var(--sx-surface2);}
+  .sx .sx-ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+  .sx .sx-card:hover .sx-ph img{transform:scale(1.04);}
+  .sx .sx-noimg{width:100%;height:100%;background:linear-gradient(135deg,var(--sx-surface2),var(--sx-surface));}
+  .sx .sx-card-body{padding:var(--sx-s3);display:flex;flex-direction:column;gap:var(--sx-s2);flex:1;}
+  .sx .sx-h3{font-size:1.5rem;}
+  .sx .sx-card-body p,.sx .sx-floor p{margin:0;color:var(--sx-grey2);flex:1;}
+  .sx .sx-foot{display:flex;align-items:flex-end;justify-content:space-between;border-top:1px solid var(--sx-rule);padding-top:var(--sx-s2);gap:var(--sx-s2);}
+  .sx .sx-price{font-family:var(--sx-display);font-stretch:115%;font-weight:900;font-size:1.4rem;}
+  .sx .sx-price small{display:block;font-family:var(--sx-mono);font-weight:400;font-size:.58rem;letter-spacing:.1em;color:var(--sx-grey);}
+  .sx .sx-go{font-family:var(--sx-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sx-grey2);white-space:nowrap;}
+  .sx .sx-card:hover .sx-go,.sx .sx-floor:hover .sx-go{color:var(--sx-red);}
+
+  .sx .sx-floors{border-top:1px solid var(--sx-rule);}
+  .sx .sx-floor{display:grid;grid-template-columns:1fr auto;gap:var(--sx-s2) var(--sx-s4);align-items:center;padding-block:var(--sx-s3);border-bottom:1px solid var(--sx-rule);transition:background .15s ease;}
+  .sx .sx-floor:hover{background:var(--sx-surface);}
+  .sx .sx-veh{font-family:var(--sx-mono);font-size:.66rem;letter-spacing:.12em;color:var(--sx-grey);margin-top:6px;}
+  .sx .sx-floor .sx-price{color:var(--sx-red);text-align:right;font-size:1.3rem;}
+
+  .sx .sx-cta{padding-block:var(--sx-s6);}
+  .sx .sx-cta-h{font-size:clamp(2rem,6vw,4rem);max-width:16ch;margin-top:var(--sx-s3);}
+  .sx .sx-cta-h em,.sx .sx-cta-h strong{font-style:normal;color:var(--sx-red);}
+  .sx .sx-cta-p{color:var(--sx-grey2);max-width:46ch;margin-top:var(--sx-s3);}
+
+  @media (min-width:760px){ .sx .sx-proof-row{grid-template-columns:repeat(4,1fr);} .sx .sx-floor{grid-template-columns:1.3fr 2fr auto auto;} }
+  @media (min-width:720px){ .sx .sx-cards{grid-template-columns:repeat(2,1fr);} }
+  @media (min-width:1000px){ .sx .sx-cards{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:759px){ .sx .sx-floor p{display:none;} }
+  @media (prefers-reduced-motion:reduce){ .sx *{transition:none!important;} }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Splinter Homepage",
+  "tag": "section",
+  "class": "section-splinter",
+  "settings": [
+    { "type": "header", "content": "Hero" },
+    { "type": "checkbox", "id": "show_hero", "label": "Show hero", "default": true },
+    { "type": "image_picker", "id": "hero_image", "label": "Hero background image" },
+    { "type": "text", "id": "hero_eyebrow", "label": "Eyebrow", "default": "Designed & built in Neerabup, WA · Shipped Australia-wide" },
+    { "type": "inline_richtext", "id": "hero_heading", "label": "Heading", "default": "Pack heavier. <strong>Carry lighter.</strong>" },
+    { "type": "textarea", "id": "hero_sub", "label": "Subheading", "default": "Ultra-lightweight drawer systems, bolt-in false floors and 12V — tailor-made to your rig, so the weight goes into your kit, not your fit-out." },
+    { "type": "text", "id": "btn1_label", "label": "Button 1 label", "default": "Shop drawer systems" },
+    { "type": "url", "id": "btn1_link", "label": "Button 1 link" },
+    { "type": "text", "id": "btn2_label", "label": "Button 2 label", "default": "Get a custom quote" },
+    { "type": "url", "id": "btn2_link", "label": "Button 2 link" },
+    { "type": "header", "content": "Proof strip" },
+    { "type": "checkbox", "id": "show_proof", "label": "Show proof strip", "default": true },
+    { "type": "text", "id": "proof_1", "label": "Stat 1", "default": "Ultra-lightweight" },
+    { "type": "text", "id": "proof_1b", "label": "Stat 1 caption", "default": "Composite build" },
+    { "type": "text", "id": "proof_2", "label": "Stat 2", "default": "Neerabup, WA" },
+    { "type": "text", "id": "proof_2b", "label": "Stat 2 caption", "default": "Workshop & install" },
+    { "type": "text", "id": "proof_3", "label": "Stat 3", "default": "2–6 weeks" },
+    { "type": "text", "id": "proof_3b", "label": "Stat 3 caption", "default": "Typical lead time" },
+    { "type": "text", "id": "proof_4", "label": "Stat 4", "default": "Australia-wide" },
+    { "type": "text", "id": "proof_4b", "label": "Stat 4 caption", "default": "Shipping" }
+  ],
+  "blocks": [
+    {
+      "type": "product_group",
+      "name": "Product group",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Eyebrow / number" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Drawer systems" },
+        { "type": "textarea", "id": "intro", "label": "Intro line" },
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "range", "id": "products_to_show", "label": "Products to show", "min": 3, "max": 12, "step": 1, "default": 6 },
+        { "type": "select", "id": "display", "label": "Layout", "options": [ {"value":"cards","label":"Photo cards"}, {"value":"rows","label":"Spec rows"} ], "default": "cards" },
+        { "type": "text", "id": "anchor", "label": "Anchor id (optional)" }
+      ]
+    },
+    {
+      "type": "cta",
+      "name": "Call to action",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Eyebrow" },
+        { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Don't see your rig? <strong>We build to it.</strong>" },
+        { "type": "textarea", "id": "text", "label": "Text" },
+        { "type": "text", "id": "btn1_label", "label": "Button 1 label", "default": "Email a custom quote" },
+        { "type": "url", "id": "btn1_link", "label": "Button 1 link" },
+        { "type": "text", "id": "btn2_label", "label": "Button 2 label" },
+        { "type": "url", "id": "btn2_link", "label": "Button 2 link" },
+        { "type": "text", "id": "anchor", "label": "Anchor id (optional)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Splinter Homepage",
+      "blocks": [
+        { "type": "product_group", "settings": { "label": "01 / Drawer systems", "heading": "Named for the places they get you to", "display": "cards", "anchor": "systems" } },
+        { "type": "product_group", "settings": { "label": "02 / False floors", "heading": "Bolt-in false floors, no drilling", "display": "rows", "anchor": "floors" } },
+        { "type": "product_group", "settings": { "label": "03 / 12V packages", "heading": "12V, wired and documented", "display": "cards", "anchor": "voltek" } },
+        { "type": "cta", "settings": { "label": "04 / Custom quote", "text": "Tell us the vehicle and how you tour, and we'll tailor a system to suit — drawers, false floor, 12V, the lot. Built in Neerabup, or shipped to your door." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
