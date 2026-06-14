@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Custom Quote — Splinter 4X4 Solutions</title>
+<meta name="description" content="Build your rig and get a tailored quote within 24 hours. Drawers, false floors, 12V — built in Neerabup WA, shipped Australia-wide.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<style>
+  .q-head{padding:64px 0 8px;}
+  .q-head h1{font-size:clamp(2.2rem,6vw,4rem);max-width:18ch;}
+  .q-head h1 em{font-style:normal;color:var(--red);}
+  .q-intro{color:var(--grey2);max-width:54ch;margin-top:16px;font-size:1.15rem;}
+  .assure{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px;}
+  .assure li{font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey2);border:1px solid var(--rule2);padding:8px 12px;}
+  .assure li::before{content:"\2713  ";color:var(--red);}
+  .qgrid{display:grid;grid-template-columns:1fr;gap:48px;margin:48px 0 96px;}
+  .qform{display:flex;flex-direction:column;gap:20px;}
+  .qrow{display:grid;grid-template-columns:1fr;gap:20px;}
+  .qf{display:flex;flex-direction:column;gap:8px;}
+  .qform label,.qform legend{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey2);}
+  .qform input,.qform select,.qform textarea{background:var(--surface);border:1px solid var(--rule2);color:var(--ink);font:inherit;padding:13px 14px;}
+  .qform input:focus,.qform select:focus,.qform textarea:focus{outline:2px solid var(--red);outline-offset:2px;border-color:var(--red);}
+  .qchecks{border:1px solid var(--rule);padding:16px;display:flex;flex-wrap:wrap;gap:10px 22px;}
+  .qchecks legend{padding:0 6px;}
+  .qcheck{display:inline-flex;align-items:center;gap:8px;font-size:.95rem;color:var(--grey2);}
+  .qcheck input{width:18px;height:18px;accent-color:var(--red);}
+  .qaside{background:var(--surface);border:1px solid var(--rule);padding:32px;align-self:start;}
+  .qaside h2{font-size:1.5rem;margin-bottom:14px;}
+  .qfacts{margin:24px 0;display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);}
+  .qfacts > div{background:var(--bg);padding:14px 16px;display:flex;justify-content:space-between;gap:16px;}
+  .qfacts dt{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);}
+  .qfacts dd{margin:0;font-weight:600;}
+  .qcontact a{display:block;font-family:var(--mono);color:var(--ink);}
+  .qcontact a:hover{color:var(--red);}
+  .qnote{font-family:var(--mono);font-size:.64rem;color:var(--grey);}
+  @media(min-width:680px){.qrow{grid-template-columns:1fr 1fr;}}
+  @media(min-width:920px){.qgrid{grid-template-columns:1.6fr 1fr;}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="bar wrap">
+  <a class="mk" href="index.html">SPLINTER<b>/</b>4X4</a>
+  <nav class="menu" aria-label="Primary">
+    <a href="drawer-systems.html">Drawer Systems</a><a href="false-floors.html">False Floors</a>
+    <a href="12v.html">12V</a><a href="build.html">Build Yours</a><a href="about.html">About</a>
+    <a href="quote.html" aria-current="page">Custom Quote</a>
+  </nav>
+</div></header>
+
+<main id="main"><div class="wrap">
+  <header class="q-head">
+    <p class="label">Custom quote · 24-hour turnaround</p>
+    <h1>Build your rig. <em>Get a price in 24 hours.</em></h1>
+    <p class="q-intro">Give us the vehicle and how you tour. You'll get a tailored quote and a fitted-weight estimate back within one business day — no showroom runaround, no pressure. Built in Neerabup, shipped Australia-wide.</p>
+    <ul class="assure"><li>Quote back within 24 hours</li><li>No obligation, no deposit to enquire</li><li>Designed &amp; built in Neerabup, WA</li></ul>
+    <p style="margin-top:18px"><a href="build.html" class="mono" style="color:var(--grey2)">Not sure what you need? <strong style="color:var(--red)">Build it visually →</strong></a></p>
+  </header>
+
+  <div class="qgrid">
+    <form class="qform" id="qform">
+      <div class="qrow">
+        <div class="qf"><label for="n">Name</label><input id="n" name="name" required></div>
+        <div class="qf"><label for="p">Phone</label><input id="p" name="phone" type="tel" required></div>
+      </div>
+      <div class="qf"><label for="e">Email</label><input id="e" name="email" type="email" required></div>
+      <div class="qrow">
+        <div class="qf"><label for="v">Vehicle (make / model / year)</label><input id="v" name="vehicle" placeholder="e.g. LandCruiser 300, 2023" required></div>
+        <div class="qf"><label for="s">Wagon or ute</label><select id="s" name="setup"><option>Wagon</option><option>Ute (tub)</option><option>Canopy</option><option>Not sure yet</option></select></div>
+      </div>
+      <fieldset class="qf qchecks"><legend>What are you after?</legend>
+        <label class="qcheck"><input type="checkbox" name="want" value="Drawer system"> Drawer system</label>
+        <label class="qcheck"><input type="checkbox" name="want" value="False floor"> False floor</label>
+        <label class="qcheck"><input type="checkbox" name="want" value="12V package"> 12V package</label>
+        <label class="qcheck"><input type="checkbox" name="want" value="Full fitout"> Full fitout</label>
+      </fieldset>
+      <div class="qrow">
+        <div class="qf"><label for="f">Supply or install</label><select id="f" name="fit"><option>Supply only (ship to me)</option><option>Supply + install in Neerabup</option><option>Not sure yet</option></select></div>
+        <div class="qf"><label for="w">Timeframe</label><select id="w" name="when"><option>As soon as possible</option><option>Next 1–3 months</option><option>Just planning</option></select></div>
+      </div>
+      <div class="qf"><label for="m">Tell us about the build and how you tour</label><textarea id="m" name="msg" rows="5" required></textarea></div>
+      <button type="submit" class="btn primary" style="align-self:flex-start">Lock in my quote →</button>
+      <p class="qnote">Preview form — in your live store this submits straight to your enquiries. Here it opens your email pre-filled.</p>
+    </form>
+
+    <aside class="qaside">
+      <h2>What happens next</h2>
+      <div style="color:var(--grey2)"><p style="margin:0">We read every enquiry ourselves. You'll hear back within one business day with options and a price — or a couple of questions if we need them.</p></div>
+      <dl class="qfacts">
+        <div><dt>Workshop</dt><dd>Neerabup, WA</dd></div>
+        <div><dt>Lead time</dt><dd>2–6 weeks</dd></div>
+        <div><dt>Shipping</dt><dd>Australia-wide</dd></div>
+      </dl>
+      <div class="qcontact"><a href="mailto:ethan@splinter4x4.com.au">ethan@splinter4x4.com.au</a><a href="tel:+61428430543">0428 430 543</a></div>
+    </aside>
+  </div>
+</div></main>
+
+<footer class="wrap">
+  <div class="foot">
+    <div class="col"><h4>Splinter 4X4 Solutions</h4><p>Ultra-lightweight touring storage,<br>built in Neerabup, WA.</p></div>
+    <div class="col"><h4>Shop</h4><a href="drawer-systems.html">Drawer systems</a><a href="false-floors.html">False floors</a><a href="12v.html">12V packages</a><a href="build.html">Build your system</a></div>
+    <div class="col"><h4>Contact</h4><a href="mailto:ethan@splinter4x4.com.au">ethan@splinter4x4.com.au</a><a href="tel:+61428430543">0428 430 543</a><p>Neerabup, WA · Australia-wide</p></div>
+  </div>
+  <div class="legal mono">© 2026 Splinter 4X4 Solutions Pty Ltd · Designed &amp; built in WA</div>
+</footer>
+
+<script>
+document.getElementById('qform').addEventListener('submit',function(ev){
+  ev.preventDefault();
+  var f=ev.target, g=function(n){return (f.elements[n]&&f.elements[n].value)||'';};
+  var want=Array.prototype.filter.call(f.querySelectorAll('[name=want]:checked'),function(){return true;}).map(function(c){return c.value;}).join(', ');
+  var body="G'day Splinter,\n\nName: "+g('name')+"\nPhone: "+g('phone')+"\nEmail: "+g('email')+
+    "\nVehicle: "+g('vehicle')+"\nSetup: "+g('setup')+"\nAfter: "+want+
+    "\nSupply/install: "+g('fit')+"\nTimeframe: "+g('when')+"\n\n"+g('msg')+"\n";
+  window.location.href="mailto:ethan@splinter4x4.com.au?subject="+encodeURIComponent("Custom quote — "+g('vehicle'))+"&body="+encodeURIComponent(body);
+});
+</script>
+</body>
+</html>
