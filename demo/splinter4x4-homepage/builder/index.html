@@ -352,6 +352,10 @@
     var href = "mailto:ethan@splinter4x4.com.au?subject="+encodeURIComponent("System build — "+money(c.price))+"&body="+encodeURIComponent(body);
     document.getElementById("send").setAttribute("href",href);
     window.__spec = spec+"\nIndicative price: "+money(c.price)+" · est weight: "+c.wt+" kg";
+    // if embedded in a quote page, hand the live build up to the parent
+    if (window.parent && window.parent !== window) {
+      try { window.parent.postMessage({ type:"splinter-build", spec:window.__spec, price:money(c.price), weight:c.wt+" kg" }, "*"); } catch(e){}
+    }
   }
 
   // ---- wire up controls ----
@@ -382,6 +386,17 @@
     var t=window.__spec||""; var btn=this;
     if(navigator.clipboard){ navigator.clipboard.writeText(t).then(function(){btn.textContent="Copied ✓";setTimeout(function(){btn.textContent="Copy spec";},1500);}); }
   });
+
+  // when embedded in the quote page, the primary button hands the build to the
+  // form instead of opening email
+  if (window.parent && window.parent !== window) {
+    var sendBtn = document.getElementById("send");
+    sendBtn.textContent = "Use this build in my quote ↓";
+    sendBtn.addEventListener("click", function(e){
+      e.preventDefault();
+      try { window.parent.postMessage({ type:"splinter-build-use", spec:window.__spec }, "*"); } catch(err){}
+    });
+  }
 
   syncPressed(); render();
 })();

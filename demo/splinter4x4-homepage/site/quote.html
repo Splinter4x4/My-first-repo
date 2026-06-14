@@ -37,6 +37,11 @@
   .qnote{font-family:var(--mono);font-size:.64rem;color:var(--grey);}
   @media(min-width:680px){.qrow{grid-template-columns:1fr 1fr;}}
   @media(min-width:920px){.qgrid{grid-template-columns:1.6fr 1fr;}}
+  .qbuild{margin:44px 0 0;}
+  .qbuild-head{margin-bottom:20px;}
+  .qframe{width:100%;height:1180px;border:1px solid var(--rule2);background:var(--bg);display:block;}
+  @media(max-width:980px){.qframe{height:1640px;}}
+  .qbuildfield textarea{font-family:var(--mono);font-size:.82rem;white-space:pre-wrap;background:var(--surface2);}
 </style>
 </head>
 <body>
@@ -56,11 +61,23 @@
     <h1>Build your rig. <em>Get a price in 24 hours.</em></h1>
     <p class="q-intro">Give us the vehicle and how you tour. You'll get a tailored quote and a fitted-weight estimate back within one business day — no showroom runaround, no pressure. Built in Neerabup, shipped Australia-wide.</p>
     <ul class="assure"><li>Quote back within 24 hours</li><li>No obligation, no deposit to enquire</li><li>Designed &amp; built in Neerabup, WA</li></ul>
-    <p style="margin-top:18px"><a href="build.html" class="mono" style="color:var(--grey2)">Not sure what you need? <strong style="color:var(--red)">Build it visually →</strong></a></p>
   </header>
+
+  <section class="qbuild">
+    <div class="qbuild-head">
+      <span class="label">Step 1 · optional</span>
+      <h2 style="margin-top:10px">Build your system in 3D</h2>
+      <p style="color:var(--grey2);max-width:62ch;margin-top:10px">Spec your rig — fridge slide, drawers, false floor, 12V — then hit <strong style="color:var(--red)">"Use this build in my quote"</strong> and it drops straight into the form below.</p>
+    </div>
+    <iframe id="builderFrame" class="qframe" src="build.html" title="Splinter system builder" loading="lazy"></iframe>
+  </section>
 
   <div class="qgrid">
     <form class="qform" id="qform">
+      <div class="qf qbuildfield" id="buildField" hidden>
+        <label for="build">Your 3D build</label>
+        <textarea id="build" name="build" rows="7" readonly></textarea>
+      </div>
       <div class="qrow">
         <div class="qf"><label for="n">Name</label><input id="n" name="name" required></div>
         <div class="qf"><label for="p">Phone</label><input id="p" name="phone" type="tel" required></div>
@@ -108,13 +125,28 @@
 </footer>
 
 <script>
+var latestBuild = "";
+window.addEventListener('message', function(e){
+  var d = e.data || {};
+  if (d.type === 'splinter-build') { latestBuild = d.spec || ""; }
+  if (d.type === 'splinter-build-use') {
+    latestBuild = d.spec || latestBuild;
+    var bf = document.getElementById('buildField'), bt = document.getElementById('build');
+    bt.value = latestBuild; bf.hidden = false;
+    bf.scrollIntoView({ behavior:'smooth', block:'center' });
+    try { bt.animate([{outline:'2px solid #D8392B'},{outline:'2px solid transparent'}], {duration:1400}); } catch(_){}
+  }
+});
 document.getElementById('qform').addEventListener('submit',function(ev){
   ev.preventDefault();
   var f=ev.target, g=function(n){return (f.elements[n]&&f.elements[n].value)||'';};
-  var want=Array.prototype.filter.call(f.querySelectorAll('[name=want]:checked'),function(){return true;}).map(function(c){return c.value;}).join(', ');
+  var want=Array.prototype.slice.call(f.querySelectorAll('[name=want]:checked')).map(function(c){return c.value;}).join(', ');
+  var build=g('build')||latestBuild;
   var body="G'day Splinter,\n\nName: "+g('name')+"\nPhone: "+g('phone')+"\nEmail: "+g('email')+
     "\nVehicle: "+g('vehicle')+"\nSetup: "+g('setup')+"\nAfter: "+want+
-    "\nSupply/install: "+g('fit')+"\nTimeframe: "+g('when')+"\n\n"+g('msg')+"\n";
+    "\nSupply/install: "+g('fit')+"\nTimeframe: "+g('when')+
+    (build?("\n\n--- My 3D build ---\n"+build):"")+
+    "\n\n"+g('msg')+"\n";
   window.location.href="mailto:ethan@splinter4x4.com.au?subject="+encodeURIComponent("Custom quote — "+g('vehicle'))+"&body="+encodeURIComponent(body);
 });
 </script>
