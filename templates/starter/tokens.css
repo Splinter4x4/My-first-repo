@@ -1,0 +1,77 @@
+/* ============================================================
+   DESIGN TOKENS
+   The system the page is built from. Set these *before* you lay
+   anything out — most of the "AI-generated" feeling comes from
+   leaving framework defaults in place here.
+
+   Replace the placeholder font and color choices with ones that
+   have a SOURCE (the brand, a photo, a mood). Don't ship the
+   defaults below as-is.
+   ============================================================ */
+
+:root {
+  /* ---- Type families ----------------------------------------
+     Pair a characterful DISPLAY face with a clean TEXT face.
+     Avoid defaulting to Inter/Roboto for everything. Swap these. */
+  --font-display: Georgia, "Times New Roman", serif;
+  --font-text:    system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:    ui-monospace, "SFMono-Regular", "Menlo", monospace;
+
+  /* ---- Type scale (modular, ratio ~1.25 from 1rem base) -----
+     Use these few sizes and reuse them. Hierarchy comes from
+     decisive jumps, not from many near-identical sizes. */
+  --text-xs:  0.8rem;
+  --text-sm:  0.9rem;
+  --text-base: 1.0625rem;   /* body: 16–18px */
+  --text-lg:  1.333rem;
+  --text-xl:  1.777rem;
+  --text-2xl: 2.369rem;
+  --text-3xl: 3.157rem;
+  --text-4xl: clamp(2.8rem, 6vw, 4.2rem);
+
+  --leading-tight: 1.05;    /* headlines */
+  --leading-body:  1.6;     /* prose */
+  --measure: 65ch;          /* max line length for readability */
+
+  /* ---- Color -------------------------------------------------
+     Tint neutrals off pure #000/#fff so the palette reads as a
+     choice. Use ONE confident accent with a source — not the
+     framework's default purple. */
+  --bg:        #FBF9F4;     /* warm paper */
+  --surface:   #F2EEE4;
+  --ink:       #1A1714;     /* near-black, slightly warm */
+  --muted:     #6B6256;
+  --rule:      rgba(26, 23, 20, 0.14);
+  --accent:    #B23A26;     /* <- replace with a SOURCED accent */
+  --accent-ink: #FFFFFF;    /* text on accent; check contrast */
+
+  /* ---- Spacing scale (8px base) -----------------------------
+     Space on the scale, not by feel. Use the big jumps to break
+     sections so the page has rhythm, not a metronome beat. */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2.5rem;
+  --space-5: 4rem;
+  --space-6: 6.5rem;
+
+  /* ---- Layout ------------------------------------------------ */
+  --container: 72rem;
+  --container-narrow: 44rem;
+  --radius: 2px;            /* restrained; not everything is a pill */
+
+  /* ---- Motion ------------------------------------------------ */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 180ms;
+}
+
+/* Re-tint for dark mode rather than inverting; re-check contrast. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14110F;
+    --surface: #1C1815;
+    --ink: #ECE7DD;
+    --muted: #A89E90;
+    --rule: rgba(236, 231, 221, 0.14);
+  }
+}
