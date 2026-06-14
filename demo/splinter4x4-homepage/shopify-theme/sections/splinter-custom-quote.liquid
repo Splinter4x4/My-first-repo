@@ -15,6 +15,14 @@
       {%- if section.settings.eyebrow != blank -%}<p class="sxq-label">{{ section.settings.eyebrow }}</p>{%- endif -%}
       <h1 class="sxq-h1">{{ section.settings.heading }}</h1>
       {%- if section.settings.intro != blank -%}<p class="sxq-intro">{{ section.settings.intro }}</p>{%- endif -%}
+      <ul class="sxq-assure">
+        <li>Quote back within 24 hours</li>
+        <li>No obligation, no deposit to enquire</li>
+        <li>Designed &amp; built in Neerabup, WA</li>
+      </ul>
+      {%- if section.settings.builder_link != blank -%}
+        <p class="sxq-buildlink"><a href="{{ section.settings.builder_link }}">Not sure what you need? <strong>Build it visually →</strong></a></p>
+      {%- endif -%}
     </header>
 
     <div class="sxq-grid">
@@ -90,7 +98,7 @@
             <textarea id="sxq-body" name="contact[body]" rows="5" required>{{ form.body }}</textarea>
           </div>
 
-          <button type="submit" class="sxq-btn">Send my enquiry →</button>
+          <button type="submit" class="sxq-btn">Lock in my quote →</button>
           <p class="sxq-fine">We only use these details to quote your build. No lists, no spam.</p>
         {%- endform -%}
       </div>
@@ -126,6 +134,13 @@
   .sxq .sxq-h1{font-size:clamp(2.2rem,6vw,4rem);max-width:18ch;}
   .sxq .sxq-h1 strong{color:var(--red);font-weight:900;}
   .sxq .sxq-intro{color:var(--grey2);max-width:54ch;margin-top:16px;font-size:1.15rem;}
+  .sxq .sxq-assure{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px;}
+  .sxq .sxq-assure li{font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey2);border:1px solid var(--rule2);padding:8px 12px;}
+  .sxq .sxq-assure li::before{content:"\2713  ";color:var(--red);}
+  .sxq .sxq-buildlink{margin-top:18px;}
+  .sxq .sxq-buildlink a{font-family:var(--mono);font-size:.8rem;color:var(--grey2);text-decoration:none;}
+  .sxq .sxq-buildlink a strong{color:var(--red);}
+  .sxq .sxq-buildlink a:hover{color:var(--ink);}
   .sxq .sxq-grid{display:grid;grid-template-columns:1fr;gap:48px;margin-top:56px;}
   .sxq .sxq-form{display:flex;flex-direction:column;gap:20px;}
   .sxq .sxq-row{display:grid;grid-template-columns:1fr;gap:20px;}
@@ -164,9 +179,10 @@
   "name": "Splinter Custom Quote",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Custom quote · No obligation" },
-    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Tell us the rig. <strong>We'll build to it.</strong>" },
-    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Drawers, false floor, 12V or a full fitout — give us the vehicle and how you tour and we'll come back with a tailored quote. Built and installed in Neerabup, or shipped Australia-wide." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Custom quote · 24-hour turnaround" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Build your rig. <strong>Get a price in 24 hours.</strong>" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Give us the vehicle and how you tour. You'll get a tailored quote and a fitted-weight estimate back within one business day — no showroom runaround, no pressure. Built in Neerabup, shipped Australia-wide." },
+    { "type": "url", "id": "builder_link", "label": "System builder link (optional)" },
     { "type": "header", "content": "Sidebar" },
     { "type": "text", "id": "aside_heading", "label": "Sidebar heading", "default": "What happens next" },
     { "type": "richtext", "id": "aside_text", "label": "Sidebar text", "default": "<p>We read every enquiry ourselves. You'll hear back within one business day with options and a price — or a few questions if we need them.</p>" },
