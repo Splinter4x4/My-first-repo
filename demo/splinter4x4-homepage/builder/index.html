@@ -4,150 +4,158 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Build your system — Splinter 4X4</title>
-<meta name="description" content="Configure your ultra-lightweight 4WD storage system — drawers, fridge slide, false floor and 12V — and watch it build in 3D. Built in Neerabup, WA.">
-<!--
-  Splinter 4X4 — interactive System Builder.
-  Self-contained. As the customer configures modules (left/right bay, fridge,
-  false floor, 12V), an isometric 3D drawing assembles live with a running
-  price + weight estimate, then sends the spec to a custom quote.
-  PRICES + WEIGHTS ARE INDICATIVE placeholders — wire to real variant data.
--->
+<meta name="description" content="See your ultra-lightweight 4WD storage system in 3D — choose a pre-built setup or build your own, with live pricing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0E0D0C;--surface:#161312;--surface2:#1E1A18;--rule:rgba(244,241,234,.12);--rule2:rgba(244,241,234,.22);
-    --ink:#F4F1EA;--grey:#A8A097;--grey2:#CFC9C0;--red:#D8392B;--red-deep:#A4271D;
-    --display:'Archivo',system-ui,sans-serif;--mono:'Space Mono',ui-monospace,monospace;
+    --bg:#0E0D0C; --panel:#15110F; --panel-2:#1C1815; --rule:rgba(244,241,234,.12); --rule-2:rgba(244,241,234,.24);
+    --ink:#F4F1EA; --grey:#9A938A; --grey-2:#C6C0B6; --red:#E03E2D; --red-deep:#B12C1E;
+    --display:'Archivo',system-ui,sans-serif; --mono:'Space Mono',ui-monospace,monospace; --body:'Inter',system-ui,sans-serif;
+    /* type scale */
+    --t-xs:.72rem; --t-sm:.82rem; --t-base:1rem; --t-lg:1.15rem; --t-xl:1.5rem; --t-2xl:2rem; --t-3xl:2.75rem;
   }
   *{box-sizing:border-box;}
   html{-webkit-text-size-adjust:100%;}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
-  h1,h2,h3{font-family:var(--display);font-stretch:115%;font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:.95;margin:0;}
-  a{color:inherit;}
-  .label{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);}
-  .wrap{max-width:1280px;margin-inline:auto;padding:24px;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:var(--t-base);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.02em;line-height:1.02;margin:0;text-transform:uppercase;}
+  .mono{font-family:var(--mono);}
+  .eyebrow{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.22em;text-transform:uppercase;color:var(--grey);margin:0;}
   :focus-visible{outline:2px solid var(--red);outline-offset:3px;}
+  .wrap{max-width:1240px;margin-inline:auto;padding-inline:28px;}
 
   header.top{border-bottom:1px solid var(--rule);}
-  header.top .bar{display:flex;align-items:center;justify-content:space-between;padding-block:16px;max-width:1280px;margin-inline:auto;padding-inline:24px;}
-  .mk{font-family:var(--display);font-stretch:115%;font-weight:900;font-size:1.25rem;text-transform:uppercase;}
+  header.top .bar{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;max-width:1240px;margin-inline:auto;}
+  .mk{font-family:var(--display);font-weight:900;font-size:1.25rem;letter-spacing:.02em;text-transform:uppercase;}
   .mk b{color:var(--red);}
-  .mk + span{margin-left:12px;}
 
-  .intro{padding:48px 24px 8px;max-width:1280px;margin-inline:auto;}
-  .intro h1{font-size:clamp(2.2rem,5.5vw,3.6rem);max-width:18ch;}
+  .intro{padding:56px 28px 0;max-width:1240px;margin-inline:auto;}
+  .intro h1{font-size:var(--t-3xl);max-width:16ch;}
   .intro h1 em{font-style:normal;color:var(--red);}
-  .intro p{color:var(--grey2);max-width:52ch;margin-top:12px;}
+  .intro p{color:var(--grey-2);max-width:50ch;margin:14px 0 0;font-size:var(--t-lg);}
 
-  .builder{display:grid;grid-template-columns:1fr;gap:24px;align-items:start;}
-  @media(min-width:980px){ .builder{grid-template-columns:340px 1fr;} }
+  .bx{display:grid;grid-template-columns:1fr;gap:28px;padding:36px 28px 80px;max-width:1240px;margin-inline:auto;align-items:start;}
+  @media(min-width:1000px){ .bx{grid-template-columns:380px 1fr;} }
 
-  /* config panel */
-  .panel{background:var(--surface);border:1px solid var(--rule);}
-  .grp{border-bottom:1px solid var(--rule);padding:20px;}
-  .grp:last-child{border-bottom:none;}
-  .grp > .label{display:block;margin-bottom:12px;}
-  .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-  .opts.one{grid-template-columns:1fr;}
-  .opt{display:flex;flex-direction:column;gap:2px;text-align:left;background:var(--bg);border:1px solid var(--rule2);color:var(--ink);font:inherit;padding:11px 12px;cursor:pointer;transition:border-color .15s ease,background .15s ease;}
+  /* controls */
+  .tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--panel);border:1px solid var(--rule);padding:6px;margin-bottom:20px;}
+  .tab{font-family:var(--mono);font-size:var(--t-sm);letter-spacing:.06em;text-transform:uppercase;color:var(--grey-2);background:transparent;border:0;padding:12px;cursor:pointer;transition:background .15s,color .15s;}
+  .tab[aria-selected="true"]{background:var(--red);color:#fff;}
+
+  .pane[hidden]{display:none;}
+  .systems{display:grid;grid-template-columns:1fr;gap:8px;}
+  .sysbtn{display:flex;align-items:baseline;justify-content:space-between;gap:12px;text-align:left;background:var(--panel);border:1px solid var(--rule-2);color:var(--ink);padding:14px 16px;cursor:pointer;transition:border-color .15s,background .15s;}
+  .sysbtn:hover{border-color:var(--grey);}
+  .sysbtn[aria-pressed="true"]{border-color:var(--red);background:var(--panel-2);}
+  .sysbtn .nm{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:1.05rem;letter-spacing:-.01em;}
+  .sysbtn .pr{font-family:var(--mono);font-size:var(--t-sm);color:var(--red);white-space:nowrap;}
+  .sysbtn .sub{display:block;font-size:var(--t-sm);color:var(--grey);margin-top:3px;font-family:var(--body);letter-spacing:0;text-transform:none;}
+
+  .grp{background:var(--panel);border:1px solid var(--rule);padding:16px 18px;margin-bottom:10px;}
+  .grp > .eyebrow{display:block;margin-bottom:10px;}
+  .opts{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+  .opt{display:flex;flex-direction:column;gap:2px;text-align:left;background:var(--bg);border:1px solid var(--rule-2);color:var(--ink);font:inherit;padding:10px 11px;cursor:pointer;transition:border-color .15s,background .15s;}
   .opt:hover{border-color:var(--grey);}
-  .opt[aria-pressed="true"]{border-color:var(--red);background:var(--surface2);}
-  .opt .nm{font-weight:600;font-size:.92rem;}
-  .opt .meta{font-family:var(--mono);font-size:.64rem;letter-spacing:.04em;color:var(--grey);}
+  .opt[aria-pressed="true"]{border-color:var(--red);background:var(--panel-2);}
+  .opt .nm{font-weight:600;font-size:.9rem;}
+  .opt .meta{font-family:var(--mono);font-size:.62rem;letter-spacing:.03em;color:var(--grey);}
 
   /* stage */
-  .stage{background:linear-gradient(180deg,#15110F,#0C0B0A);border:1px solid var(--rule);position:relative;overflow:hidden;min-height:420px;display:flex;flex-direction:column;}
-  .stage .views{position:absolute;top:14px;right:14px;display:flex;gap:6px;z-index:3;}
-  .vbtn{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;background:rgba(244,241,234,.06);border:1px solid var(--rule2);color:var(--grey2);padding:7px 10px;cursor:pointer;}
+  .stage{background:radial-gradient(120% 90% at 50% 0%,#1A1512 0%,#0C0B0A 70%);border:1px solid var(--rule);}
+  .stage-top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--rule);}
+  .stage-title{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:var(--t-lg);letter-spacing:-.01em;}
+  .views{display:flex;gap:6px;}
+  .vbtn{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;background:rgba(244,241,234,.05);border:1px solid var(--rule-2);color:var(--grey-2);padding:7px 10px;cursor:pointer;}
   .vbtn[aria-pressed="true"]{border-color:var(--red);color:var(--ink);}
-  svg.scene{width:100%;height:auto;display:block;flex:1;}
-  .stage .cap{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;color:var(--grey);padding:10px 16px;border-top:1px solid var(--rule);}
-  @keyframes spawn{from{opacity:0;transform:translateY(-14px);}to{opacity:1;transform:translateY(0);}}
-  .mod{animation:spawn .35s cubic-bezier(.2,.7,.3,1) both;transform-box:fill-box;}
-  @media(prefers-reduced-motion:reduce){ .mod{animation:none;} }
+  svg.scene{width:100%;height:auto;display:block;}
+  .cap{font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;color:var(--grey);padding:0 18px 14px;text-align:center;}
 
-  /* summary */
-  .summary{background:var(--surface);border:1px solid var(--rule);margin-top:24px;}
-  .summary .rows{padding:8px 20px;}
-  .srow{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--rule);font-size:.95rem;}
+  .summary{border-top:1px solid var(--rule);}
+  .srows{padding:10px 18px;}
+  .srow{display:flex;justify-content:space-between;gap:16px;padding:8px 0;border-bottom:1px solid var(--rule);font-size:.92rem;}
   .srow:last-child{border-bottom:none;}
-  .srow .k{color:var(--grey2);}
-  .srow .v{font-family:var(--mono);}
-  .totals{display:flex;flex-wrap:wrap;gap:24px;align-items:baseline;justify-content:space-between;padding:18px 20px;border-top:1px solid var(--rule2);background:var(--surface2);}
-  .totals .big{font-family:var(--display);font-stretch:115%;font-weight:900;font-size:2.2rem;color:var(--red);}
-  .totals .big small{font-family:var(--mono);font-weight:400;font-size:.6rem;letter-spacing:.1em;color:var(--grey);display:block;}
-  .totals .wt{font-family:var(--display);font-stretch:115%;font-weight:900;font-size:1.4rem;}
-  .totals .wt small{font-family:var(--mono);font-weight:400;font-size:.6rem;letter-spacing:.1em;color:var(--grey);display:block;}
-  .actions{display:flex;gap:10px;flex-wrap:wrap;padding:18px 20px;}
-  .btn{font-family:var(--mono);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.8rem;padding:14px 22px;border:1px solid;cursor:pointer;transition:transform .15s,background .15s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+  .srow .k{color:var(--grey-2);} .srow .v{font-family:var(--mono);font-size:.85rem;}
+  .totals{display:flex;flex-wrap:wrap;gap:20px;align-items:baseline;justify-content:space-between;padding:16px 18px;background:var(--panel-2);border-top:1px solid var(--rule-2);}
+  .totals .big{font-family:var(--display);font-weight:900;font-size:var(--t-2xl);color:var(--red);line-height:1;}
+  .totals .big small,.totals .wt small{display:block;font-family:var(--mono);font-weight:400;font-size:.58rem;letter-spacing:.08em;color:var(--grey);margin-top:5px;}
+  .totals .wt{font-family:var(--display);font-weight:900;font-size:var(--t-xl);line-height:1;}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;padding:16px 18px;}
+  .btn{font-family:var(--mono);font-weight:700;text-transform:uppercase;letter-spacing:.07em;font-size:.78rem;padding:13px 20px;border:1px solid;cursor:pointer;transition:transform .15s,background .15s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
   .btn.primary{background:var(--red);color:#fff;border-color:var(--red);}
-  .btn.primary:hover{background:var(--red-deep);transform:translateY(-2px);}
-  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule2);}
+  .btn.primary:hover{background:var(--red-deep);border-color:var(--red-deep);transform:translateY(-2px);}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule-2);}
   .btn.ghost:hover{border-color:var(--ink);}
-  .fine{font-family:var(--mono);font-size:.64rem;letter-spacing:.04em;color:var(--grey);padding:0 20px 18px;}
+  .btn[hidden]{display:none !important;}
+  .fine{font-family:var(--mono);font-size:.62rem;letter-spacing:.03em;color:var(--grey);padding:0 18px 16px;}
+
+  @keyframes spawn{from{opacity:0;}to{opacity:1;}}
+  .scene g.mod{animation:spawn .3s ease both;}
+  @media(prefers-reduced-motion:reduce){ .scene g.mod{animation:none;} }
 </style>
 </head>
 <body>
   <header class="top"><div class="bar">
-    <div><span class="mk">SPLINTER<b>/</b>4X4</span><span class="label">System Builder</span></div>
-    <a class="label" href="#" style="text-decoration:none;">Neerabup, WA →</a>
+    <a href="index.html"><span class="mk">SPLINTER<b>/</b>4X4</span></a>
+    <a class="eyebrow" href="index.html" style="text-decoration:none">← Back to site</a>
   </div></header>
 
   <section class="intro">
-    <p class="label">Build your system</p>
-    <h1>Spec your rig. <em>Watch it build.</em></h1>
-    <p>Pick what goes where — fridge slide, drawers, false floor, 12V — and your system draws itself, with a live price and weight. Happy with it? Send it straight to us for a firm quote.</p>
+    <p class="eyebrow">System builder</p>
+    <h1>See it before <em>you build it.</em></h1>
+    <p>Choose a pre-built system or design your own — the 3D model updates live, with pricing and fitted weight.</p>
   </section>
 
-  <div class="wrap">
-    <div class="builder">
-      <!-- CONFIG -->
-      <form class="panel" id="panel" aria-label="System configuration">
+  <div class="bx">
+    <!-- CONTROLS -->
+    <div>
+      <div class="tabs" role="tablist" aria-label="Mode">
+        <button class="tab" id="tab-prebuilt" role="tab" aria-selected="true">Pre-built systems</button>
+        <button class="tab" id="tab-custom" role="tab" aria-selected="false">Build your own</button>
+      </div>
+
+      <div class="pane" id="pane-prebuilt">
+        <div class="systems" id="systems"></div>
+      </div>
+
+      <div class="pane" id="pane-custom" hidden>
         <div class="grp">
-          <span class="label">Vehicle</span>
+          <span class="eyebrow">Vehicle</span>
           <div class="opts" data-key="vehicle">
             <button type="button" class="opt" data-val="wagon"><span class="nm">Wagon</span><span class="meta">4dr / SUV</span></button>
             <button type="button" class="opt" data-val="ute"><span class="nm">Ute tub</span><span class="meta">+ tub kit</span></button>
           </div>
         </div>
         <div class="grp">
-          <span class="label">Base — false floor</span>
+          <span class="eyebrow">Base — false floor</span>
           <div class="opts" data-key="base">
-            <button type="button" class="opt" data-val="yes"><span class="nm">Bolt-in floor</span><span class="meta">+ flat platform</span></button>
+            <button type="button" class="opt" data-val="yes"><span class="nm">Bolt-in floor</span><span class="meta">flat platform</span></button>
             <button type="button" class="opt" data-val="no"><span class="nm">No floor</span><span class="meta">drawers only</span></button>
           </div>
         </div>
         <div class="grp">
-          <span class="label">Left bay</span>
+          <span class="eyebrow">Left bay</span>
           <div class="opts" data-key="left">
-            <button type="button" class="opt" data-val="none"><span class="nm">Empty</span><span class="meta">open space</span></button>
-            <button type="button" class="opt" data-val="drawer"><span class="nm">Single drawer</span><span class="meta">HD slide</span></button>
+            <button type="button" class="opt" data-val="none"><span class="nm">Empty</span><span class="meta">open</span></button>
+            <button type="button" class="opt" data-val="drawer"><span class="nm">Drawer</span><span class="meta">HD slide</span></button>
             <button type="button" class="opt" data-val="dual"><span class="nm">Dual drawer</span><span class="meta">stacked</span></button>
-            <button type="button" class="opt" data-val="fridge"><span class="nm">Fridge slide</span><span class="meta">+ tilt</span></button>
+            <button type="button" class="opt" data-val="fridge"><span class="nm">Fridge slide</span><span class="meta">low</span></button>
+            <button type="button" class="opt" data-val="tower"><span class="nm">Stand-up fridge</span><span class="meta">tall hutch</span></button>
           </div>
         </div>
         <div class="grp">
-          <span class="label">Right bay</span>
+          <span class="eyebrow">Right bay</span>
           <div class="opts" data-key="right">
-            <button type="button" class="opt" data-val="none"><span class="nm">Empty</span><span class="meta">open space</span></button>
-            <button type="button" class="opt" data-val="drawer"><span class="nm">Single drawer</span><span class="meta">HD slide</span></button>
+            <button type="button" class="opt" data-val="none"><span class="nm">Empty</span><span class="meta">open</span></button>
+            <button type="button" class="opt" data-val="drawer"><span class="nm">Drawer</span><span class="meta">HD slide</span></button>
             <button type="button" class="opt" data-val="dual"><span class="nm">Dual drawer</span><span class="meta">stacked</span></button>
-            <button type="button" class="opt" data-val="fridge"><span class="nm">Fridge slide</span><span class="meta">+ tilt</span></button>
+            <button type="button" class="opt" data-val="fridge"><span class="nm">Fridge slide</span><span class="meta">low</span></button>
+            <button type="button" class="opt" data-val="tower"><span class="nm">Stand-up fridge</span><span class="meta">tall hutch</span></button>
           </div>
         </div>
         <div class="grp">
-          <span class="label">Fridge</span>
-          <div class="opts" data-key="fridge">
-            <button type="button" class="opt" data-val="none"><span class="nm">None</span><span class="meta">—</span></button>
-            <button type="button" class="opt" data-val="evakool40"><span class="nm">Evakool 40L</span><span class="meta">supplied</span></button>
-            <button type="button" class="opt" data-val="engel30"><span class="nm">Engel 30L</span><span class="meta">supplied</span></button>
-            <button type="button" class="opt" data-val="byo"><span class="nm">BYO fridge</span><span class="meta">built to suit</span></button>
-          </div>
-        </div>
-        <div class="grp">
-          <span class="label">12V — Splinter × Voltek</span>
+          <span class="eyebrow">12V — Splinter × Voltek</span>
           <div class="opts" data-key="power">
             <button type="button" class="opt" data-val="none"><span class="nm">None</span><span class="meta">—</span></button>
             <button type="button" class="opt" data-val="core"><span class="nm">Core</span><span class="meta">80Ah</span></button>
@@ -155,32 +163,32 @@
             <button type="button" class="opt" data-val="apex"><span class="nm">Apex</span><span class="meta">200Ah</span></button>
           </div>
         </div>
-      </form>
+      </div>
+    </div>
 
-      <!-- STAGE -->
-      <div>
-        <div class="stage">
-          <div class="views" role="group" aria-label="View angle">
-            <button type="button" class="vbtn" data-view="iso">Iso</button>
-            <button type="button" class="vbtn" data-view="rear">Rear</button>
-            <button type="button" class="vbtn" data-view="top">Top</button>
-          </div>
-          <svg class="scene" id="scene" viewBox="0 0 640 460" role="img" aria-label="3D drawing of your configured system"></svg>
-          <div class="cap" id="cap">Your build — drawn live</div>
+    <!-- STAGE -->
+    <div class="stage">
+      <div class="stage-top">
+        <span class="stage-title" id="stageTitle">Steep Point</span>
+        <div class="views" role="group" aria-label="View">
+          <button class="vbtn" data-view="iso">Iso</button>
+          <button class="vbtn" data-view="rear">Rear</button>
+          <button class="vbtn" data-view="top">Top</button>
         </div>
-
-        <div class="summary">
-          <div class="rows" id="rows"></div>
-          <div class="totals">
-            <div><div class="big" id="price">$0<small>indicative — we confirm on quote</small></div></div>
-            <div><div class="wt" id="weight">0 kg<small>est. fitted weight</small></div></div>
-          </div>
-          <div class="actions">
-            <a class="btn primary" id="send" href="#">Send this build for a quote →</a>
-            <button type="button" class="btn ghost" id="copy">Copy spec</button>
-          </div>
-          <p class="fine">Prices and weights are indicative and exclude shipping. We confirm the final figure and fitted weight on your quote.</p>
+      </div>
+      <svg class="scene" id="scene" viewBox="0 0 760 470" role="img" aria-label="3D model of the system"></svg>
+      <div class="cap" id="cap"></div>
+      <div class="summary">
+        <div class="srows" id="rows"></div>
+        <div class="totals">
+          <div class="big" id="price">$0<small>from · we confirm on quote</small></div>
+          <div class="wt" id="weight">0 kg<small>est. fitted weight</small></div>
         </div>
+        <div class="actions">
+          <a class="btn primary" id="send" href="#">Send this build for a quote →</a>
+          <a class="btn ghost" id="view" href="#" hidden>View product →</a>
+        </div>
+        <p class="fine">Pricing and weight are indicative and exclude shipping. We confirm the final figure on your quote.</p>
       </div>
     </div>
   </div>
@@ -189,216 +197,178 @@
 (function(){
   "use strict";
 
-  // ---- model + pricing (INDICATIVE placeholders) ----
-  var PRICE = {
-    base:{yes:750,no:0},
-    bay:{none:0,drawer:900,dual:1500,fridge:1100},
-    fridge:{none:0,evakool40:700,engel30:650,byo:0},
-    power:{none:0,core:2190,frontier:3490,apex:4790},
-    uteKit:600
-  };
-  var WEIGHT = {
-    base:{yes:18,no:0},
-    bay:{none:0,drawer:12,dual:20,fridge:14},
-    fridge:{none:0,evakool40:17,engel30:14,byo:0},
-    power:{none:0,core:12,frontier:18,apex:28}
-  };
-  var LABEL = {
-    vehicle:{wagon:"Wagon",ute:"Ute tub"},
-    base:{yes:"Bolt-in false floor",no:"No false floor"},
-    bay:{none:"Empty",drawer:"Single drawer",dual:"Dual drawer",fridge:"Fridge slide"},
-    fridge:{none:"No fridge",evakool40:"Evakool 40L",engel30:"Engel 30L",byo:"BYO fridge"},
-    power:{none:"No 12V",core:"Voltek Core (80Ah)",frontier:"Voltek Frontier (120Ah)",apex:"Voltek Apex (200Ah)"}
-  };
+  var PRESETS = [
+    {id:"steep-point", name:"Steep Point", sub:"Flagship · upright fridge, dual tables, pantry", price:5600, handle:"steep-point-drawer-system",
+      cfg:{vehicle:"wagon",base:"yes",left:"tower",right:"dual",fridge:"evakool40",power:"frontier"}},
+    {id:"gibb-river", name:"Gibb River", sub:"Stand-up fridge + deep drawers, off-grid", price:5000, handle:"ultimate-standup-fridge-system",
+      cfg:{vehicle:"wagon",base:"yes",left:"tower",right:"dual",fridge:"evakool40",power:"core"}},
+    {id:"yardie-creek", name:"Yardie Creek", sub:"Dual drawers + fridge slide", price:4200, handle:"yardie-creek-drawer-system",
+      cfg:{vehicle:"wagon",base:"yes",left:"fridge",right:"dual",fridge:"evakool40",power:"none"}},
+    {id:"kalbarri", name:"Kalbarri", sub:"Slimline fridge-slide system", price:4200, handle:"slimline-fridge-slide-system",
+      cfg:{vehicle:"wagon",base:"yes",left:"fridge",right:"drawer",fridge:"engel30",power:"none"}},
+    {id:"sandy-cape", name:"Sandy Cape", sub:"Everyday drawer, fridge hutch + table", price:2700, handle:"sandycape-drawer-fridge-system",
+      cfg:{vehicle:"wagon",base:"yes",left:"fridge",right:"drawer",fridge:"evakool40",power:"none"}}
+  ];
 
-  var STATE = {vehicle:"wagon",base:"yes",left:"fridge",right:"drawer",fridge:"evakool40",power:"core"};
-  var VIEW = "iso";
+  var PRICE={base:{yes:750,no:0},bay:{none:0,drawer:900,dual:1500,fridge:1100,tower:1600},fridge:{none:0,evakool40:700,engel30:650,byo:0},power:{none:0,core:2190,frontier:3490,apex:4790},uteKit:600};
+  var WEIGHT={base:{yes:18,no:0},bay:{none:0,drawer:12,dual:20,fridge:14,tower:22},fridge:{none:0,evakool40:17,engel30:14,byo:0},power:{none:0,core:12,frontier:18,apex:28}};
+  var LABEL={vehicle:{wagon:"Wagon",ute:"Ute tub"},base:{yes:"Bolt-in false floor",no:"No false floor"},bay:{none:"Empty",drawer:"Single drawer",dual:"Dual drawer",fridge:"Fridge slide",tower:"Stand-up fridge"},fridge:{none:"No fridge",evakool40:"Evakool 40L",engel30:"Engel 30L",byo:"BYO fridge"},power:{none:"No 12V",core:"Voltek Core",frontier:"Voltek Frontier",apex:"Voltek Apex"}};
 
-  // ---- isometric projection ----
+  var MODE="prebuilt";
+  var PRESET=PRESETS[0].id;
+  var STATE=Object.assign({}, PRESETS[0].cfg);
+  var VIEW="iso";
+
+  // ---------- isometric projection ----------
   function project(x,y,z){
-    if(VIEW==="top"){ return [320 + x*1.05, 250 + z*1.05 - y*0.06]; }
-    var dz = (VIEW==="rear") ? -z : z;
-    var dx = (VIEW==="rear") ? -x : x;
-    return [320 + (dx - dz)*0.74, 270 + (dx + dz)*0.37 - y*0.74];
+    if(VIEW==="top"){ return [380 + x*1.15, 250 + z*1.15 - y*0.05]; }
+    var dx=(VIEW==="rear")?-x:x, dz=(VIEW==="rear")?-z:z;
+    return [380 + (dx - dz)*0.82, 300 + (dx + dz)*0.42 - y*0.86];
   }
-  function pts(arr){ return arr.map(function(p){var s=project(p[0],p[1],p[2]);return s[0].toFixed(1)+","+s[1].toFixed(1);}).join(" "); }
-
-  // a cuboid from min-corner (x,y,z) size (w,h,d), three shaded faces
-  function box(x,y,z,w,h,d,cT,cF,cR){
-    var top  = pts([[x,y+h,z],[x+w,y+h,z],[x+w,y+h,z+d],[x,y+h,z+d]]);
-    var front= pts([[x,y,z+d],[x+w,y,z+d],[x+w,y+h,z+d],[x,y+h,z+d]]);
-    var right= pts([[x+w,y,z],[x+w,y,z+d],[x+w,y+h,z+d],[x+w,y+h,z]]);
-    return '<polygon points="'+front+'" fill="'+cF+'"/>'+
-           '<polygon points="'+right+'" fill="'+cR+'"/>'+
-           '<polygon points="'+top+'" fill="'+cT+'"/>';
+  function P(a){return a.map(function(p){var s=project(p[0],p[1],p[2]);return s[0].toFixed(1)+","+s[1].toFixed(1);}).join(" ");}
+  function shade(hex,m){var n=parseInt(hex.slice(1),16),r=(n>>16)&255,g=(n>>8)&255,b=n&255;r=Math.max(0,Math.min(255,Math.round(r*m)));g=Math.max(0,Math.min(255,Math.round(g*m)));b=Math.max(0,Math.min(255,Math.round(b*m)));return "#"+(1<<24|r<<16|g<<8|b).toString(16).slice(1);}
+  function box(x,y,z,w,h,d,base){
+    var top=P([[x,y+h,z],[x+w,y+h,z],[x+w,y+h,z+d],[x,y+h,z+d]]);
+    var front=P([[x,y,z+d],[x+w,y,z+d],[x+w,y+h,z+d],[x,y+h,z+d]]);
+    var right=P([[x+w,y,z],[x+w,y,z+d],[x+w,y+h,z+d],[x+w,y+h,z]]);
+    return '<polygon points="'+front+'" fill="'+shade(base,.82)+'"/>'+
+           '<polygon points="'+right+'" fill="'+shade(base,.62)+'"/>'+
+           '<polygon points="'+top+'" fill="'+shade(base,1.12)+'"/>';
   }
-  function g(inner,spawnKey){ return '<g class="mod" data-k="'+(spawnKey||'')+'">'+inner+'</g>'; }
+  function line(a,b,stroke,w){return '<polyline points="'+P([a,b])+'" fill="none" stroke="'+stroke+'" stroke-width="'+(w||1.4)+'"/>';}
 
-  // ---- geometry of the rig ----
-  // x: left(-) .. right(+)  | y: up | z: depth (back- .. front+)
-  var BAYW=104, GAP=12, DEPTH=150, FLOORH=12, MODH=58;
-  var leftX = -(BAYW+GAP/2), rightX = GAP/2;
-  var baseY = 0;
-  var modBaseY = (STATE.base==="yes")? FLOORH : 0;
+  // geometry
+  var BW=108,GAP=12,DEP=150,FLOOR=12,MH=58;
+  var LX=-(BW+GAP/2), RX=GAP/2;
 
-  function moduleBox(kind, x){
+  function moduleSVG(kind,x){
     if(kind==="none") return "";
-    var y = (STATE.base==="yes")? FLOORH : 0;
+    var y=(STATE.base==="yes")?FLOOR:0, c="#5A554C";
     if(kind==="drawer"){
-      var b = box(x,y,-DEPTH/2,BAYW,MODH,DEPTH, "#43403A","#332F2A","#2A2722");
-      // drawer front handle line
-      var hy=y+MODH*0.55, hl=pts([[x+14,hy,DEPTH/2],[x+BAYW-14,hy,DEPTH/2]]);
-      return b+'<polyline points="'+hl+'" fill="none" stroke="#8a857d" stroke-width="2"/>';
+      return box(x,y,-DEP/2,BW,MH,DEP,c)+line([x+14,y+MH*.55,DEP/2],[x+BW-14,y+MH*.55,DEP/2],"#16130F",2)+line([x+14,y+MH*.5,DEP/2],[x+BW-14,y+MH*.5,DEP/2],shade(c,1.4),1.4);
     }
     if(kind==="dual"){
-      var lo=box(x,y,-DEPTH/2,BAYW,MODH*0.55,DEPTH,"#43403A","#332F2A","#2A2722");
-      var hi=box(x,y+MODH*0.6,-DEPTH/2,BAYW,MODH*0.5,DEPTH,"#4A463F","#3A352F","#302C27");
-      return lo+hi;
+      return box(x,y,-DEP/2,BW,MH*.5,DEP,c)+line([x+14,y+MH*.28,DEP/2],[x+BW-14,y+MH*.28,DEP/2],"#16130F",1.6)+
+             box(x,y+MH*.54,-DEP/2,BW,MH*.46,DEP,shade(c,1.1))+line([x+14,y+MH*.78,DEP/2],[x+BW-14,y+MH*.78,DEP/2],"#16130F",1.6);
     }
     if(kind==="fridge"){
-      // a slide tray + the fridge (red) on top
-      var tray=box(x,y,-DEPTH/2,BAYW,MODH*0.4,DEPTH,"#3C3934","#2D2A26","#26231F");
-      var fy=y+MODH*0.4;
-      var fridge=box(x+8,fy,-DEPTH/2+12,BAYW-16,MODH*0.85,DEPTH-24,"#E85C4E","#C8463A","#A4271D");
-      var lid=box(x+8,fy+MODH*0.85,-DEPTH/2+12,BAYW-16,4,DEPTH-24,"#F0F0EC","#d9d9d4","#c9c9c4");
-      return tray+fridge+lid;
+      var tray=box(x,y,-DEP/2,BW,MH*.36,DEP,"#46423B");
+      var fy=y+MH*.36, fr=box(x+8,fy,-DEP/2+12,BW-16,MH*.7,DEP-24,"#E0463A");
+      var lid=box(x+8,fy+MH*.7,-DEP/2+12,BW-16,4,DEP-24,"#EDEAE3");
+      return tray+fr+lid+line([x+16,fy+MH*.35,DEP/2-12],[x+BW-24,fy+MH*.35,DEP/2-12],shade("#E0463A",.6),1.6);
+    }
+    if(kind==="tower"){
+      var ty=box(x,y,-DEP/2,BW,MH*.3,DEP,"#46423B");
+      var hy=y+MH*.3, fr=box(x+6,hy,-DEP/2+10,BW-12,MH*1.25,DEP-20,"#E0463A");
+      var lid=box(x+6,hy+MH*1.25,-DEP/2+10,BW-12,5,DEP-20,"#EDEAE3");
+      return ty+fr+lid+line([x+14,hy+MH*.5,DEP/2-10],[x+BW-18,hy+MH*.5,DEP/2-10],shade("#E0463A",.6),1.6)+line([x+14,hy+MH*.95,DEP/2-10],[x+BW-18,hy+MH*.95,DEP/2-10],shade("#E0463A",.6),1.6);
     }
     return "";
   }
-
-  function powerBox(kind){
+  function powerSVG(kind){
     if(kind==="none") return "";
-    var y=(STATE.base==="yes")?FLOORH:0;
-    var sz={core:[46,28],frontier:[58,34],apex:[72,42]}[kind];
-    var w=sz[0], h=sz[1];
-    // sits centre-back
-    return box(-w/2, y, -DEPTH/2+6, w, h, 30, "#26323A","#1A242B","#141C22")+
-           // accent stripe
-           (function(){var sy=y+h*0.5;return '<polyline points="'+pts([[-w/2+6,sy,-DEPTH/2+36],[w/2-6,sy,-DEPTH/2+36]])+'" fill="none" stroke="#D8392B" stroke-width="2"/>';})();
+    var y=(STATE.base==="yes")?FLOOR:0, s={core:[44,26],frontier:[56,32],apex:[70,40]}[kind], w=s[0],h=s[1];
+    return box(-w/2,y,-DEP/2+6,w,h,28,"#27343C")+line([-w/2+6,y+h*.5,-DEP/2+34],[w/2-6,y+h*.5,-DEP/2+34],"#E03E2D",2);
   }
 
   function render(){
-    modBaseY = (STATE.base==="yes")? FLOORH : 0;
-    var parts = [];
-
-    // ground shadow
-    var sh = pts([[ -(BAYW+GAP/2)-20, -2, -DEPTH/2-20],[ (BAYW+GAP/2)+20,-2,-DEPTH/2-20],[ (BAYW+GAP/2)+20,-2,DEPTH/2+20],[ -(BAYW+GAP/2)-20,-2,DEPTH/2+20]]);
-    parts.push('<polygon points="'+sh+'" fill="rgba(0,0,0,0.35)"/>');
-
-    // vehicle bay (wireframe)
-    var bx=-(BAYW+GAP/2)-14, bw=(BAYW+GAP/2)*2+28, bh=MODH+ (STATE.base==="yes"?FLOORH:0) +30, bz=-DEPTH/2-14, bd=DEPTH+28;
-    (function(){
-      var edges=[
-        [[bx,0,bz],[bx+bw,0,bz]],[[bx+bw,0,bz],[bx+bw,0,bz+bd]],[[bx+bw,0,bz+bd],[bx,0,bz+bd]],[[bx,0,bz+bd],[bx,0,bz]],
-        [[bx,0,bz],[bx,bh,bz]],[[bx+bw,0,bz],[bx+bw,bh,bz]],[[bx+bw,0,bz+bd],[bx+bw,bh,bz+bd]],[[bx,0,bz+bd],[bx,bh,bz+bd]],
-        [[bx,bh,bz],[bx+bw,bh,bz]],[[bx+bw,bh,bz],[bx+bw,bh,bz+bd]]
-      ];
-      var s='';
-      edges.forEach(function(e){ s+='<polyline points="'+pts(e)+'" fill="none" stroke="rgba(244,241,234,0.18)" stroke-width="1.5"/>'; });
-      parts.push(s);
-    })();
-
-    // false floor
-    if(STATE.base==="yes"){
-      parts.push(g(box(-(BAYW+GAP/2)-8,0,-DEPTH/2-8,(BAYW+GAP/2)*2+16,FLOORH,DEPTH+16,"#2E2A25","#211E1A","#1A1714"),"base"));
-    }
-    // power (drawn behind modules)
-    if(STATE.power!=="none") parts.push(g(powerBox(STATE.power),"power"));
-    // modules — left drawn before right (painter's order for iso)
-    if(STATE.left!=="none")  parts.push(g(moduleBox(STATE.left,leftX),"left"));
-    if(STATE.right!=="none") parts.push(g(moduleBox(STATE.right,rightX),"right"));
-
-    document.getElementById("scene").innerHTML = parts.join("");
-
-    // re-trigger spawn animation only on changed groups handled by key diff below
+    var parts=[];
+    // ground grid
+    var gx=-(BW+GAP/2)-26, gw=(BW+GAP/2)*2+52, gz=-DEP/2-26, gd=DEP+52, gstroke="rgba(244,241,234,0.07)";
+    for(var i=0;i<=6;i++){ var fx=gx+gw*i/6; parts.push(line([fx,0,gz],[fx,0,gz+gd],gstroke,1)); var fz=gz+gd*i/6; parts.push(line([gx,0,fz],[gx+gw,0,fz],gstroke,1)); }
+    // shadow
+    parts.push('<polygon points="'+P([[gx+14,-1,gz+14],[gx+gw-14,-1,gz+14],[gx+gw-14,-1,gz+gd-14],[gx+14,-1,gz+gd-14]])+'" fill="rgba(0,0,0,0.4)"/>');
+    // vehicle bay wireframe
+    var bx=-(BW+GAP/2)-14,bw=(BW+GAP/2)*2+28,bz=-DEP/2-14,bd=DEP+28,bh=MH+(STATE.base==="yes"?FLOOR:0)+ (STATE.left==="tower"||STATE.right==="tower"?78:34);
+    [[[bx,0,bz],[bx+bw,0,bz]],[[bx+bw,0,bz],[bx+bw,0,bz+bd]],[[bx,0,bz+bd],[bx+bw,0,bz+bd]],[[bx,0,bz],[bx,0,bz+bd]],
+     [[bx,0,bz],[bx,bh,bz]],[[bx+bw,0,bz],[bx+bw,bh,bz]],[[bx,0,bz+bd],[bx,bh,bz+bd]],[[bx+bw,0,bz+bd],[bx+bw,bh,bz+bd]],
+     [[bx,bh,bz],[bx+bw,bh,bz]],[[bx+bw,bh,bz],[bx+bw,bh,bz+bd]],[[bx,bh,bz+bd],[bx,bh,bz]]
+    ].forEach(function(e){ parts.push(line(e[0],e[1],"rgba(244,241,234,0.16)",1.4)); });
+    var body='';
+    if(STATE.base==="yes") body+='<g class="mod">'+box(-(BW+GAP/2)-8,0,-DEP/2-8,(BW+GAP/2)*2+16,FLOOR,DEP+16,"#34302A")+'</g>';
+    if(STATE.power!=="none") body+='<g class="mod">'+powerSVG(STATE.power)+'</g>';
+    if(STATE.left!=="none") body+='<g class="mod">'+moduleSVG(STATE.left,LX)+'</g>';
+    if(STATE.right!=="none") body+='<g class="mod">'+moduleSVG(STATE.right,RX)+'</g>';
+    document.getElementById("scene").innerHTML=parts.join("")+body;
     updateSummary();
   }
 
-  // ---- summary, price, weight ----
-  function bayLabel(side){ return LABEL.bay[STATE[side]]; }
   function compute(){
-    var price=0, wt=0, lines=[];
-    function add(k,v){ lines.push([k,v]); }
-    add("Vehicle", LABEL.vehicle[STATE.vehicle]);
-    if(STATE.vehicle==="ute"){ price+=PRICE.uteKit; }
-    price+=PRICE.base[STATE.base]; wt+=WEIGHT.base[STATE.base];
-    add("Base", LABEL.base[STATE.base]);
-    price+=PRICE.bay[STATE.left]; wt+=WEIGHT.bay[STATE.left];
-    add("Left bay", bayLabel("left"));
-    price+=PRICE.bay[STATE.right]; wt+=WEIGHT.bay[STATE.right];
-    add("Right bay", bayLabel("right"));
-    if(STATE.fridge!=="none"){ price+=PRICE.fridge[STATE.fridge]; wt+=WEIGHT.fridge[STATE.fridge]; }
-    add("Fridge", LABEL.fridge[STATE.fridge]);
-    price+=PRICE.power[STATE.power]; wt+=WEIGHT.power[STATE.power];
-    add("12V", LABEL.power[STATE.power]);
+    var price=0,wt=0,lines=[];
+    if(MODE==="prebuilt"){
+      var p=PRESETS.filter(function(x){return x.id===PRESET;})[0];
+      price=p.price;
+      wt=WEIGHT.base[STATE.base]+WEIGHT.bay[STATE.left]+WEIGHT.bay[STATE.right]+WEIGHT.fridge[STATE.fridge]+WEIGHT.power[STATE.power];
+      lines=[["System",p.name],["Left bay",LABEL.bay[STATE.left]],["Right bay",LABEL.bay[STATE.right]],["Fridge",LABEL.fridge[STATE.fridge]],["12V",LABEL.power[STATE.power]]];
+    } else {
+      if(STATE.vehicle==="ute") price+=PRICE.uteKit;
+      price+=PRICE.base[STATE.base]+PRICE.bay[STATE.left]+PRICE.bay[STATE.right]+PRICE.fridge[STATE.fridge]+PRICE.power[STATE.power];
+      wt=WEIGHT.base[STATE.base]+WEIGHT.bay[STATE.left]+WEIGHT.bay[STATE.right]+WEIGHT.fridge[STATE.fridge]+WEIGHT.power[STATE.power];
+      lines=[["Vehicle",LABEL.vehicle[STATE.vehicle]],["Base",LABEL.base[STATE.base]],["Left bay",LABEL.bay[STATE.left]],["Right bay",LABEL.bay[STATE.right]],["Fridge",LABEL.fridge[STATE.fridge]],["12V",LABEL.power[STATE.power]]];
+    }
     return {price:price,wt:wt,lines:lines};
   }
-  function money(n){ return "$"+n.toLocaleString("en-AU"); }
+  function money(n){return "$"+n.toLocaleString("en-AU");}
 
   function updateSummary(){
     var c=compute();
-    var html=c.lines.map(function(l){return '<div class="srow"><span class="k">'+l[0]+'</span><span class="v">'+l[1]+'</span></div>';}).join("");
-    document.getElementById("rows").innerHTML=html;
-    document.getElementById("price").innerHTML = money(c.price)+'<small>indicative — we confirm on quote</small>';
-    document.getElementById("weight").innerHTML = c.wt+' kg<small>est. fitted weight</small>';
-    document.getElementById("cap").textContent =
-      bayLabel("left")+" (L) · "+bayLabel("right")+" (R)"+(STATE.base==="yes"?" · on false floor":"");
-
-    // build the quote payload
-    var spec = c.lines.map(function(l){return l[0]+": "+l[1];}).join("\n");
-    var body = "G'day Splinter,\n\nHere's the system I built:\n\n"+spec+
-               "\n\nIndicative price: "+money(c.price)+" · est. weight: "+c.wt+" kg"+
-               "\n\nMy vehicle: \nName: \nPhone: \n";
-    var href = "mailto:ethan@splinter4x4.com.au?subject="+encodeURIComponent("System build — "+money(c.price))+"&body="+encodeURIComponent(body);
-    document.getElementById("send").setAttribute("href",href);
-    window.__spec = spec+"\nIndicative price: "+money(c.price)+" · est weight: "+c.wt+" kg";
-    // if embedded in a quote page, hand the live build up to the parent
-    if (window.parent && window.parent !== window) {
-      try { window.parent.postMessage({ type:"splinter-build", spec:window.__spec, price:money(c.price), weight:c.wt+" kg" }, "*"); } catch(e){}
-    }
+    document.getElementById("rows").innerHTML=c.lines.map(function(l){return '<div class="srow"><span class="k">'+l[0]+'</span><span class="v">'+l[1]+'</span></div>';}).join("");
+    document.getElementById("price").innerHTML=money(c.price)+'<small>from · we confirm on quote</small>';
+    document.getElementById("weight").innerHTML=c.wt+' kg<small>est. fitted weight</small>';
+    var name=(MODE==="prebuilt")?PRESETS.filter(function(x){return x.id===PRESET;})[0].name:"Your custom build";
+    document.getElementById("stageTitle").textContent=name;
+    document.getElementById("cap").textContent=LABEL.bay[STATE.left]+" (left) · "+LABEL.bay[STATE.right]+" (right)"+(STATE.base==="yes"?" · on false floor":"");
+    var view=document.getElementById("view");
+    if(MODE==="prebuilt"){ var p=PRESETS.filter(function(x){return x.id===PRESET;})[0]; view.hidden=false; view.setAttribute("href","https://splinter4x4.com.au/products/"+p.handle); }
+    else view.hidden=true;
+    var spec=c.lines.map(function(l){return l[0]+": "+l[1];}).join("\n")+"\nIndicative price: "+money(c.price)+" · est weight: "+c.wt+" kg";
+    var body="G'day Splinter,\n\nHere's the system I built:\n\n"+spec+"\n\nMy vehicle: \nName: \nPhone: \n";
+    document.getElementById("send").setAttribute("href","mailto:ethan@splinter4x4.com.au?subject="+encodeURIComponent("System build — "+name)+"&body="+encodeURIComponent(body));
+    window.__spec=spec;
+    if(window.parent&&window.parent!==window){ try{window.parent.postMessage({type:"splinter-build",spec:spec,price:money(c.price),weight:c.wt+" kg"},"*");}catch(e){} }
   }
 
-  // ---- wire up controls ----
-  function syncPressed(){
-    document.querySelectorAll("#panel .opts").forEach(function(grp){
-      var key=grp.getAttribute("data-key");
-      grp.querySelectorAll(".opt").forEach(function(b){
-        b.setAttribute("aria-pressed", String(b.getAttribute("data-val")===STATE[key]));
-      });
-    });
-    document.querySelectorAll(".vbtn").forEach(function(b){ b.setAttribute("aria-pressed", String(b.getAttribute("data-view")===VIEW)); });
-  }
-  document.querySelectorAll("#panel .opts").forEach(function(grp){
-    var key=grp.getAttribute("data-key");
-    grp.addEventListener("click",function(e){
-      var b=e.target.closest(".opt"); if(!b) return;
-      STATE[key]=b.getAttribute("data-val");
-      // a fridge only makes sense if a bay holds a fridge slide
-      if(key==="fridge" && STATE.fridge!=="none" && STATE.left!=="fridge" && STATE.right!=="fridge"){ STATE.right="fridge"; }
-      if((key==="left"||key==="right") && STATE.left!=="fridge" && STATE.right!=="fridge"){ STATE.fridge="none"; }
-      syncPressed(); render();
-    });
-  });
-  document.querySelectorAll(".vbtn").forEach(function(b){
-    b.addEventListener("click",function(){ VIEW=b.getAttribute("data-view"); syncPressed(); render(); });
-  });
-  document.getElementById("copy").addEventListener("click",function(){
-    var t=window.__spec||""; var btn=this;
-    if(navigator.clipboard){ navigator.clipboard.writeText(t).then(function(){btn.textContent="Copied ✓";setTimeout(function(){btn.textContent="Copy spec";},1500);}); }
-  });
+  // build prebuilt list
+  document.getElementById("systems").innerHTML=PRESETS.map(function(p){
+    return '<button class="sysbtn" data-id="'+p.id+'"><span><span class="nm">'+p.name+'</span><span class="sub">'+p.sub+'</span></span><span class="pr">from '+money(p.price)+'</span></button>';
+  }).join("");
 
-  // when embedded in the quote page, the primary button hands the build to the
-  // form instead of opening email
-  if (window.parent && window.parent !== window) {
-    var sendBtn = document.getElementById("send");
-    sendBtn.textContent = "Use this build in my quote ↓";
-    sendBtn.addEventListener("click", function(e){
-      e.preventDefault();
-      try { window.parent.postMessage({ type:"splinter-build-use", spec:window.__spec }, "*"); } catch(err){}
+  function selectPreset(id){
+    PRESET=id; var p=PRESETS.filter(function(x){return x.id===id;})[0];
+    STATE=Object.assign({}, p.cfg);
+    document.querySelectorAll(".sysbtn").forEach(function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-id")===id));});
+    render();
+  }
+  document.getElementById("systems").addEventListener("click",function(e){var b=e.target.closest(".sysbtn");if(b)selectPreset(b.getAttribute("data-id"));});
+
+  function syncCustom(){
+    document.querySelectorAll("#pane-custom .opts").forEach(function(grp){
+      var k=grp.getAttribute("data-key");
+      grp.querySelectorAll(".opt").forEach(function(b){b.setAttribute("aria-pressed",String(b.getAttribute("data-val")===STATE[k]));});
     });
   }
+  document.querySelectorAll("#pane-custom .opts").forEach(function(grp){
+    var k=grp.getAttribute("data-key");
+    grp.addEventListener("click",function(e){var b=e.target.closest(".opt");if(!b)return;STATE[k]=b.getAttribute("data-val");syncCustom();render();});
+  });
 
-  syncPressed(); render();
+  function setMode(m){
+    MODE=m;
+    document.getElementById("tab-prebuilt").setAttribute("aria-selected",String(m==="prebuilt"));
+    document.getElementById("tab-custom").setAttribute("aria-selected",String(m==="custom"));
+    document.getElementById("pane-prebuilt").hidden=(m!=="prebuilt");
+    document.getElementById("pane-custom").hidden=(m!=="custom");
+    if(m==="prebuilt"){ selectPreset(PRESET); }
+    else { if(!STATE.fridge)STATE.fridge="evakool40"; syncCustom(); render(); }
+  }
+  document.getElementById("tab-prebuilt").addEventListener("click",function(){setMode("prebuilt");});
+  document.getElementById("tab-custom").addEventListener("click",function(){setMode("custom");});
+  document.querySelectorAll(".vbtn").forEach(function(b){b.addEventListener("click",function(){VIEW=b.getAttribute("data-view");document.querySelectorAll(".vbtn").forEach(function(x){x.setAttribute("aria-pressed",String(x===b));});render();});});
+
+  if(window.parent&&window.parent!==window){ var s=document.getElementById("send"); s.textContent="Use this build in my quote ↓"; s.addEventListener("click",function(e){e.preventDefault();try{window.parent.postMessage({type:"splinter-build-use",spec:window.__spec},"*");}catch(_){}}); }
+
+  document.querySelector('.vbtn[data-view="iso"]').setAttribute("aria-pressed","true");
+  selectPreset(PRESET);
 })();
 </script>
 </body>
