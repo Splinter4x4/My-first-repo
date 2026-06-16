@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Splinter 4x4 — Build Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Saira:wght@500;600&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap center"><div id="view" style="width:100%;max-width:560px"></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script>
+const token=new URLSearchParams(location.search).get("t");
+const view=document.getElementById("view");
+
+function notFound(){
+  view.innerHTML='<div class="panel" style="text-align:center"><div style="font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase">Splinter 4x4 Solutions</div>'
+   +'<h2 style="margin:8px 0 6px">Build not found</h2>'
+   +'<div class="note">This tracking link looks incorrect or has expired. Please check the link, or get in touch and we\'ll send you a fresh one.</div></div>';
+}
+
+function paint(j){
+  const s=st(j.stage),c=col(j),dl=daysLeft(j.due);
+  const status=c==="delayed"?"Running a little behind":c==="ready"?"Ready for pickup":c==="completed"?"Completed":"In progress";
+  view.innerHTML='<div class="panel">'
+   +'<div style="display:flex;justify-content:space-between;align-items:center">'
+   +'<div style="font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase">Splinter 4x4 Solutions</div>'
+   +(DB.ready?'<span class="live"><span class="ldot"></span>Live</span>':'')+'</div>'
+   +'<h2 style="margin:3px 0 16px">Build tracker</h2>'
+   +'<div style="color:var(--muted);font-size:13px">Hi '+esc(j.first)+", here's the latest on your build.</div>"
+   +'<div style="font-family:\'Saira\',sans-serif;font-weight:600;font-size:19px;margin-top:6px">'+esc(veh(j))+'</div><div style="color:var(--muted);font-size:13px;margin-bottom:18px">'+esc(j.build)+'</div>'
+   +'<div style="display:flex;align-items:center;gap:18px;background:var(--surface2);border-radius:12px;padding:18px">'+ring(s[2],"var(--accent)",96)
+   +'<div><div style="font-size:13px;color:var(--muted)">'+status+'</div><div style="font-family:\'Saira\',sans-serif;font-weight:600;font-size:18px;margin:2px 0 4px">'+s[1]+'</div><div style="font-size:13px;color:#c6cacf">'+s[3]+'</div></div></div>'
+   +'<div class="metrics"><div class="metric"><div class="l">Expected completion</div><div class="v">'+fmt(j.due)+'</div></div>'
+   +'<div class="metric"><div class="l">Days remaining</div><div class="v">'+(dl===null?"—":dl<0?"Overdue":dl===0?"Due today":dl)+'</div></div></div>'
+   +'<div class="note" style="margin-top:18px">Questions about your build? Reply to our email or give us a call — happy to help.</div></div>';
+}
+
+(async function(){
+  if(!token){notFound();return;}
+  try{
+    const j=await DB.getByToken(token);
+    if(!j){notFound();return;}
+    paint(j);
+    DB.subscribe(token,paint); // live updates when a stage is advanced (Supabase mode)
+  }catch(e){notFound();}
+})();
+</script>
+</body>
+</html>

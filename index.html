@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Splinter 4x4 — Build Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Saira:wght@500;600&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap"><div id="view"></div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+<script>
+let state={jobs:[],view:"board",activeId:null,editId:null};
+const uid=()=>(crypto.randomUUID?crypto.randomUUID():"j"+Date.now()+Math.random().toString(36).slice(2));
+
+function render(){
+  const v=document.getElementById("view");
+  if(state.view==="new")return v.innerHTML=formView();
+  if(state.view==="customer")return v.innerHTML=customerView();
+  if(state.view==="email")return v.innerHTML=emailView();
+  v.innerHTML=boardView();
+}
+function modeBanner(){
+  return DB.ready
+   ? '<div class="banner"><span class="live"><span class="ldot"></span>Live</span> &nbsp;Jobs are saved to your Supabase database and customer links update in real time.</div>'
+   : '<div class="banner"><b>Local mode.</b> Jobs are saved in this browser only. Add your Supabase keys in <b>config.js</b> to turn on live customer tracking across all devices — see README.</div>';
+}
+function boardView(){
+  const active=state.jobs.filter(j=>j.stage!=="completed").length;
+  const ready=state.jobs.filter(j=>col(j)==="ready").length;
+  const delayed=state.jobs.filter(j=>col(j)==="delayed").length;
+  let h='<div class="topbar"><div class="brand"><div class="slash"></div><div><div class="k">Splinter 4x4</div><div class="s">Build Board</div></div></div>'
+   +'<div style="display:flex;gap:8px"><button class="btn btn-accent" data-a="new">+ New job</button></div></div>';
+  h+=modeBanner();
+  h+='<div class="stats">'
+   +'<div class="stat"><div class="v num">'+active+'</div><div class="l">Active builds</div></div>'
+   +'<div class="stat"><div class="v num" style="color:var(--ready)">'+ready+'</div><div class="l">Ready for pickup</div></div>'
+   +'<div class="stat"><div class="v num" style="color:var(--delay)">'+delayed+'</div><div class="l">Delayed</div></div>'
+   +'<div class="stat"><div class="v num">'+state.jobs.length+'</div><div class="l">Total jobs</div></div></div>';
+  if(!state.jobs.length)h+='<div class="empty">No jobs yet. Hit "+ New job" to add your first build.</div>';
+  else{
+    h+='<div class="board">';
+    COLS.forEach(c=>{
+      const cj=state.jobs.filter(j=>col(j)===c[0]);
+      h+='<div><div class="colhead"><span class="dot" style="background:'+c[2]+'"></span><span class="t">'+c[1]+'</span><span class="c">'+cj.length+'</span></div>';
+      cj.forEach(j=>{h+=cardHtml(j,c[2]);});
+      if(!cj.length)h+='<div class="empty">—</div>';
+      h+='</div>';
+    });
+    h+='</div>';
+  }
+  return h;
+}
+function cardHtml(j,accent){
+  const s=st(j.stage),c=col(j),dl=daysLeft(j.due);
+  return '<div class="card'+(c==="delayed"?" delay":"")+'"><div class="cardtop">'+ring(s[2],accent,68)
+   +'<div style="min-width:0"><div class="cust">'+esc(j.name)+'</div><div class="veh">'+esc(veh(j))+(j.rego?' · '+esc(j.rego):'')+'</div><div class="build">'+esc(j.build)+'</div>'
+   +'<div class="meta">Pickup '+fmt(j.due)+(dl!==null?' · '+(dl<0?Math.abs(dl)+'d over':dl===0?'due today':dl+'d left'):'')+'</div></div></div>'
+   +'<div class="stagebar">'+s[1]+'</div>'
+   +'<div class="acts">'
+   +(j.stage!=="completed"?'<button class="btn btn-sm btn-accent" data-a="advance" data-id="'+j.id+'">Next stage →</button>':'')
+   +'<button class="btn btn-sm" data-a="email" data-id="'+j.id+'">Email</button>'
+   +'<button class="btn btn-sm" data-a="customer" data-id="'+j.id+'">Customer view</button>'
+   +'<button class="btn btn-sm" data-a="copylink" data-id="'+j.id+'">Copy link</button>'
+   +'<button class="btn btn-sm btn-ghost" data-a="edit" data-id="'+j.id+'">Edit</button>'
+   +'</div></div>';
+}
+function formView(){
+  const e=state.editId?state.jobs.find(j=>j.id===state.editId):null;
+  const g=(k,d)=>esc(e?(e[k]||""):(d||""));
+  return '<button class="back" data-a="board">← Back to board</button>'
+   +'<div class="panel"><h2 style="margin-bottom:18px">'+(e?"Edit job":"New job")+'</h2>'
+   +'<div class="field"><label>Customer name *</label><input id="f_name" value="'+g("name")+'"></div>'
+   +'<div class="row"><div class="field"><label>Email</label><input id="f_email" value="'+g("email")+'"></div><div class="field"><label>Phone</label><input id="f_phone" value="'+g("phone")+'"></div></div>'
+   +'<div class="row"><div class="field"><label>Make</label><input id="f_make" value="'+g("make")+'" placeholder="Toyota"></div><div class="field"><label>Model</label><input id="f_model" value="'+g("model")+'" placeholder="LandCruiser 300"></div></div>'
+   +'<div class="field"><label>Registration</label><input id="f_rego" value="'+g("rego")+'"></div>'
+   +'<div class="field"><label>Build type</label><select id="f_build">'+BUILDS.map(b=>'<option'+(e&&e.build===b?" selected":"")+'>'+b+'</option>').join("")+'</select></div>'
+   +'<div class="row"><div class="field"><label>Drop-off date</label><input id="f_drop" type="date" value="'+g("drop")+'"></div><div class="field"><label>Expected completion</label><input id="f_due" type="date" value="'+g("due")+'"></div></div>'
+   +'<div style="display:flex;gap:10px;margin-top:6px"><button class="btn btn-accent" data-a="save">'+(e?"Save changes":"Create job")+'</button>'
+   +(e?'<button class="btn btn-ghost" data-a="delete" data-id="'+e.id+'" style="color:var(--delay)">Delete job</button>':"")+'</div></div>';
+}
+function customerView(){
+  const j=state.jobs.find(x=>x.id===state.activeId);if(!j)return boardView();
+  const s=st(j.stage),c=col(j),dl=daysLeft(j.due);
+  const status=c==="delayed"?"Running a little behind":c==="ready"?"Ready for pickup":c==="completed"?"Completed":"In progress";
+  return '<button class="back" data-a="board">← Back to board</button>'
+   +'<div class="panel" style="max-width:560px"><div style="font-size:11px;letter-spacing:3px;color:var(--muted);text-transform:uppercase">Splinter 4x4 Solutions</div>'
+   +'<h2 style="margin:3px 0 16px">Build tracker (preview)</h2>'
+   +'<div style="color:var(--muted);font-size:13px">Hi '+esc(j.first)+", here's the latest on your build.</div>"
+   +'<div style="font-family:\'Saira\',sans-serif;font-weight:600;font-size:19px;margin-top:6px">'+esc(veh(j))+'</div><div style="color:var(--muted);font-size:13px;margin-bottom:18px">'+esc(j.build)+'</div>'
+   +'<div style="display:flex;align-items:center;gap:18px;background:var(--surface2);border-radius:12px;padding:18px">'+ring(s[2],"var(--accent)",96)
+   +'<div><div style="font-size:13px;color:var(--muted)">'+status+'</div><div style="font-family:\'Saira\',sans-serif;font-weight:600;font-size:18px;margin:2px 0 4px">'+s[1]+'</div><div style="font-size:13px;color:#c6cacf">'+s[3]+'</div></div></div>'
+   +'<div class="metrics"><div class="metric"><div class="l">Expected completion</div><div class="v">'+fmt(j.due)+'</div></div>'
+   +'<div class="metric"><div class="l">Days remaining</div><div class="v">'+(dl===null?"—":dl<0?"Overdue":dl===0?"Due today":dl)+'</div></div></div>'
+   +'<div style="margin-top:16px"><label style="font-size:11px;color:var(--muted)">Customer link (send this / paste into the Outlook event)</label><div style="display:flex;gap:8px;align-items:center"><input id="c_link" readonly value="'+esc(trackLink(j))+'" style="flex:1"><button class="btn btn-sm" data-a="copylink" data-id="'+j.id+'">Copy</button></div></div>'
+   +'<div class="note">'+(DB.ready?'This link stays live — when you advance a stage the customer\'s page updates on its own.':'In local mode this link only works on this device. Add Supabase keys (see README) to make it work for customers.')+'</div></div>';
+}
+function emailView(){
+  const j=state.jobs.find(x=>x.id===state.activeId);if(!j)return boardView();
+  const m=emailFor(j);
+  return '<button class="back" data-a="board">← Back to board</button>'
+   +'<div class="panel"><h2 style="margin-bottom:4px">Customer email draft</h2>'
+   +'<div style="font-size:13px;color:var(--muted);margin-bottom:16px">'+esc(j.name)+' · '+esc(veh(j))+' · '+st(j.stage)[2]+'%</div>'
+   +'<div class="field"><label>Subject</label><input id="e_subj" value="'+esc(m.subject)+'"></div>'
+   +'<div class="field"><label>Message</label><textarea id="e_body">'+esc(m.body)+'</textarea></div>'
+   +'<div style="display:flex;gap:10px"><button class="btn btn-accent" data-a="copy">Copy to clipboard</button><button class="btn" data-a="board">Done</button></div>'
+   +'<div class="note">Copy and paste into Outlook for now. The customer link inside updates live as you advance stages.</div></div>';
+}
+
+document.body.addEventListener("click",async e=>{
+  const t=e.target.closest("[data-a]");if(!t)return;
+  const a=t.dataset.a,id=t.dataset.id;
+  if(a==="board"){state.view="board";state.editId=null;await refresh();}
+  else if(a==="new"){state.editId=null;state.view="new";render();}
+  else if(a==="edit"){state.editId=id;state.view="new";render();}
+  else if(a==="customer"){state.activeId=id;state.view="customer";render();}
+  else if(a==="email"){state.activeId=id;state.view="email";render();}
+  else if(a==="advance"){const j=state.jobs.find(x=>x.id===id);const i=stIdx(j.stage);if(i<STAGES.length-1){j.stage=STAGES[i+1][0];j.flag=false;await DB.upsert(j);}render();}
+  else if(a==="copy"){const txt="Subject: "+document.getElementById("e_subj").value+"\n\n"+document.getElementById("e_body").value;try{await navigator.clipboard.writeText(txt);t.textContent="Copied ✓";setTimeout(()=>t.textContent="Copy to clipboard",1500);}catch(x){t.textContent="Press Ctrl+C";}}
+  else if(a==="copylink"){const j=state.jobs.find(x=>x.id===id);const link=trackLink(j);try{await navigator.clipboard.writeText(link);t.textContent="Copied ✓";setTimeout(()=>render(),1200);}catch(x){prompt("Copy this link:",link);}}
+  else if(a==="delete"){if(confirm("Delete this job?")){await DB.remove(id);state.view="board";state.editId=null;await refresh();}}
+  else if(a==="save"){
+    const val=k=>{const el=document.getElementById(k);return el?el.value.trim():"";};
+    const name=val("f_name");if(!name){alert("Customer name is required.");return;}
+    const data={name,first:name.split(/\s+/)[0],email:val("f_email"),phone:val("f_phone"),make:val("f_make"),model:val("f_model"),rego:val("f_rego"),build:document.getElementById("f_build").value,drop:val("f_drop"),due:val("f_due")};
+    let job;
+    if(state.editId){job=Object.assign(state.jobs.find(j=>j.id===state.editId),data);}
+    else{job=Object.assign({id:uid(),stage:"booked",flag:false,token:tok()},data);}
+    await DB.upsert(job);
+    state.view="board";state.editId=null;await refresh();
+  }
+});
+
+async function refresh(){try{state.jobs=await DB.list();}catch(e){alert("Could not load jobs: "+e.message);}render();}
+
+function seed(){
+  return [
+   {name:"Ryan Darcy",first:"Ryan",email:"ryandarcy111@hotmail.com",make:"Toyota",model:"LandCruiser 300",rego:"",build:"Drawers + 12V package",stage:"booked",drop:"2026-06-17",due:"2026-06-24"},
+   {name:"Coral Robins",first:"Coral",email:"coralrobins24@outlook.com",make:"Toyota",model:"LandCruiser 200",rego:"",build:"Sandy Cape drawer system",stage:"booked",drop:"2026-06-22",due:"2026-06-26"},
+   {name:"Walshy",first:"Walshy",email:"info@seasideplumbingandfiltration.com.au",make:"",model:"Van",rego:"",build:"Custom build",stage:"booked",drop:"2026-06-26",due:"2026-06-30"},
+   {name:"Geoff Fosbery",first:"Geoff",email:"gf@consultag.com.au",make:"",model:"",rego:"",build:"Drawers + 12V package",stage:"booked",drop:"2026-07-20",due:"2026-07-24"}
+  ].map(j=>Object.assign({id:uid(),flag:false,token:tok()},j));
+}
+
+(async function(){
+  await refresh();
+  // Seed sample jobs only on first run in local mode so the board isn't empty.
+  if(!DB.ready && !state.jobs.length){
+    for(const j of seed())await DB.upsert(j);
+    await refresh();
+  }
+})();
+</script>
+</body>
+</html>
