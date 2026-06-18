@@ -5,49 +5,51 @@
 <title>Custom Quote — Splinter 4X4 Solutions</title>
 <meta name="description" content="Build your rig and get a tailored quote within 24 hours. Drawers, false floors, 12V — built in Neerabup WA, shipped Australia-wide.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 <style>
-  .q-head{padding:64px 0 8px;}
-  .q-head h1{font-size:clamp(2.2rem,6vw,4rem);max-width:18ch;}
-  .q-head h1 em{font-style:normal;color:var(--red);}
-  .q-intro{color:var(--grey2);max-width:54ch;margin-top:16px;font-size:1.15rem;}
+  .q-head{padding:56px 0 0;}
+  .q-head h1{font-size:clamp(2.4rem,6vw,4rem);font-weight:900;max-width:18ch;}
+  .q-head h1 em{font-style:normal;color:var(--dirt);}
+  .q-intro{color:var(--muted-2);max-width:54ch;margin-top:16px;font-size:1.2rem;}
   .assure{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:10px;}
-  .assure li{font-family:var(--mono);font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--grey2);border:1px solid var(--rule2);padding:8px 12px;}
-  .assure li::before{content:"\2713  ";color:var(--red);}
-  .qgrid{display:grid;grid-template-columns:1fr;gap:48px;margin:48px 0 96px;}
-  .qform{display:flex;flex-direction:column;gap:20px;}
-  .qrow{display:grid;grid-template-columns:1fr;gap:20px;}
-  .qf{display:flex;flex-direction:column;gap:8px;}
-  .qform label,.qform legend{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey2);}
-  .qform input,.qform select,.qform textarea{background:var(--surface);border:1px solid var(--rule2);color:var(--ink);font:inherit;padding:13px 14px;}
-  .qform input:focus,.qform select:focus,.qform textarea:focus{outline:2px solid var(--red);outline-offset:2px;border-color:var(--red);}
-  .qchecks{border:1px solid var(--rule);padding:16px;display:flex;flex-wrap:wrap;gap:10px 22px;}
-  .qchecks legend{padding:0 6px;}
-  .qcheck{display:inline-flex;align-items:center;gap:8px;font-size:.95rem;color:var(--grey2);}
-  .qcheck input{width:18px;height:18px;accent-color:var(--red);}
-  .qaside{background:var(--surface);border:1px solid var(--rule);padding:32px;align-self:start;}
-  .qaside h2{font-size:1.5rem;margin-bottom:14px;}
-  .qfacts{margin:24px 0;display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);}
-  .qfacts > div{background:var(--bg);padding:14px 16px;display:flex;justify-content:space-between;gap:16px;}
-  .qfacts dt{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--grey);}
-  .qfacts dd{margin:0;font-weight:600;}
-  .qcontact a{display:block;font-family:var(--mono);color:var(--ink);}
-  .qcontact a:hover{color:var(--red);}
-  .qnote{font-family:var(--mono);font-size:.64rem;color:var(--grey);}
-  @media(min-width:680px){.qrow{grid-template-columns:1fr 1fr;}}
-  @media(min-width:920px){.qgrid{grid-template-columns:1.6fr 1fr;}}
+  .assure li{font-weight:700;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);border:2px solid var(--ink);padding:8px 12px;}
+  .assure li::before{content:"\2713  ";color:var(--dirt);}
   .qbuild{margin:44px 0 0;}
-  .qbuild-head{margin-bottom:20px;}
-  .qframe{width:100%;height:1180px;border:1px solid var(--rule2);background:var(--bg);display:block;}
+  .qbuild .frametag{display:flex;align-items:baseline;justify-content:space-between;gap:16px;border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:18px;}
+  .qbuild .frametag h2{font-size:1.7rem;font-weight:900;}
+  .qframe{width:100%;height:1180px;border:2px solid var(--ink);background:var(--bone);display:block;}
   @media(max-width:980px){.qframe{height:1640px;}}
-  .qbuildfield textarea{font-family:var(--mono);font-size:.82rem;white-space:pre-wrap;background:var(--surface2);}
+  .qgrid{display:grid;grid-template-columns:1fr;gap:40px;margin:56px 0 96px;}
+  @media(min-width:920px){.qgrid{grid-template-columns:1.6fr 1fr;}}
+  .qform{display:flex;flex-direction:column;gap:18px;}
+  .qrow{display:grid;grid-template-columns:1fr;gap:18px;}
+  @media(min-width:680px){.qrow{grid-template-columns:1fr 1fr;}}
+  .qf{display:flex;flex-direction:column;gap:7px;}
+  .qform label,.qform legend{font-weight:700;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--euc);}
+  .qform input,.qform select,.qform textarea{background:var(--card);border:2px solid var(--ink);color:var(--ink);font:inherit;padding:12px 14px;}
+  .qform input:focus,.qform select:focus,.qform textarea:focus{outline:2px solid var(--dirt);outline-offset:2px;}
+  .qchecks{border:2px solid var(--ink);padding:16px;display:flex;flex-wrap:wrap;gap:10px 22px;background:var(--card);}
+  .qchecks legend{padding:0 6px;}
+  .qcheck{display:inline-flex;align-items:center;gap:8px;font-size:.95rem;color:var(--ink);font-weight:500;}
+  .qcheck input{width:18px;height:18px;accent-color:var(--dirt);}
+  .qbuildfield textarea{font-family:var(--body);font-size:.9rem;white-space:pre-wrap;background:var(--bone-2);}
+  .qaside{background:var(--card);border:2px solid var(--ink);padding:30px;align-self:start;}
+  .qaside h2{font-size:1.5rem;font-weight:900;margin-bottom:12px;}
+  .qfacts{margin:22px 0;display:grid;gap:0;border:2px solid var(--ink);}
+  .qfacts > div{padding:13px 16px;display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--line);}
+  .qfacts > div:first-child{border-top:none;}
+  .qfacts dt{font-weight:700;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--euc);}
+  .qfacts dd{margin:0;font-weight:700;font-family:var(--display);}
+  .qcontact a{display:block;font-weight:600;color:var(--ink);}
+  .qcontact a:hover{color:var(--dirt);}
+  .qnote{font-size:.7rem;color:var(--muted);}
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top"><div class="bar wrap">
-  <a class="mk" href="index.html">SPLINTER<b>/</b>4X4</a>
+  <a class="brand" href="index.html">Splinter&nbsp;4X4 <span class="stamp">Est. WA</span></a>
   <nav class="menu" aria-label="Primary">
     <a href="drawer-systems.html">Drawer Systems</a><a href="false-floors.html">False Floors</a>
     <a href="12v.html">12V</a><a href="build.html">Build Yours</a><a href="about.html">About</a>
@@ -57,18 +59,15 @@
 
 <main id="main"><div class="wrap">
   <header class="q-head">
-    <p class="label">Custom quote · 24-hour turnaround</p>
+    <p class="kicker">Custom quote · 24-hour turnaround</p>
     <h1>Build your rig. <em>Get a price in 24 hours.</em></h1>
     <p class="q-intro">Give us the vehicle and how you tour. You'll get a tailored quote and a fitted-weight estimate back within one business day — no showroom runaround, no pressure. Built in Neerabup, shipped Australia-wide.</p>
-    <ul class="assure"><li>Quote back within 24 hours</li><li>No obligation, no deposit to enquire</li><li>Designed &amp; built in Neerabup, WA</li></ul>
+    <ul class="assure"><li>Quote back within 24 hours</li><li>No obligation to enquire</li><li>Built in Neerabup, WA</li></ul>
   </header>
 
   <section class="qbuild">
-    <div class="qbuild-head">
-      <span class="label">Step 1 · optional</span>
-      <h2 style="margin-top:10px">Build your system in 3D</h2>
-      <p style="color:var(--grey2);max-width:62ch;margin-top:10px">Spec your rig — fridge slide, drawers, false floor, 12V — then hit <strong style="color:var(--red)">"Use this build in my quote"</strong> and it drops straight into the form below.</p>
-    </div>
+    <div class="frametag"><div><p class="kicker">Step 1 · optional</p><h2>Build your system in 3D</h2></div></div>
+    <p style="color:var(--muted-2);max-width:62ch;margin:0 0 18px">Spec your rig — fridge slide, drawers, false floor, 12V — then hit <strong style="color:var(--dirt)">"Use this build in my quote"</strong> and it drops straight into the form below.</p>
     <iframe id="builderFrame" class="qframe" src="build.html" title="Splinter system builder" loading="lazy"></iframe>
   </section>
 
@@ -104,7 +103,7 @@
 
     <aside class="qaside">
       <h2>What happens next</h2>
-      <div style="color:var(--grey2)"><p style="margin:0">We read every enquiry ourselves. You'll hear back within one business day with options and a price — or a couple of questions if we need them.</p></div>
+      <p style="color:var(--muted-2);margin:0">We read every enquiry ourselves. You'll hear back within one business day with options and a price — or a couple of questions if we need them.</p>
       <dl class="qfacts">
         <div><dt>Workshop</dt><dd>Neerabup, WA</dd></div>
         <div><dt>Lead time</dt><dd>2–6 weeks</dd></div>
@@ -115,14 +114,11 @@
   </div>
 </div></main>
 
-<footer class="wrap">
-  <div class="foot">
-    <div class="col"><h4>Splinter 4X4 Solutions</h4><p>Ultra-lightweight touring storage,<br>built in Neerabup, WA.</p></div>
-    <div class="col"><h4>Shop</h4><a href="drawer-systems.html">Drawer systems</a><a href="false-floors.html">False floors</a><a href="12v.html">12V packages</a><a href="build.html">Build your system</a></div>
-    <div class="col"><h4>Contact</h4><a href="mailto:ethan@splinter4x4.com.au">ethan@splinter4x4.com.au</a><a href="tel:+61428430543">0428 430 543</a><p>Neerabup, WA · Australia-wide</p></div>
-  </div>
-  <div class="legal mono">© 2026 Splinter 4X4 Solutions Pty Ltd · Designed &amp; built in WA</div>
-</footer>
+<footer><div class="wrap"><div class="foot">
+  <div class="col"><h4>Splinter 4X4 Solutions</h4><p>Ultra-lightweight touring storage,<br>built by hand in Neerabup, WA.</p></div>
+  <div class="col"><h4>Shop</h4><a href="drawer-systems.html">Drawer systems</a><a href="false-floors.html">False floors</a><a href="12v.html">12V packages</a><a href="build.html">Build your system</a></div>
+  <div class="col"><h4>Contact</h4><a href="mailto:ethan@splinter4x4.com.au">ethan@splinter4x4.com.au</a><a href="tel:+61428430543">0428 430 543</a><p>Neerabup, WA · Australia-wide</p></div>
+</div><div class="legal">© 2026 Splinter 4X4 Solutions Pty Ltd · Designed &amp; built in WA</div></div></footer>
 
 <script>
 var latestBuild = "";
@@ -134,7 +130,7 @@ window.addEventListener('message', function(e){
     var bf = document.getElementById('buildField'), bt = document.getElementById('build');
     bt.value = latestBuild; bf.hidden = false;
     bf.scrollIntoView({ behavior:'smooth', block:'center' });
-    try { bt.animate([{outline:'2px solid #D8392B'},{outline:'2px solid transparent'}], {duration:1400}); } catch(_){}
+    try { bt.animate([{outline:'2px solid #B0472A'},{outline:'2px solid transparent'}], {duration:1400}); } catch(_){}
   }
 });
 document.getElementById('qform').addEventListener('submit',function(ev){
