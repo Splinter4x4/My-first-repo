@@ -14,3 +14,8 @@ window.SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
 // The public base URL where THIS app is hosted (used to build customer links).
 // Leave blank to auto-detect from the current address bar.
 window.PUBLIC_BASE_URL = "";
+
+// The only email allowed to sign in to the admin board and edit jobs (in live
+// mode). Must match the email used in schema.sql's "owner write" policy.
+// Customers never log in — they just open their tracking link.
+window.ADMIN_EMAIL = "ethan@splinter4x4.com.au";

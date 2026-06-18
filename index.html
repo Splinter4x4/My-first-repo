@@ -19,6 +19,16 @@
 let state={jobs:[],view:"board",activeId:null,editId:null};
 const uid=()=>(crypto.randomUUID?crypto.randomUUID():"j"+Date.now()+Math.random().toString(36).slice(2));
 
+function loginView(msg){
+  const email=esc(window.ADMIN_EMAIL||"");
+  return '<div class="panel" style="max-width:420px"><div class="brand" style="margin-bottom:14px"><div class="slash"></div><div><div class="k">Splinter 4x4</div><div class="s">Build Board</div></div></div>'
+   +'<h2 style="margin-bottom:6px">Sign in</h2>'
+   +'<div class="note" style="margin:0 0 14px">Enter your email and we\'ll send a one-time sign-in link. Only the owner account can edit builds.</div>'
+   +'<div class="field"><label>Email</label><input id="l_email" type="email" value="'+email+'" placeholder="you@example.com"></div>'
+   +'<button class="btn btn-accent" data-a="login">Send sign-in link</button>'
+   +(msg?'<div class="note" style="margin-top:12px;color:var(--ready)">'+esc(msg)+'</div>':'')+'</div>';
+}
+
 function render(){
   const v=document.getElementById("view");
   if(state.view==="new")return v.innerHTML=formView();
@@ -36,7 +46,9 @@ function boardView(){
   const ready=state.jobs.filter(j=>col(j)==="ready").length;
   const delayed=state.jobs.filter(j=>col(j)==="delayed").length;
   let h='<div class="topbar"><div class="brand"><div class="slash"></div><div><div class="k">Splinter 4x4</div><div class="s">Build Board</div></div></div>'
-   +'<div style="display:flex;gap:8px"><button class="btn btn-accent" data-a="new">+ New job</button></div></div>';
+   +'<div style="display:flex;gap:8px">'
+   +(DB.ready?'<button class="btn" data-a="signout">Sign out</button>':'')
+   +'<button class="btn btn-accent" data-a="new">+ New job</button></div></div>';
   h+=modeBanner();
   h+='<div class="stats">'
    +'<div class="stat"><div class="v num">'+active+'</div><div class="l">Active builds</div></div>'
@@ -116,7 +128,16 @@ function emailView(){
 document.body.addEventListener("click",async e=>{
   const t=e.target.closest("[data-a]");if(!t)return;
   const a=t.dataset.a,id=t.dataset.id;
-  if(a==="board"){state.view="board";state.editId=null;await refresh();}
+  if(a==="login"){
+    const email=(document.getElementById("l_email").value||"").trim();
+    if(!email){alert("Enter your email.");return;}
+    t.textContent="Sending…";
+    const {error}=await sb.auth.signInWithOtp({email,options:{emailRedirectTo:location.href.split("#")[0]}});
+    document.getElementById("view").innerHTML=loginView(error?"":"Check "+email+" for your sign-in link, then come back to this tab.");
+    if(error)alert("Could not send link: "+error.message);
+  }
+  else if(a==="signout"){await sb.auth.signOut();document.getElementById("view").innerHTML=loginView("Signed out.");}
+  else if(a==="board"){state.view="board";state.editId=null;await refresh();}
   else if(a==="new"){state.editId=null;state.view="new";render();}
   else if(a==="edit"){state.editId=id;state.view="new";render();}
   else if(a==="customer"){state.activeId=id;state.view="customer";render();}
@@ -148,13 +169,26 @@ function seed(){
   ].map(j=>Object.assign({id:uid(),flag:false,token:tok()},j));
 }
 
-(async function(){
+async function start(){
   await refresh();
   // Seed sample jobs only on first run in local mode so the board isn't empty.
   if(!DB.ready && !state.jobs.length){
     for(const j of seed())await DB.upsert(j);
     await refresh();
   }
+}
+
+(async function(){
+  // Local mode: no login needed.
+  if(!DB.ready){await start();return;}
+
+  // Live mode: show the board only while signed in. onAuthStateChange fires once
+  // on load (INITIAL_SESSION) and again when the magic link returns a session.
+  let started=false;
+  sb.auth.onAuthStateChange(async (_event,session)=>{
+    if(session&&!started){started=true;await start();}
+    else if(!session){started=false;document.getElementById("view").innerHTML=loginView();}
+  });
 })();
 </script>
 </body>

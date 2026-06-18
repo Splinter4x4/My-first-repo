@@ -32,11 +32,17 @@ After deploying, set `PUBLIC_BASE_URL` in `config.js` to your live address (or l
 
 Each job gets a private random token, e.g. `track.html?t=AB12CD34EF`. Paste that link into the Outlook calendar event or email it. The customer opens it and sees live progress — no login. Advance a stage on your board and their page refreshes on its own.
 
-## ⚠️ Security note (read before going public)
+## Security / login
 
-In live mode the app uses Supabase's public **anon key**, which is embedded in the website. The starter `schema.sql` lets that key read *and write* jobs — simple, and fine while your admin page URL stays private. **Before you advertise the admin URL,** switch to the hardened policy at the bottom of `schema.sql` (Supabase Auth — only your email can edit; customers can still view their build by link).
+In live mode the board is **locked down**:
+
+- **You sign in** to the admin board with a one-time email link (no password). Only `ADMIN_EMAIL` (in `config.js`) can create, edit, or delete jobs — enforced by the database rules in `schema.sql`, not just the screen.
+- **Customers never log in.** Their tracking link is public and read-only; they only see their own build.
+
+To set it up: running `schema.sql` already applies the locked-down rules. Email sign-in is on by default in Supabase. Optionally, in Supabase → **Authentication → Providers → Email**, turn **off** "Allow new users to sign up" so only your existing account can ever authenticate. If you change `ADMIN_EMAIL`, update the matching email in `schema.sql` too.
+
+> Local mode (no Supabase keys) has no login — it's just your own browser.
 
 ## Roadmap / next steps
-- Lock down writes with Supabase Auth (one account: ethan@splinter4x4.com.au).
 - Build photos on the customer page (Supabase Storage).
 - Send the email drafts straight from Outlook instead of copy-paste.

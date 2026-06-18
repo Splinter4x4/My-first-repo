@@ -27,26 +27,17 @@ alter publication supabase_realtime add table public.jobs;
 -- Row Level Security.
 alter table public.jobs enable row level security;
 
--- ── v1 policy (fast start) ──────────────────────────────────────────────────
--- Lets the static site read & write with the public anon key. Simple and works
--- immediately. Fine while the admin page (index.html) URL is kept private.
---
--- ⚠️  SECURITY: the anon key ships in the website, so anyone who finds it could
---    edit jobs. Before you advertise the admin URL publicly, switch to the
---    "hardened" policy block below (Supabase Auth — only your email can write,
---    everyone can still read their build by link).
-create policy "anon read"   on public.jobs for select using (true);
-create policy "anon insert" on public.jobs for insert with check (true);
-create policy "anon update" on public.jobs for update using (true) with check (true);
-create policy "anon delete" on public.jobs for delete using (true);
+-- ── Policies (locked down) ──────────────────────────────────────────────────
+-- Anyone can READ (so customer tracking links work without a login)...
+create policy "public read" on public.jobs for select using (true);
 
--- ── Hardened policy (recommended once live) ─────────────────────────────────
--- Enable Supabase Auth, sign in as ethan@splinter4x4.com.au, then run:
---
--- drop policy "anon insert" on public.jobs;
--- drop policy "anon update" on public.jobs;
--- drop policy "anon delete" on public.jobs;
--- create policy "owner write" on public.jobs for all
---   using (auth.jwt() ->> 'email' = 'ethan@splinter4x4.com.au')
---   with check (auth.jwt() ->> 'email' = 'ethan@splinter4x4.com.au');
--- (Keep "anon read" so customer links keep working.)
+-- ...but only the signed-in owner can CREATE / EDIT / DELETE jobs.
+-- This email must match ADMIN_EMAIL in config.js. To change it, update both.
+create policy "owner write" on public.jobs for all
+  using      (auth.jwt() ->> 'email' = 'ethan@splinter4x4.com.au')
+  with check (auth.jwt() ->> 'email' = 'ethan@splinter4x4.com.au');
+
+-- The owner signs in on the board via a one-time email link (Supabase Auth →
+-- Email provider is on by default). Optional but recommended: in Supabase →
+-- Authentication → Providers → Email, turn OFF "Allow new users to sign up"
+-- so only your existing account can ever authenticate.
