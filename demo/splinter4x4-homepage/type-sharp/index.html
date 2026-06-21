@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Splinter 4X4 — Sharp font</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  @font-face{
+    font-family:'Sharp';
+    src:url('Sharp.ttf') format('truetype');
+    font-weight:400;font-style:normal;font-display:swap;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--red:#c1272d;--bg:#0a0a0a;--bdr:#262626;--tx:#fff;--td:#b5b5b5;--tm:#777}
+  body{background:#000;color:var(--tx);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased}
+  .page{max-width:1100px;margin:0 auto;padding:34px 26px 60px}
+  .intro{border-bottom:1px solid var(--bdr);padding-bottom:20px;margin-bottom:26px}
+  .intro h1{font-family:'Sharp',sans-serif;font-size:30px;letter-spacing:1px;text-transform:uppercase}
+  .intro p{color:var(--tm);font-size:14px;margin-top:8px;font-family:'Inter'}
+
+  /* HERO */
+  .hero{position:relative;padding:54px 44px 44px;background:radial-gradient(120% 130% at 80% 0%,#1b1010 0%,#0a0a0a 55%);border:1px solid var(--bdr);border-radius:3px;overflow:hidden}
+  .hero::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--red)}
+  .eyebrow{font-family:'DM Sans';font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:18px}
+  .h{font-family:'Sharp',sans-serif;font-size:clamp(40px,7vw,74px);line-height:1.12;text-transform:uppercase;letter-spacing:1px;margin-bottom:20px}
+  .h .red{color:var(--red)}
+  .sub{color:var(--td);max-width:48ch;font-size:17px;line-height:1.6;margin-bottom:28px}
+  .row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .btn{padding:15px 28px;font-family:'DM Sans';font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:2px;font-size:14px}
+  .btn.solid{background:var(--red);color:#fff}
+  .btn.line{background:transparent;color:#fff;border:1.5px solid #444}
+  .chip{margin-left:auto;text-align:right}
+  .chip .k{font-family:'DM Sans';font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--tm)}
+  .chip .v{font-family:'Sharp',sans-serif;font-weight:400;color:#fff;font-size:30px;letter-spacing:1px}
+  .mini{margin-top:30px;padding-top:22px;border-top:1px solid var(--bdr);display:flex;gap:30px;flex-wrap:wrap}
+  .mini .m b{font-family:'Sharp',sans-serif;font-size:24px;letter-spacing:1px}
+  .mini .m span{display:block;font-family:'DM Sans';font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--tm);margin-top:4px}
+
+  /* spec / cards row to show it in more contexts */
+  .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:22px}
+  .card{background:#111;border:1px solid var(--bdr);border-radius:3px;padding:22px}
+  .card .nm{font-family:'Sharp',sans-serif;font-size:24px;text-transform:uppercase;letter-spacing:1px}
+  .card .ds{font-family:'Inter';color:var(--td);font-size:14px;line-height:1.5;margin:8px 0 14px}
+  .card .pr{font-family:'Sharp',sans-serif;color:var(--red);font-size:22px}
+  .specimen{margin-top:26px;background:#0e0e0e;border:1px solid var(--bdr);border-radius:3px;padding:26px}
+  .specimen .lbl{font-family:'DM Sans';font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--tm);margin-bottom:12px}
+  .specimen .big{font-family:'Sharp',sans-serif;font-size:46px;letter-spacing:1px;line-height:1.1}
+  .specimen .set{font-family:'Sharp',sans-serif;font-size:22px;letter-spacing:1px;color:var(--td);margin-top:10px;word-break:break-word}
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="intro">
+    <h1>Sharp — in context</h1>
+    <p>Your Sharp font on headlines + data, paired with DM Sans / Inter for body. Dark premium, red #c1272d.</p>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow">Ultra-lightweight touring systems · WA</div>
+    <h2 class="h">Built light.<br><span class="red">Built to last.</span></h2>
+    <p class="sub">Composite drawer systems, bolt-in false floors and 12V — engineered and built in Neerabup, Western Australia.</p>
+    <div class="row">
+      <a class="btn solid">Build your system</a>
+      <a class="btn line">Browse the range</a>
+      <div class="chip"><div class="k">From</div><div class="v">$2,700</div></div>
+    </div>
+    <div class="mini"><div class="m"><b>Composite</b><span>Build, not steel</span></div><div class="m"><b>2–6 WKS</b><span>Lead time</span></div><div class="m"><b>Neerabup</b><span>Workshop &amp; install</span></div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="nm">Steep Point</div><div class="ds">Upright fridge, dual tables, deep drawers and a pantry.</div><div class="pr">$5,600</div></div>
+    <div class="card"><div class="nm">Yardie Creek</div><div class="ds">Dual drawers with an integrated fridge slide.</div><div class="pr">$4,200</div></div>
+    <div class="card"><div class="nm">Sandy Cape</div><div class="ds">The everyday tourer — drawer, hutch and table.</div><div class="pr">$2,700</div></div>
+  </div>
+
+  <div class="specimen">
+    <div class="lbl">Sharp specimen</div>
+    <div class="big">SPLINTER 4X4 SOLUTIONS</div>
+    <div class="set">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz<br>0123456789 &amp; $ . , — !</div>
+  </div>
+</div>
+</body>
+</html>
