@@ -91,3 +91,6 @@ To add a new area later, copy a file in `.claude/agents/` and adjust it.
 - "How do I record X in Xero / GST question" → `books-helper`.
 - "What quotes did I send?" → not available via Xero connection; Ethan checks
   Xero → Business → Quotes and we cross-reference from there.
+- "Update the dashboard" → see `docs/dashboard/README.md`: run
+  `inbox-triage` + `finance-watch`, fill `docs/dashboard/render.py`, run it,
+  publish to the existing Artifact URL. Don't mint a new URL each time.
