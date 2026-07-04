@@ -7,7 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <div class="sxq" id="sxq-{{ section.id }}">
   <div class="sxq-wrap">
@@ -148,14 +148,14 @@
 
 {%- style -%}
   #sxq-{{ section.id }}.sxq{
-    --bg:#0E0D0C;--surface:#161312;--surface2:#1E1A18;--rule:rgba(244,241,234,.12);--rule2:rgba(244,241,234,.22);
-    --ink:#F4F1EA;--grey:#A8A097;--grey2:#CFC9C0;--red:#D8392B;--red-deep:#A4271D;
-    --display:'Archivo',system-ui,sans-serif;--mono:'Space Mono',ui-monospace,monospace;
-    background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;
+    --bg:#000000;--surface:#141414;--surface2:#1a1a1a;--rule:#2a2a2a;--rule2:#3a3a3a;
+    --ink:#ffffff;--grey:#777777;--grey2:#c0c0c0;--red:#c1272d;--red-deep:#8f1d22;
+    --display:'Oswald',sans-serif;--mono:'DM Sans',sans-serif;
+    background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;
   }
   .sxq *{box-sizing:border-box;}
   .sxq .sxq-wrap{max-width:1100px;margin-inline:auto;padding:96px 24px;}
-  .sxq h1,.sxq h2{font-family:var(--display);font-stretch:115%;font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:.94;margin:0;}
+  .sxq h1,.sxq h2{font-family:var(--display);font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:.94;margin:0;}
   .sxq .sxq-label{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);margin:0 0 16px;}
   .sxq .sxq-h1{font-size:clamp(2.2rem,6vw,4rem);max-width:18ch;}
   .sxq .sxq-h1 strong{color:var(--red);font-weight:900;}

@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <div class="sxc" id="sxc-{{ section.id }}">
   {%- if section.settings.show_hero -%}
@@ -113,11 +113,11 @@
 </div>
 
 {%- style -%}
-  #sxc-{{ section.id }}.sxc{--bg:#0E0D0C;--surface:#161312;--surface2:#1E1A18;--rule:rgba(244,241,234,.12);--rule2:rgba(244,241,234,.22);--ink:#F4F1EA;--grey:#A8A097;--grey2:#CFC9C0;--red:#D8392B;--red-deep:#A4271D;--display:'Archivo',system-ui,sans-serif;--mono:'Space Mono',ui-monospace,monospace;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;}
+  #sxc-{{ section.id }}.sxc{--bg:#000000;--surface:#141414;--surface2:#1a1a1a;--rule:#2a2a2a;--rule2:#3a3a3a;--ink:#ffffff;--grey:#777777;--grey2:#c0c0c0;--red:#c1272d;--red-deep:#8f1d22;--display:'Oswald',sans-serif;--mono:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;}
   .sxc *{box-sizing:border-box;}
   .sxc a{text-decoration:none;color:inherit;}
   .sxc .sxc-wrap{max-width:1200px;margin-inline:auto;padding-inline:24px;}
-  .sxc h1,.sxc h2,.sxc h3{font-family:var(--display);font-stretch:115%;font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:.94;margin:0;}
+  .sxc h1,.sxc h2,.sxc h3{font-family:var(--display);font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:.94;margin:0;}
   .sxc .sxc-label,.sxc .sxc-fk{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--grey);margin:0;}
   .sxc :focus-visible{outline:2px solid var(--red);outline-offset:3px;}
   .sxc .sxc-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.8rem;padding:14px 22px;border:1px solid;transition:transform .15s,background .15s;}
@@ -152,7 +152,7 @@
   .sxc .sxc-h3{font-size:1.4rem;}
   .sxc .sxc-cb p,.sxc .sxc-floor p,.sxc .sxc-feat p{margin:0;color:var(--grey2);flex:1;}
   .sxc .sxc-foot{display:flex;align-items:flex-end;justify-content:space-between;border-top:1px solid var(--rule);padding-top:16px;gap:12px;}
-  .sxc .sxc-price{font-family:var(--display);font-stretch:115%;font-weight:900;font-size:1.35rem;}
+  .sxc .sxc-price{font-family:var(--display);font-weight:900;font-size:1.35rem;}
   .sxc .sxc-price small{display:block;font-family:var(--mono);font-weight:400;font-size:.58rem;letter-spacing:.1em;color:var(--grey);}
   .sxc .sxc-go{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--grey2);white-space:nowrap;}
   .sxc .sxc-card:hover .sxc-go,.sxc .sxc-floor:hover .sxc-go{color:var(--red);}
@@ -169,7 +169,7 @@
 
   .sxc .sxc-faqs{display:grid;gap:0;border-top:1px solid var(--rule);}
   .sxc .sxc-faq{border-bottom:1px solid var(--rule);}
-  .sxc .sxc-faq summary{cursor:pointer;list-style:none;padding:20px 0;font-family:var(--display);font-stretch:115%;font-weight:700;text-transform:uppercase;font-size:1.05rem;display:flex;justify-content:space-between;gap:16px;}
+  .sxc .sxc-faq summary{cursor:pointer;list-style:none;padding:20px 0;font-family:var(--display);font-weight:700;text-transform:uppercase;font-size:1.05rem;display:flex;justify-content:space-between;gap:16px;}
   .sxc .sxc-faq summary::after{content:'+';color:var(--red);font-family:var(--mono);}
   .sxc .sxc-faq[open] summary::after{content:'–';}
   .sxc .sxc-faq summary::-webkit-details-marker{display:none;}

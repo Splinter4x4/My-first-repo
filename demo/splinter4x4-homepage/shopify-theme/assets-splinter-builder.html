@@ -7,12 +7,12 @@
 <meta name="description" content="See your ultra-lightweight 4WD storage system in 3D — choose a pre-built setup or build your own, with live pricing.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#F3EBDB; --panel:#FBF6EC; --panel-2:#E8DCC4; --rule:rgba(34,28,21,.18); --rule-2:rgba(34,28,21,.32);
-    --ink:#221C15; --grey:#6E6354; --grey-2:#7C7060; --red:#B0472A; --red-deep:#8C3A22;
-    --display:'Zilla Slab',Georgia,serif; --mono:'Hanken Grotesk',system-ui,sans-serif; --body:'Hanken Grotesk',system-ui,sans-serif;
+    --bg:#000; --panel:#0f0f0f; --panel-2:#1a1a1a; --rule:#2a2a2a; --rule-2:#3a3a3a;
+    --ink:#fff; --grey:#777; --grey-2:#c0c0c0; --red:#c1272d; --red-deep:#8f1d22;
+    --display:'Oswald',sans-serif; --mono:'DM Sans',sans-serif; --body:'DM Sans',sans-serif;
     /* type scale */
     --t-xs:.72rem; --t-sm:.82rem; --t-base:1rem; --t-lg:1.15rem; --t-xl:1.5rem; --t-2xl:2rem; --t-3xl:2.75rem;
   }
@@ -20,7 +20,7 @@
   html{-webkit-text-size-adjust:100%;}
   body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:var(--t-base);line-height:1.55;-webkit-font-smoothing:antialiased;}
   a{color:inherit;text-decoration:none;}
-  h1,h2,h3{font-family:var(--display);font-weight:900;letter-spacing:-.01em;line-height:1.02;margin:0;}
+  h1,h2,h3{font-family:var(--display);font-weight:800;letter-spacing:-.02em;line-height:1.02;margin:0;text-transform:uppercase;}
   .mono{font-family:var(--mono);}
   .eyebrow{font-family:var(--mono);font-size:var(--t-xs);letter-spacing:.22em;text-transform:uppercase;color:var(--grey);margin:0;}
   :focus-visible{outline:2px solid var(--red);outline-offset:3px;}
@@ -63,7 +63,7 @@
   .opt .meta{font-family:var(--mono);font-size:.62rem;letter-spacing:.03em;color:var(--grey);}
 
   /* stage */
-  .stage{background:radial-gradient(120% 90% at 50% 0%,#FBF6EC 0%,#E7DBC4 78%);border:2px solid var(--ink);}
+  .stage{background:linear-gradient(180deg,#111 0%,#0a0a0a 70%);border:1px solid var(--rule);}
   .stage-top{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--rule);}
   .stage-title{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:var(--t-lg);letter-spacing:-.01em;}
   .views{display:flex;gap:6px;}
@@ -226,9 +226,10 @@
     var top=P([[x,y+h,z],[x+w,y+h,z],[x+w,y+h,z+d],[x,y+h,z+d]]);
     var front=P([[x,y,z+d],[x+w,y,z+d],[x+w,y+h,z+d],[x,y+h,z+d]]);
     var right=P([[x+w,y,z],[x+w,y,z+d],[x+w,y+h,z+d],[x+w,y+h,z]]);
-    return '<polygon points="'+front+'" fill="'+shade(base,.82)+'"/>'+
-           '<polygon points="'+right+'" fill="'+shade(base,.62)+'"/>'+
-           '<polygon points="'+top+'" fill="'+shade(base,1.12)+'"/>';
+    var E=' stroke="rgba(255,255,255,.34)" stroke-width=".9" stroke-linejoin="round"';
+    return '<polygon points="'+front+'" fill="'+shade(base,.82)+'"'+E+'/>'+
+           '<polygon points="'+right+'" fill="'+shade(base,.58)+'"'+E+'/>'+
+           '<polygon points="'+top+'" fill="'+shade(base,1.18)+'"'+E+'/>';
   }
   function line(a,b,stroke,w){return '<polyline points="'+P([a,b])+'" fill="none" stroke="'+stroke+'" stroke-width="'+(w||1.4)+'"/>';}
 
@@ -236,9 +237,13 @@
   var BW=108,GAP=12,DEP=150,FLOOR=12,MH=58;
   var LX=-(BW+GAP/2), RX=GAP/2;
 
+  function panel(x,y,z,w,h,fill){
+    var m=6, pts=P([[x+m,y+m,z],[x+w-m,y+m,z],[x+w-m,y+h-m,z],[x+m,y+h-m,z]]);
+    return '<polygon points="'+pts+'" fill="'+fill+'" stroke="rgba(255,255,255,.4)" stroke-width="1" stroke-linejoin="round"/>';
+  }
   function moduleSVG(kind,x){
     if(kind==="none") return "";
-    var y=(STATE.base==="yes")?FLOOR:0, c="#3A3026";
+    var y=(STATE.base==="yes")?FLOOR:0, c="#4a4a4a";
     if(kind==="drawer"){
       return box(x,y,-DEP/2,BW,MH,DEP,c)+line([x+14,y+MH*.55,DEP/2],[x+BW-14,y+MH*.55,DEP/2],"#16130F",2)+line([x+14,y+MH*.5,DEP/2],[x+BW-14,y+MH*.5,DEP/2],shade(c,1.4),1.4);
     }
@@ -247,40 +252,47 @@
              box(x,y+MH*.54,-DEP/2,BW,MH*.46,DEP,shade(c,1.1))+line([x+14,y+MH*.78,DEP/2],[x+BW-14,y+MH*.78,DEP/2],"#16130F",1.6);
     }
     if(kind==="fridge"){
-      var tray=box(x,y,-DEP/2,BW,MH*.36,DEP,"#46423B");
-      var fy=y+MH*.36, fr=box(x+8,fy,-DEP/2+12,BW-16,MH*.7,DEP-24,"#B0472A");
-      var lid=box(x+8,fy+MH*.7,-DEP/2+12,BW-16,4,DEP-24,"#F1E9DA");
-      return tray+fr+lid+line([x+16,fy+MH*.35,DEP/2-12],[x+BW-24,fy+MH*.35,DEP/2-12],shade("#B0472A",.6),1.6);
+      var tray=box(x,y,-DEP/2,BW,MH*.3,DEP,"#3a3a3a");
+      var fy=y+MH*.3, fh=MH*.85, fz=DEP/2-10;
+      var body=box(x+6,fy,-DEP/2+10,BW-12,fh,DEP-20,"#565656");
+      var face=panel(x+6,fy,fz,BW-12,fh,"#c1272d");
+      var handle=line([x+18,fy+fh*.78,fz+.5],[x+BW-18,fy+fh*.78,fz+.5],"#f0f0f0",2.4);
+      var v1=line([x+20,fy+fh*.2,fz+.5],[x+BW-34,fy+fh*.2,fz+.5],shade("#c1272d",.55),1.2);
+      var v2=line([x+20,fy+fh*.32,fz+.5],[x+BW-34,fy+fh*.32,fz+.5],shade("#c1272d",.55),1.2);
+      return tray+body+face+v1+v2+handle;
     }
     if(kind==="tower"){
-      var ty=box(x,y,-DEP/2,BW,MH*.3,DEP,"#46423B");
-      var hy=y+MH*.3, fr=box(x+6,hy,-DEP/2+10,BW-12,MH*1.25,DEP-20,"#B0472A");
-      var lid=box(x+6,hy+MH*1.25,-DEP/2+10,BW-12,5,DEP-20,"#F1E9DA");
-      return ty+fr+lid+line([x+14,hy+MH*.5,DEP/2-10],[x+BW-18,hy+MH*.5,DEP/2-10],shade("#B0472A",.6),1.6)+line([x+14,hy+MH*.95,DEP/2-10],[x+BW-18,hy+MH*.95,DEP/2-10],shade("#B0472A",.6),1.6);
+      var ty=box(x,y,-DEP/2,BW,MH*.24,DEP,"#3a3a3a");
+      var hy=y+MH*.24, th=MH*1.32, tz=DEP/2-8;
+      var bodyT=box(x+5,hy,-DEP/2+8,BW-10,th,DEP-16,"#565656");
+      var door=panel(x+5,hy,tz,BW-10,th,"#c1272d");
+      var vh=line([x+BW-22,hy+th*.18,tz+.5],[x+BW-22,hy+th*.62,tz+.5],"#f0f0f0",2.4);
+      var seam=line([x+12,hy+th*.5,tz+.5],[x+BW-16,hy+th*.5,tz+.5],shade("#c1272d",.55),1.2);
+      return ty+bodyT+door+seam+vh;
     }
     return "";
   }
   function powerSVG(kind){
     if(kind==="none") return "";
     var y=(STATE.base==="yes")?FLOOR:0, s={core:[44,26],frontier:[56,32],apex:[70,40]}[kind], w=s[0],h=s[1];
-    return box(-w/2,y,-DEP/2+6,w,h,28,"#566049")+line([-w/2+6,y+h*.5,-DEP/2+34],[w/2-6,y+h*.5,-DEP/2+34],"#B0472A",2);
+    return box(-w/2,y,-DEP/2+6,w,h,28,"#37474f")+line([-w/2+6,y+h*.5,-DEP/2+34],[w/2-6,y+h*.5,-DEP/2+34],"#c1272d",2);
   }
 
   function render(){
     var parts=[];
     // ground grid
-    var gx=-(BW+GAP/2)-26, gw=(BW+GAP/2)*2+52, gz=-DEP/2-26, gd=DEP+52, gstroke="rgba(34,28,21,0.13)";
+    var gx=-(BW+GAP/2)-26, gw=(BW+GAP/2)*2+52, gz=-DEP/2-26, gd=DEP+52, gstroke="rgba(255,255,255,0.06)";
     for(var i=0;i<=6;i++){ var fx=gx+gw*i/6; parts.push(line([fx,0,gz],[fx,0,gz+gd],gstroke,1)); var fz=gz+gd*i/6; parts.push(line([gx,0,fz],[gx+gw,0,fz],gstroke,1)); }
     // shadow
-    parts.push('<polygon points="'+P([[gx+14,-1,gz+14],[gx+gw-14,-1,gz+14],[gx+gw-14,-1,gz+gd-14],[gx+14,-1,gz+gd-14]])+'" fill="rgba(34,28,21,0.16)"/>');
+    parts.push('<polygon points="'+P([[gx+14,-1,gz+14],[gx+gw-14,-1,gz+14],[gx+gw-14,-1,gz+gd-14],[gx+14,-1,gz+gd-14]])+'" fill="rgba(0,0,0,0.4)"/>');
     // vehicle bay wireframe
     var bx=-(BW+GAP/2)-14,bw=(BW+GAP/2)*2+28,bz=-DEP/2-14,bd=DEP+28,bh=MH+(STATE.base==="yes"?FLOOR:0)+ (STATE.left==="tower"||STATE.right==="tower"?78:34);
     [[[bx,0,bz],[bx+bw,0,bz]],[[bx+bw,0,bz],[bx+bw,0,bz+bd]],[[bx,0,bz+bd],[bx+bw,0,bz+bd]],[[bx,0,bz],[bx,0,bz+bd]],
      [[bx,0,bz],[bx,bh,bz]],[[bx+bw,0,bz],[bx+bw,bh,bz]],[[bx,0,bz+bd],[bx,bh,bz+bd]],[[bx+bw,0,bz+bd],[bx+bw,bh,bz+bd]],
      [[bx,bh,bz],[bx+bw,bh,bz]],[[bx+bw,bh,bz],[bx+bw,bh,bz+bd]],[[bx,bh,bz+bd],[bx,bh,bz]]
-    ].forEach(function(e){ parts.push(line(e[0],e[1],"rgba(34,28,21,0.42)",1.4)); });
+    ].forEach(function(e){ parts.push(line(e[0],e[1],"rgba(255,255,255,0.14)",1.4)); });
     var body='';
-    if(STATE.base==="yes") body+='<g class="mod">'+box(-(BW+GAP/2)-8,0,-DEP/2-8,(BW+GAP/2)*2+16,FLOOR,DEP+16,"#7A6B52")+'</g>';
+    if(STATE.base==="yes") body+='<g class="mod">'+box(-(BW+GAP/2)-8,0,-DEP/2-8,(BW+GAP/2)*2+16,FLOOR,DEP+16,"#2b2b2b")+'</g>';
     if(STATE.power!=="none") body+='<g class="mod">'+powerSVG(STATE.power)+'</g>';
     if(STATE.left!=="none") body+='<g class="mod">'+moduleSVG(STATE.left,LX)+'</g>';
     if(STATE.right!=="none") body+='<g class="mod">'+moduleSVG(STATE.right,RX)+'</g>';

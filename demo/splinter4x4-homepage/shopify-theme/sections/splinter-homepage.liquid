@@ -12,7 +12,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <div class="sx" id="sx-{{ section.id }}">
 
@@ -23,22 +23,36 @@
             class: 'sx-hero-bg', loading: 'eager', sizes: '100vw',
             widths: '600,900,1200,1600,2200', alt: section.settings.hero_image.alt | default: 'Splinter 4X4 touring setup' }}
       {%- endif -%}
-      <div class="sx-wrap sx-hero-inner">
-        {%- if section.settings.hero_eyebrow != blank -%}
-          <p class="sx-label">{{ section.settings.hero_eyebrow }}</p>
-        {%- endif -%}
-        <h1 class="sx-h1">{{ section.settings.hero_heading }}</h1>
-        {%- if section.settings.hero_sub != blank -%}
-          <p class="sx-sub">{{ section.settings.hero_sub }}</p>
-        {%- endif -%}
-        <div class="sx-actions">
-          {%- if section.settings.btn1_label != blank -%}
-            <a class="sx-btn sx-primary" href="{{ section.settings.btn1_link | default: '#' }}">{{ section.settings.btn1_label }}</a>
+      <div class="sx-wrap sx-hero-inner{% if section.settings.show_3d %} has-3d{% endif %}">
+        <div class="sx-hero-copy">
+          {%- if section.settings.hero_eyebrow != blank -%}
+            <p class="sx-label">{{ section.settings.hero_eyebrow }}</p>
           {%- endif -%}
-          {%- if section.settings.btn2_label != blank -%}
-            <a class="sx-btn sx-ghost" href="{{ section.settings.btn2_link | default: '#' }}">{{ section.settings.btn2_label }}</a>
+          <h1 class="sx-h1">{{ section.settings.hero_heading }}</h1>
+          {%- if section.settings.hero_sub != blank -%}
+            <p class="sx-sub">{{ section.settings.hero_sub }}</p>
           {%- endif -%}
+          <div class="sx-actions">
+            {%- if section.settings.btn1_label != blank -%}
+              <a class="sx-btn sx-primary" href="{{ section.settings.btn1_link | default: '#' }}">{{ section.settings.btn1_label }}</a>
+            {%- endif -%}
+            {%- if section.settings.btn2_label != blank -%}
+              <a class="sx-btn sx-ghost" href="{{ section.settings.btn2_link | default: '#' }}">{{ section.settings.btn2_label }}</a>
+            {%- endif -%}
+          </div>
         </div>
+        {%- if section.settings.show_3d -%}
+        <div class="sx-h3d">
+          <div class="sx-chips" id="sxChips">
+            <button type="button" class="sx-chip on" data-k="sandy">Sandy Cape</button>
+            <button type="button" class="sx-chip" data-k="yardie">Yardie Creek</button>
+            <button type="button" class="sx-chip" data-k="steep">Steep Point</button>
+          </div>
+          <svg id="sxScene" viewBox="0 0 640 400" role="img" aria-label="3D drawing of the selected system"></svg>
+          <div class="sx-h3d-foot"><span class="n" id="sxName">Sandy Cape</span><span class="p" id="sxPrice">From $2,700</span></div>
+          <a class="sx-h3d-link" href="{{ section.settings.builder_link | default: '/pages/build' }}">Customise this build in the full 3D builder &rarr;</a>
+        </div>
+        {%- endif -%}
       </div>
     </section>
 
@@ -125,20 +139,84 @@
   {%- endfor -%}
 </div>
 
+{% if section.settings.show_3d %}
+<script>
+{% raw %}
+(function(){
+  "use strict";
+  var VIEW="iso";
+  function project(x,y,z){var dx=x,dz=z;return [320+(dx-dz)*.7, 252+(dx+dz)*.355-y*.74];}
+  function P(a){return a.map(function(p){var s=project(p[0],p[1],p[2]);return s[0].toFixed(1)+","+s[1].toFixed(1);}).join(" ");}
+  function shade(hex,m){var n=parseInt(hex.slice(1),16),r=(n>>16)&255,g=(n>>8)&255,b=n&255;r=Math.min(255,Math.round(r*m));g=Math.min(255,Math.round(g*m));b=Math.min(255,Math.round(b*m));return "#"+(1<<24|r<<16|g<<8|b).toString(16).slice(1);}
+  var E=' stroke="rgba(255,255,255,.34)" stroke-width=".9" stroke-linejoin="round"';
+  function box(x,y,z,w,h,d,base){
+    var top=P([[x,y+h,z],[x+w,y+h,z],[x+w,y+h,z+d],[x,y+h,z+d]]);
+    var front=P([[x,y,z+d],[x+w,y,z+d],[x+w,y+h,z+d],[x,y+h,z+d]]);
+    var right=P([[x+w,y,z],[x+w,y,z+d],[x+w,y+h,z+d],[x+w,y+h,z]]);
+    return '<polygon points="'+front+'" fill="'+shade(base,.82)+'"'+E+'/><polygon points="'+right+'" fill="'+shade(base,.58)+'"'+E+'/><polygon points="'+top+'" fill="'+shade(base,1.18)+'"'+E+'/>';
+  }
+  function panel(x,y,z,w,h,fill){var m=6;return '<polygon points="'+P([[x+m,y+m,z],[x+w-m,y+m,z],[x+w-m,y+h-m,z],[x+m,y+h-m,z]])+'" fill="'+fill+'" stroke="rgba(255,255,255,.4)" stroke-width="1" stroke-linejoin="round"/>';}
+  function line(a,b,st,w){return '<polyline points="'+P([a,b])+'" fill="none" stroke="'+st+'" stroke-width="'+(w||1.4)+'"/>';}
+  var BW=104,GAP=12,DEP=140,FLOOR=12,MH=56,LX=-(BW+GAP/2),RX=GAP/2;
+  function mod(kind,x){
+    var y=FLOOR,c="#4a4a4a";
+    if(kind==="drawer") return box(x,y,-DEP/2,BW,MH,DEP,c)+line([x+14,y+MH*.55,DEP/2],[x+BW-14,y+MH*.55,DEP/2],"#161616",2)+line([x+14,y+MH*.5,DEP/2],[x+BW-14,y+MH*.5,DEP/2],shade(c,1.4),1.4);
+    if(kind==="dual") return box(x,y,-DEP/2,BW,MH*.5,DEP,c)+line([x+14,y+MH*.28,DEP/2],[x+BW-14,y+MH*.28,DEP/2],"#161616",1.6)+box(x,y+MH*.54,-DEP/2,BW,MH*.46,DEP,shade(c,1.1))+line([x+14,y+MH*.78,DEP/2],[x+BW-14,y+MH*.78,DEP/2],"#161616",1.6);
+    if(kind==="fridge"){var tray=box(x,y,-DEP/2,BW,MH*.3,DEP,"#3a3a3a"),fy=y+MH*.3,fh=MH*.85,fz=DEP/2-10;
+      return tray+box(x+6,fy,-DEP/2+10,BW-12,fh,DEP-20,"#565656")+panel(x+6,fy,fz,BW-12,fh,"#c1272d")
+        +line([x+20,fy+fh*.2,fz+.5],[x+BW-34,fy+fh*.2,fz+.5],shade("#c1272d",.55),1.2)
+        +line([x+20,fy+fh*.32,fz+.5],[x+BW-34,fy+fh*.32,fz+.5],shade("#c1272d",.55),1.2)
+        +line([x+18,fy+fh*.78,fz+.5],[x+BW-18,fy+fh*.78,fz+.5],"#f0f0f0",2.4);}
+    if(kind==="tower"){var ty=box(x,y,-DEP/2,BW,MH*.24,DEP,"#3a3a3a"),hy=y+MH*.24,th=MH*1.32,tz=DEP/2-8;
+      return ty+box(x+5,hy,-DEP/2+8,BW-10,th,DEP-16,"#565656")+panel(x+5,hy,tz,BW-10,th,"#c1272d")
+        +line([x+12,hy+th*.5,tz+.5],[x+BW-16,hy+th*.5,tz+.5],shade("#c1272d",.55),1.2)
+        +line([x+BW-22,hy+th*.18,tz+.5],[x+BW-22,hy+th*.62,tz+.5],"#f0f0f0",2.4);}
+    return "";
+  }
+  var CFG={
+    sandy:{left:"fridge",right:"drawer",name:"Sandy Cape",price:"From $2,700"},
+    yardie:{left:"fridge",right:"dual",name:"Yardie Creek",price:"From $4,200"},
+    steep:{left:"tower",right:"dual",name:"Steep Point",price:"From $5,600"}
+  };
+  var scene=document.getElementById("sxScene");
+  function render(k){
+    var c=CFG[k],parts=[];
+    var gx=LX-24,gw=(BW+GAP/2)*2+48,gz=-DEP/2-24,gd=DEP+48,gs="rgba(255,255,255,0.06)";
+    for(var i=0;i<=6;i++){var fx=gx+gw*i/6;parts.push(line([fx,0,gz],[fx,0,gz+gd],gs,1));var fz=gz+gd*i/6;parts.push(line([gx,0,fz],[gx+gw,0,fz],gs,1));}
+    var bx=LX-14,bw=(BW+GAP/2)*2+28,bz=-DEP/2-14,bd=DEP+28,bh=MH+FLOOR+(c.left==="tower"?74:32);
+    [[[bx,0,bz],[bx+bw,0,bz]],[[bx+bw,0,bz],[bx+bw,0,bz+bd]],[[bx,0,bz+bd],[bx+bw,0,bz+bd]],[[bx,0,bz],[bx,0,bz+bd]],[[bx,0,bz],[bx,bh,bz]],[[bx+bw,0,bz],[bx+bw,bh,bz]],[[bx,0,bz+bd],[bx,bh,bz+bd]],[[bx+bw,0,bz+bd],[bx+bw,bh,bz+bd]],[[bx,bh,bz],[bx+bw,bh,bz]],[[bx+bw,bh,bz],[bx+bw,bh,bz+bd]],[[bx,bh,bz+bd],[bx,bh,bz]]].forEach(function(e){parts.push(line(e[0],e[1],"rgba(255,255,255,0.14)",1.2));});
+    var body='<g class="mod">'+box(LX-8,0,-DEP/2-8,(BW+GAP/2)*2+16,FLOOR,DEP+16,"#2b2b2b")+'</g>';
+    body+='<g class="mod">'+mod(c.left,LX)+'</g><g class="mod">'+mod(c.right,RX)+'</g>';
+    scene.innerHTML=parts.join("")+body;
+    document.getElementById("sxName").textContent=c.name;
+    document.getElementById("sxPrice").textContent=c.price;
+    document.querySelectorAll("#sxChips .chip").forEach(function(ch){ch.classList.toggle("on",ch.getAttribute("data-k")===k);});
+  }
+  var keys=["sandy","yardie","steep"],idx=0,timer=setInterval(function(){idx=(idx+1)%keys.length;render(keys[idx]);},4000);
+  document.getElementById("sxChips").addEventListener("click",function(e){
+    var ch=e.target.closest(".chip");if(!ch)return;
+    clearInterval(timer);idx=keys.indexOf(ch.getAttribute("data-k"));render(keys[idx]);
+  });
+  render("sandy");
+  })();
+{% endraw %}
+</script>
+{% endif %}
+
 {%- style -%}
   #sx-{{ section.id }}.sx {
-    --sx-bg:#0E0D0C; --sx-surface:#161312; --sx-surface2:#1E1A18;
-    --sx-rule:rgba(244,241,234,.12); --sx-rule2:rgba(244,241,234,.22);
-    --sx-ink:#F4F1EA; --sx-grey:#A8A097; --sx-grey2:#CFC9C0;
-    --sx-red:#D8392B; --sx-red-deep:#A4271D;
-    --sx-display:'Archivo',system-ui,sans-serif; --sx-mono:'Space Mono',ui-monospace,monospace;
+    --sx-bg:#000000; --sx-surface:#141414; --sx-surface2:#1a1a1a;
+    --sx-rule:#2a2a2a; --sx-rule2:#3a3a3a;
+    --sx-ink:#ffffff; --sx-grey:#777777; --sx-grey2:#c0c0c0;
+    --sx-red:#c1272d; --sx-red-deep:#8f1d22;
+    --sx-display:'Oswald',sans-serif; --sx-mono:'DM Sans',sans-serif;
     --sx-s1:8px;--sx-s2:16px;--sx-s3:24px;--sx-s4:40px;--sx-s5:72px;--sx-s6:112px;
-    background:var(--sx-bg); color:var(--sx-ink); font-family:'Inter',system-ui,sans-serif;
+    background:var(--sx-bg); color:var(--sx-ink); font-family:'DM Sans',sans-serif;
   }
   .sx *{box-sizing:border-box;}
   .sx a{text-decoration:none;color:inherit;}
   .sx .sx-wrap{max-width:1200px;margin-inline:auto;padding-inline:var(--sx-s3);}
-  .sx h1,.sx h2,.sx h3{font-family:var(--sx-display);font-stretch:115%;font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:.92;margin:0;}
+  .sx h1,.sx h2,.sx h3{font-family:var(--sx-display);font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:.92;margin:0;}
   .sx .sx-label{font-family:var(--sx-mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--sx-grey);margin:0;}
   .sx :focus-visible{outline:2px solid var(--sx-red);outline-offset:3px;}
 
@@ -153,14 +231,14 @@
   .sx .sx-hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
   .sx .sx-hero::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(100deg,rgba(14,13,12,.94),rgba(14,13,12,.6) 46%,rgba(14,13,12,.2));}
   .sx .sx-hero-inner{position:relative;z-index:2;width:100%;padding-block:var(--sx-s6);}
-  .sx .sx-h1{font-size:clamp(2.6rem,8vw,6rem);max-width:15ch;}
-  .sx .sx-h1 em,.sx .sx-h1 strong{font-style:normal;font-weight:900;color:var(--sx-red);}
+  .sx .sx-h1{font-family:var(--sx-display);font-weight:700;font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.04;letter-spacing:1px;text-transform:uppercase;max-width:16ch;}
+  .sx .sx-h1 em,.sx .sx-h1 strong{font-style:normal;font-weight:700;color:inherit;text-decoration:underline;text-decoration-color:var(--sx-red);text-decoration-thickness:4px;text-underline-offset:8px;}
   .sx .sx-sub{font-size:1.25rem;color:var(--sx-grey2);max-width:46ch;margin-top:var(--sx-s3);font-weight:500;}
 
   .sx .sx-proof{border-bottom:1px solid var(--sx-rule);background:var(--sx-surface);}
   .sx .sx-proof-row{display:grid;grid-template-columns:repeat(2,1fr);}
   .sx .sx-cell{padding:var(--sx-s3);border-right:1px solid var(--sx-rule);border-top:1px solid var(--sx-rule);}
-  .sx .sx-cell b{font-family:var(--sx-display);font-stretch:115%;display:block;font-size:1.1rem;}
+  .sx .sx-cell b{font-family:var(--sx-display);display:block;font-size:1.1rem;}
   .sx .sx-cell span{font-family:var(--sx-mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--sx-grey);}
 
   .sx .sx-section{padding-block:var(--sx-s6);border-bottom:1px solid var(--sx-rule);}
@@ -180,7 +258,7 @@
   .sx .sx-h3{font-size:1.5rem;}
   .sx .sx-card-body p,.sx .sx-floor p{margin:0;color:var(--sx-grey2);flex:1;}
   .sx .sx-foot{display:flex;align-items:flex-end;justify-content:space-between;border-top:1px solid var(--sx-rule);padding-top:var(--sx-s2);gap:var(--sx-s2);}
-  .sx .sx-price{font-family:var(--sx-display);font-stretch:115%;font-weight:900;font-size:1.4rem;}
+  .sx .sx-price{font-family:var(--sx-display);font-weight:900;font-size:1.4rem;}
   .sx .sx-price small{display:block;font-family:var(--sx-mono);font-weight:400;font-size:.58rem;letter-spacing:.1em;color:var(--sx-grey);}
   .sx .sx-go{font-family:var(--sx-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sx-grey2);white-space:nowrap;}
   .sx .sx-card:hover .sx-go,.sx .sx-floor:hover .sx-go{color:var(--sx-red);}
@@ -201,6 +279,22 @@
   @media (min-width:1000px){ .sx .sx-cards{grid-template-columns:repeat(3,1fr);} }
   @media (max-width:759px){ .sx .sx-floor p{display:none;} }
   @media (prefers-reduced-motion:reduce){ .sx *{transition:none!important;} }
+  .sx .sx-hero-inner.has-3d{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;}
+  @media(max-width:940px){.sx .sx-hero-inner.has-3d{grid-template-columns:1fr;}}
+  .sx .sx-h3d{background:rgba(10,10,10,.85);border:1px solid var(--sx-rule);border-radius:2px;padding:14px;}
+  .sx .sx-chips{display:flex;gap:8px;flex-wrap:wrap;}
+  .sx .sx-chip{font-family:var(--sx-display);font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:8px 13px;border:1px solid #3a3a3a;border-radius:2px;color:#cfcfcf;cursor:pointer;background:transparent;transition:all .15s;}
+  .sx .sx-chip:hover{border-color:#fff;color:#fff;}
+  .sx .sx-chip.on{background:var(--sx-red);border-color:var(--sx-red);color:#fff;}
+  .sx .sx-h3d svg{width:100%;height:auto;display:block;}
+  .sx .sx-h3d-foot{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:8px 4px 2px;border-top:1px solid var(--sx-rule);}
+  .sx .sx-h3d-foot .n{font-family:var(--sx-display);font-weight:700;text-transform:uppercase;font-size:16px;}
+  .sx .sx-h3d-foot .p{font-family:var(--sx-display);font-weight:700;color:var(--sx-red);font-size:16px;}
+  .sx .sx-h3d-link{display:block;text-align:right;font-size:13px;color:#999;padding:8px 4px 0;text-decoration:none;}
+  .sx .sx-h3d-link:hover{color:var(--sx-red);}
+  @keyframes sxspawn{from{opacity:0}to{opacity:1}}
+  #sxScene g.mod{animation:sxspawn .35s ease both;}
+  @media(prefers-reduced-motion:reduce){#sxScene g.mod{animation:none;}}
 {%- endstyle -%}
 
 {% schema %}
@@ -211,6 +305,8 @@
   "settings": [
     { "type": "header", "content": "Hero" },
     { "type": "checkbox", "id": "show_hero", "label": "Show hero", "default": true },
+    { "type": "checkbox", "id": "show_3d", "label": "Show interactive 3D panel", "default": true },
+    { "type": "url", "id": "builder_link", "label": "3D builder page link" },
     { "type": "image_picker", "id": "hero_image", "label": "Hero background image" },
     { "type": "text", "id": "hero_eyebrow", "label": "Eyebrow", "default": "Designed & built in Neerabup, WA · Shipped Australia-wide" },
     { "type": "inline_richtext", "id": "hero_heading", "label": "Heading", "default": "Pack heavier. <strong>Carry lighter.</strong>" },
