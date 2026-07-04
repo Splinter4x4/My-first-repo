@@ -1,0 +1,50 @@
+{%- comment -%}
+  Splinter System Builder — embeds the interactive 3D builder as an isolated
+  asset (iframe) so its global styles never leak into the theme. Upload the
+  builder file as an asset named `splinter-builder.html` (Edit code → Assets →
+  Add a new asset → upload), then assign this section to a page (page.build).
+{%- endcomment -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<div class="sxb" id="sxb-{{ section.id }}">
+  {%- if section.settings.heading != blank -%}
+    <div class="sxb-head">
+      {%- if section.settings.eyebrow != blank -%}<p class="sxb-label">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="sxb-h">{{ section.settings.heading }}</h2>
+      {%- if section.settings.intro != blank -%}<p class="sxb-intro">{{ section.settings.intro }}</p>{%- endif -%}
+    </div>
+  {%- endif -%}
+  <div class="sxb-frame">
+    <iframe src="{{ 'splinter-builder.html' | asset_url }}" title="Splinter 4X4 system builder" loading="lazy"></iframe>
+  </div>
+  <noscript><p class="sxb-intro">The builder needs JavaScript. <a href="{{ 'splinter-builder.html' | asset_url }}">Open it in a new tab.</a></p></noscript>
+</div>
+
+{%- style -%}
+  #sxb-{{ section.id }}.sxb{background:#000000;color:#ffffff;padding:64px 24px;font-family:'DM Sans',sans-serif;}
+  #sxb-{{ section.id }} .sxb-head{max-width:1200px;margin:0 auto 28px;}
+  #sxb-{{ section.id }} .sxb-label{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#777777;margin:0 0 12px;}
+  #sxb-{{ section.id }} .sxb-h{font-family:'Oswald',sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:-.01em;font-size:clamp(1.8rem,5vw,3rem);margin:0;}
+  #sxb-{{ section.id }} .sxb-h strong{color:#c1272d;}
+  #sxb-{{ section.id }} .sxb-intro{color:#c0c0c0;max-width:52ch;margin-top:12px;font-family:'DM Sans',sans-serif;}
+  #sxb-{{ section.id }} .sxb-frame{max-width:1280px;margin:0 auto;border:1px solid #2a2a2a;}
+  #sxb-{{ section.id }} .sxb-frame iframe{display:block;width:100%;height:1180px;border:0;background:#000000;}
+  @media(max-width:980px){ #sxb-{{ section.id }} .sxb-frame iframe{height:1640px;} }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Splinter System Builder",
+  "tag": "section",
+  "settings": [
+    { "type": "paragraph", "content": "Upload the builder file as an asset named 'splinter-builder.html' (Edit code → Assets → Add a new asset)." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Build your system" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Spec your rig. <strong>Watch it build.</strong>" },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Pick what goes where — fridge slide, drawers, false floor, 12V — and your system draws itself, with a live price and weight." }
+  ],
+  "presets": [ { "name": "Splinter System Builder" } ]
+}
+{% endschema %}

@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Splinter 4X4 Solutions — Ultra-Lightweight Touring Storage | Neerabup, WA</title>
+  <meta name="description" content="Ultra-lightweight drawer systems, bolt-in false floors and 12V packages for touring 4WDs. Designed and built in Neerabup, Western Australia. Shipped Australia-wide.">
+  <meta property="og:title" content="Splinter 4X4 Solutions — Ultra-Lightweight Touring Storage">
+  <meta property="og:description" content="Drawer systems, bolt-in false floors and 12V, built in WA. Lighter fit-outs, more payload.">
+  <meta property="og:type" content="website">
+
+  <!--
+    Splinter 4X4 — launch-ready homepage.
+    Built with the web-design skill from the real Shopify product export:
+    handles, variants, "from" prices and product photos are live data.
+    Every product button links to the real Shopify product page, so cart +
+    checkout happen on your store.
+
+    CONFIRM BEFORE LAUNCH:
+      • 12V / Voltek prices+specs came from your v2 mockup, NOT the export —
+        verify them or send an export that includes the 12V products.
+      • Prado 150 is currently UNPUBLISHED (draft) in your store.
+      • Hero/store URLs assume the splinter4x4.com.au domain.
+    See SHOPIFY.md for how to put this live.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0E0D0C; --surface: #161312; --surface-2: #1E1A18;
+      --rule: rgba(244,241,234,0.12); --rule-2: rgba(244,241,234,0.22);
+      --ink: #F4F1EA; --grey: #A8A097; --grey-2: #CFC9C0;
+      --red: #D8392B; --red-deep: #A4271D;
+      --display: 'Archivo', system-ui, sans-serif;
+      --mono: 'Space Mono', ui-monospace, monospace;
+      --s1: 8px; --s2: 16px; --s3: 24px; --s4: 40px; --s5: 72px; --s6: 112px;
+      --huge: clamp(2.6rem, 8vw, 6rem); --container: 1200px;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; font-size: 1.0625rem; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    h1,h2,h3 { font-family: var(--display); font-stretch: 115%; font-weight: 900; text-transform: uppercase; letter-spacing: -0.01em; line-height: 0.92; margin: 0; text-wrap: balance; }
+    .mono { font-family: var(--mono); }
+    .label { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey); }
+    .wrap { max-width: var(--container); margin-inline: auto; padding-inline: var(--s3); }
+    :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+    .skip { position: absolute; left: 16px; top: -3rem; background: var(--ink); color: var(--bg); padding: 8px 14px; z-index: 200; transition: top 160ms ease; }
+    .skip:focus { top: 12px; }
+
+    .btn { display: inline-flex; align-items: center; gap: var(--s1); font-family: var(--mono); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; padding: 14px 22px; border: 1px solid; transition: transform 150ms ease, background 150ms ease, color 150ms ease, border-color 150ms ease; }
+    .btn.primary { background: var(--red); color: #fff; border-color: var(--red); }
+    .btn.primary:hover { background: var(--red-deep); border-color: var(--red-deep); transform: translateY(-2px); }
+    .btn.ghost { background: transparent; color: var(--ink); border-color: var(--rule-2); }
+    .btn.ghost:hover { border-color: var(--ink); transform: translateY(-2px); }
+
+    /* header */
+    .top { position: sticky; top: 0; z-index: 50; background: rgba(14,13,12,0.92); border-bottom: 1px solid var(--rule); backdrop-filter: blur(8px); }
+    .top .bar { display: flex; align-items: center; justify-content: space-between; padding-block: var(--s2); }
+    .mk { font-family: var(--display); font-stretch: 115%; font-weight: 900; font-size: 1.3rem; letter-spacing: 0.01em; text-transform: uppercase; }
+    .mk b { color: var(--red); }
+    nav.menu { display: flex; gap: var(--s3); align-items: center; }
+    nav.menu a { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-2); }
+    nav.menu a:hover { color: var(--red); }
+    @media (max-width: 860px) { nav.menu a:not(.cart) { display: none; } }
+
+    /* hero */
+    .hero { position: relative; min-height: 88vh; display: flex; align-items: flex-end; overflow: hidden; }
+    .hero img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    .hero::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(100deg, rgba(14,13,12,0.94) 0%, rgba(14,13,12,0.6) 46%, rgba(14,13,12,0.2) 100%), linear-gradient(to top, rgba(14,13,12,0.92), transparent 42%); }
+    .hero .inner { position: relative; z-index: 2; width: 100%; padding-block: var(--s6); }
+    .hero h1 { font-size: var(--huge); max-width: 15ch; }
+    .hero h1 em { font-style: normal; color: var(--red); }
+    .hero .sub { font-size: 1.25rem; color: var(--grey-2); max-width: 46ch; margin-top: var(--s3); font-weight: 500; }
+    .hero .actions { display: flex; gap: var(--s2); flex-wrap: wrap; margin-top: var(--s4); }
+
+    /* proof strip */
+    .proof { border-bottom: 1px solid var(--rule); background: var(--surface); }
+    .proof .row { display: grid; grid-template-columns: repeat(2,1fr); }
+    @media (min-width: 760px) { .proof .row { grid-template-columns: repeat(4,1fr); } }
+    .proof .cell { padding: var(--s3); border-right: 1px solid var(--rule); border-top: 1px solid var(--rule); }
+    .proof .cell b { font-family: var(--display); font-stretch: 115%; display: block; font-size: 1.1rem; }
+    .proof .cell span { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey); }
+
+    /* sections */
+    .section { padding-block: var(--s6); border-bottom: 1px solid var(--rule); }
+    .head { display: flex; align-items: baseline; gap: var(--s3); flex-wrap: wrap; margin-bottom: var(--s5); }
+    .head h2 { font-size: clamp(1.9rem, 4.5vw, 3.2rem); }
+    .head p { color: var(--grey); max-width: 42ch; margin: 0; }
+
+    /* drawer systems — photo cards, varied weighting */
+    .systems { display: grid; gap: var(--s3); grid-template-columns: 1fr; }
+    @media (min-width: 720px) { .systems { grid-template-columns: repeat(2,1fr); } }
+    @media (min-width: 1000px) { .systems { grid-template-columns: repeat(6,1fr); } .sys.feature { grid-column: span 6; } .sys:not(.feature) { grid-column: span 3; } }
+    .sys { background: var(--surface); border: 1px solid var(--rule); overflow: hidden; display: flex; flex-direction: column; transition: border-color 150ms ease, transform 150ms ease; }
+    .sys:hover { border-color: var(--rule-2); transform: translateY(-3px); }
+    .sys .ph { aspect-ratio: 16/10; overflow: hidden; background: var(--surface-2); }
+    .sys.feature .ph { aspect-ratio: 21/8; }
+    .sys .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms ease; }
+    .sys:hover .ph img { transform: scale(1.04); }
+    .sys .body { padding: var(--s3); display: flex; flex-direction: column; gap: var(--s2); flex: 1; }
+    .sys .place { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); }
+    .sys h3 { font-size: 1.6rem; }
+    .sys p { margin: 0; color: var(--grey-2); flex: 1; }
+    .sys .foot { display: flex; align-items: flex-end; justify-content: space-between; border-top: 1px solid var(--rule); padding-top: var(--s2); margin-top: var(--s1); gap: var(--s2); }
+    .sys .price { font-family: var(--display); font-stretch: 115%; font-weight: 900; font-size: 1.5rem; }
+    .sys .price small { display: block; font-family: var(--mono); font-weight: 400; font-size: 0.58rem; letter-spacing: 0.1em; color: var(--grey); }
+    .sys .go { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-2); white-space: nowrap; }
+    .sys:hover .go { color: var(--red); }
+
+    /* false floors — spec rows */
+    .floors { border-top: 1px solid var(--rule); }
+    .floor { display: grid; grid-template-columns: 1fr auto; gap: var(--s2) var(--s4); align-items: center; padding-block: var(--s3); border-bottom: 1px solid var(--rule); transition: background 150ms ease; }
+    .floor:hover { background: var(--surface); }
+    @media (min-width: 760px) { .floor { grid-template-columns: 1.3fr 2fr auto auto; } }
+    .floor h3 { font-size: 1.3rem; }
+    .floor .veh { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; color: var(--grey); margin-top: 6px; }
+    .floor p { margin: 0; color: var(--grey-2); display: none; }
+    @media (min-width: 760px) { .floor p { display: block; } }
+    .floor .price { font-family: var(--display); font-stretch: 115%; font-weight: 900; font-size: 1.3rem; color: var(--red); text-align: right; }
+    .floor .price small { display: block; font-family: var(--mono); font-weight: 400; font-size: 0.58rem; letter-spacing: 0.1em; color: var(--grey); }
+    .floor .go { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-2); white-space: nowrap; }
+    .floor:hover .go { color: var(--red); }
+    .draft { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--bg); background: var(--grey); padding: 2px 6px; margin-left: 8px; vertical-align: middle; }
+
+    /* 12V */
+    .voltek { background: var(--surface); }
+    .tiers { display: grid; grid-template-columns: 1fr; gap: var(--s2); }
+    @media (min-width: 820px) { .tiers { grid-template-columns: repeat(3,1fr); } }
+    .tier { background: var(--bg); border: 1px solid var(--rule); padding: var(--s4); display: flex; flex-direction: column; gap: var(--s2); transition: border-color 150ms ease, transform 150ms ease; }
+    .tier:hover { border-color: var(--rule-2); transform: translateY(-3px); }
+    .tier h3 { font-size: 1.6rem; }
+    .tier .tagline { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); }
+    .tier ul { list-style: none; margin: var(--s1) 0; padding: 0; flex: 1; }
+    .tier li { padding: 7px 0; border-top: 1px solid var(--rule); color: var(--grey-2); font-size: 0.95rem; }
+    .tier .price { font-family: var(--display); font-stretch: 115%; font-weight: 900; font-size: 1.5rem; }
+    .tier .price small { font-family: var(--mono); font-weight: 400; font-size: 0.58rem; letter-spacing: 0.1em; color: var(--grey); }
+    .note { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.06em; color: var(--grey); margin-top: var(--s3); }
+
+    /* cta */
+    .cta { padding-block: var(--s6); }
+    .cta h2 { font-size: clamp(2rem, 6vw, 4rem); max-width: 16ch; }
+    .cta h2 em { font-style: normal; color: var(--red); }
+    .cta p { color: var(--grey-2); max-width: 46ch; margin-top: var(--s3); }
+    .cta .actions { display: flex; gap: var(--s2); flex-wrap: wrap; margin-top: var(--s4); }
+
+    footer { border-top: 1px solid var(--rule); padding-block: var(--s5) var(--s4); }
+    .foot { display: flex; flex-wrap: wrap; gap: var(--s4); justify-content: space-between; }
+    .foot .col h4 { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey); margin: 0 0 var(--s2); }
+    .foot .col a, .foot .col p { color: var(--grey-2); margin: 0 0 6px; display: block; font-size: 0.95rem; }
+    .foot .col a:hover { color: var(--red); }
+    .legal { margin-top: var(--s4); border-top: 1px solid var(--rule); padding-top: var(--s3); color: var(--grey); font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="top">
+    <div class="wrap bar">
+      <div class="brand"><span class="mk">SPLINTER<b>/</b>4X4</span></div>
+      <nav class="menu" aria-label="Primary">
+        <a href="#systems">Drawer Systems</a>
+        <a href="#floors">False Floors</a>
+        <a href="#voltek">12V</a>
+        <a href="#quote">Custom Quote</a>
+        <a class="cart" href="https://splinter4x4.com.au/cart">Cart</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="h">
+      <img class="bg" src="https://cdn.shopify.com/s/files/1/0573/3249/8501/files/20241117_011819406_iOS.jpg?v=1732150168&width=2000" alt="Splinter 4X4 ultra-lightweight drawer system fitted in a touring wagon">
+      <div class="wrap inner">
+        <p class="label" style="margin:0 0 var(--s3)">Designed &amp; built in Neerabup, WA · Shipped Australia-wide</p>
+        <h1 id="h">Pack heavier.<br><em>Carry lighter.</em></h1>
+        <p class="sub">Ultra-lightweight drawer systems, bolt-in false floors and 12V — tailor-made to your rig, so the weight goes into your kit, not your fit-out.</p>
+        <div class="actions">
+          <a class="btn primary" href="#systems">Shop drawer systems →</a>
+          <a class="btn ghost" href="#quote">Get a custom quote</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof" aria-label="At a glance">
+      <div class="wrap"><div class="row">
+        <div class="cell"><b>Ultra-lightweight</b><span>Composite build</span></div>
+        <div class="cell"><b>Neerabup, WA</b><span>Workshop &amp; install</span></div>
+        <div class="cell"><b>2–6 weeks</b><span>Typical lead time</span></div>
+        <div class="cell"><b>Australia-wide</b><span>Shipping</span></div>
+      </div></div>
+    </section>
+
+    <!-- ============ DRAWER SYSTEMS ============ -->
+    <section class="section wrap" id="systems" aria-labelledby="sys-h">
+      <div class="head">
+        <span class="label">01 / Drawer systems</span>
+        <h2 id="sys-h">Named for the places they get you to</h2>
+        <p>Ultra-lightweight drawer &amp; fridge systems for wagons and ute tubs. Supply only, or installed at our Neerabup workshop.</p>
+      </div>
+      <div class="systems">
+        <a class="sys feature" href="https://splinter4x4.com.au/products/steep-point-drawer-system">
+          <div class="ph"><img src="https://cdn.shopify.com/s/files/1/0573/3249/8501/files/20240917_080749276_iOS.png?v=1730780604&width=1600" alt="Steep Point stand-up fridge drawer system" loading="lazy"></div>
+          <div class="body">
+            <span class="place">Shark Bay · WA — flagship</span>
+            <h3>Steep Point</h3>
+            <p>The full remote fit-out: upright fridge hutch, dual extending tables, deep drawers and a dedicated pantry. The system for long stays off the grid.</p>
+            <div class="foot"><div class="price">$5,600<small>from / wagon · ute $6,000</small></div><span class="go">Configure →</span></div>
+          </div>
+        </a>
+        <a class="sys" href="https://splinter4x4.com.au/products/sandycape-drawer-fridge-system">
+          <div class="ph"><img src="https://cdn.shopify.com/s/files/1/0573/3249/8501/files/IMG_2426.jpg?v=1715133781&width=1000" alt="Sandy Cape drawer, fridge hutch and pull-out table" loading="lazy"></div>
+          <div class="body">
+            <span class="place">West coast · WA</span>
+            <h3>Sandy Cape</h3>
+            <p>The everyday tourer — drawer, fridge hutch and pull-out table. Supplied with a 40L Evakool or 30L Engel, or built to suit your own fridge.</p>
+            <div class="foot"><div class="price">$2,700<small>from / wagon, BYO fridge</small></div><span class="go">Configure →</span></div>
+          </div>
+        </a>
+        <a class="sys" href="https://splinter4x4.com.au/products/slimline-fridge-slide-system">
+          <div class="ph"><img src="https://cdn.shopify.com/s/files/1/0573/3249/8501/files/20230824_104920975_iOS.jpg?v=1715134230&width=1000" alt="Kalbarri slimline fridge slide system" loading="lazy"></div>
+          <div class="body">
+            <span class="place">Coral coast · WA</span>
+            <h3>Kalbarri</h3>
+            <p>A slimline fridge-slide system for everyday storage and touring, sized to keep the rest of the load floor usable.</p>
+            <div class="foot"><div class="price">$4,200<small>from / wagon · ute $4,800</small></div><span class="go">Configure →</span></div>
+          </div>
+        </a>
+        <a class="sys" href="https://splinter4x4.com.au/products/yardie-creek-drawer-system">
+          <div class="ph"><img src="https://cdn.shopify.com/s/files/1/0573/3249/8501/files/20241117_011819406_iOS.jpg?v=1732150168&width=1000" alt="Yardie Creek dual drawer system" loading="lazy"></div>
+          <div class="body">
+            <span class="place">Ningaloo · WA</span>
+            <h3>Yardie Creek</h3>
+            <p>Dual-drawer touring and off-grid storage with an integrated fridge slide that clears the tailgate. Supply or installed.</p>
+            <div class="foot"><div class="price">$4,200<small>from / supply</small></div><span class="go">Configure →</span></div>
+          </div>
+        </a>
+        <a class="sys" href="https://splinter4x4.com.au/products/ultimate-standup-fridge-system">
+          <div class="ph"><img src="https://cdn.shopify.com/s/files/1/0573/3249/8501/files/20240116_090111696_iOS.jpg?v=1715134522&width=1000" alt="Gibb River stand-up drawer system" loading="lazy"></div>
+          <div class="body">
+            <span class="place">Kimberley · WA</span>
+            <h3>Gibb River</h3>
+            <p>Built for the long off-grid hauls — deep drawers and a stand-up fridge setup that takes a corrugation diet without working loose.</p>
+            <div class="foot"><div class="price">$5,000<small>from / wagon · ute $5,600</small></div><span class="go">Configure →</span></div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ FALSE FLOORS ============ -->
+    <section class="section wrap" id="floors" aria-labelledby="ff-h">
+      <div class="head">
+        <span class="label">02 / False floors</span>
+        <h2 id="ff-h">Bolt-in false floors, no drilling</h2>
+        <p>One-piece tops on a solid base, bolted to your vehicle's factory points. Supply for a DIY fit, or installed in Neerabup. Access-panel options to suit how you pack.</p>
+      </div>
+      <div class="floors">
+        <a class="floor" href="https://splinter4x4.com.au/products/landcruiser-300-series-false-floor">
+          <div><h3>LandCruiser 300</h3><div class="veh">LC300 · bolt-in</div></div>
+          <p>Flat load floor with no-access, single, dual or L-shape panel options.</p>
+          <div class="price">$750<small>from / supply</small></div>
+          <span class="go">View →</span>
+        </a>
+        <a class="floor" href="https://splinter4x4.com.au/products/y62falsefloor">
+          <div><h3>Nissan Patrol Y62</h3><div class="veh">Y62 · bolt-in</div></div>
+          <p>Sealed flat floor, with dual/single access or L-shape wheel-arch wrap (install).</p>
+          <div class="price">$750<small>from / supply</small></div>
+          <span class="go">View →</span>
+        </a>
+        <a class="floor" href="https://splinter4x4.com.au/products/next-gen-ford-everest-false-floor">
+          <div><h3>Ford Everest</h3><div class="veh">Next-gen · bolt-in · ~20kg</div></div>
+          <p>Lightweight bolt-in floor with spare-tyre access panel — squares off the rear for drawers or a sleep platform.</p>
+          <div class="price">$750<small>from / supply</small></div>
+          <span class="go">View →</span>
+        </a>
+        <a class="floor" href="https://splinter4x4.com.au/products/250-prado-false-floor">
+          <div><h3>Toyota Prado 250</h3><div class="veh">Prado 250 · bolt-in · ~30kg</div></div>
+          <p>One-piece top on a solid base for the new 250-series. DIY supply or installed.</p>
+          <div class="price">$850<small>from / supply</small></div>
+          <span class="go">View →</span>
+        </a>
+        <a class="floor" href="https://splinter4x4.com.au/products/toyota-prado-150-false-floor">
+          <div><h3>Toyota Prado 150<span class="draft">draft</span></h3><div class="veh">Prado 150 · bolt-in</div></div>
+          <p>Bolt-in false floor sized for the 150-series rear.</p>
+          <div class="price">$700<small>from / supply</small></div>
+          <span class="go">View →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ 12V / VOLTEK ============ -->
+    <section class="section voltek" id="voltek" aria-labelledby="vk-h">
+      <div class="wrap">
+        <div class="head">
+          <span class="label">03 / 12V packages — Splinter × Voltek</span>
+          <h2 id="vk-h">12V, wired and documented</h2>
+          <p>Battery, inverter, DC-DC and a Cerbo GX into a fused, labelled loom — built into the same fit-out, one install.</p>
+        </div>
+        <div class="tiers">
+          <div class="tier">
+            <span class="tagline">Daily / weekender</span>
+            <h3>Core</h3>
+            <ul><li>80Ah Lithium</li><li>1000W Inverter</li><li>20A DC-DC</li><li>Victron Cerbo GX</li></ul>
+            <div class="price">$2,190<small>from</small></div>
+          </div>
+          <div class="tier">
+            <span class="tagline">Extended touring</span>
+            <h3>Frontier</h3>
+            <ul><li>120Ah Lithium</li><li>2000W Inverter</li><li>40A DC-DC</li><li>Victron Cerbo GX</li></ul>
+            <div class="price">$3,490<small>from</small></div>
+          </div>
+          <div class="tier">
+            <span class="tagline">Off-grid, long-stay</span>
+            <h3>Apex</h3>
+            <ul><li>200Ah Lithium</li><li>3000W Inverter</li><li>40A DC-DC</li><li>Victron Cerbo GX</li></ul>
+            <div class="price">$4,790<small>from</small></div>
+          </div>
+        </div>
+        <p class="note">⚠ 12V specs &amp; prices are from your previous mockup, not the product export — confirm or replace before launch, and point these at the real Shopify products.</p>
+      </div>
+    </section>
+
+    <section class="section cta wrap" id="quote" aria-labelledby="cta-h">
+      <span class="label">04 / Custom quote</span>
+      <h2 id="cta-h" style="margin-top:var(--s3)">Don't see your rig? <em>We build to it.</em></h2>
+      <p>Tell us the vehicle and how you tour, and we'll tailor a system to suit — drawers, false floor, 12V, the lot. Built and installed in Neerabup, or shipped to your door.</p>
+      <div class="actions">
+        <a class="btn primary" href="mailto:ethan@splinter4x4.com.au?subject=Custom%20build%20enquiry">Email a custom quote →</a>
+        <a class="btn ghost" href="tel:+61428430543">Call 0428 430 543</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <div class="foot">
+      <div class="col">
+        <h4>Splinter 4X4 Solutions</h4>
+        <p>Ultra-lightweight touring storage,<br>designed &amp; built in Neerabup, WA.</p>
+      </div>
+      <div class="col">
+        <h4>Shop</h4>
+        <a href="#systems">Drawer systems</a>
+        <a href="#floors">False floors</a>
+        <a href="#voltek">12V packages</a>
+        <a href="#quote">Custom quote</a>
+      </div>
+      <div class="col">
+        <h4>Contact</h4>
+        <a href="mailto:ethan@splinter4x4.com.au">ethan@splinter4x4.com.au</a>
+        <a href="tel:+61428430543">0428 430 543</a>
+        <p>Neerabup, WA · Australia-wide shipping</p>
+      </div>
+    </div>
+    <div class="legal mono">© <span id="yr"></span> Splinter 4X4 Solutions Pty Ltd · Designed &amp; built in WA</div>
+  </footer>
+
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+</body>
+</html>
