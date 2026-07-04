@@ -97,7 +97,7 @@
 </head>
 <body>
   <header class="top"><div class="bar">
-    <a href="index.html"><span class="mk">SPLINTER<b>/</b>4X4</span></a>
+    <a href="index.html"><img src="https://cdn.shopify.com/s/files/1/0573/3249/8501/files/ChatGPT_Image_Jun_1_2026_08_12_30_AM.png" alt="Splinter 4X4" style="height:38px;width:auto;display:block" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'"><span class="mk" style="display:none">SPLINTER<b>/</b>4X4</span></a>
     <a class="eyebrow" href="index.html" style="text-decoration:none">← Back to site</a>
   </div></header>
 
@@ -231,9 +231,10 @@
     var top=P([[x,y+h,z],[x+w,y+h,z],[x+w,y+h,z+d],[x,y+h,z+d]]);
     var front=P([[x,y,z+d],[x+w,y,z+d],[x+w,y+h,z+d],[x,y+h,z+d]]);
     var right=P([[x+w,y,z],[x+w,y,z+d],[x+w,y+h,z+d],[x+w,y+h,z]]);
-    return '<polygon points="'+front+'" fill="'+shade(base,.82)+'"/>'+
-           '<polygon points="'+right+'" fill="'+shade(base,.62)+'"/>'+
-           '<polygon points="'+top+'" fill="'+shade(base,1.12)+'"/>';
+    var E=' stroke="rgba(255,255,255,.34)" stroke-width=".9" stroke-linejoin="round"';
+    return '<polygon points="'+front+'" fill="'+shade(base,.82)+'"'+E+'/>'+
+           '<polygon points="'+right+'" fill="'+shade(base,.58)+'"'+E+'/>'+
+           '<polygon points="'+top+'" fill="'+shade(base,1.18)+'"'+E+'/>';
   }
   function line(a,b,stroke,w){return '<polyline points="'+P([a,b])+'" fill="none" stroke="'+stroke+'" stroke-width="'+(w||1.4)+'"/>';}
 
@@ -241,9 +242,13 @@
   var BW=108,GAP=12,DEP=150,FLOOR=12,MH=58;
   var LX=-(BW+GAP/2), RX=GAP/2;
 
+  function panel(x,y,z,w,h,fill){
+    var m=6, pts=P([[x+m,y+m,z],[x+w-m,y+m,z],[x+w-m,y+h-m,z],[x+m,y+h-m,z]]);
+    return '<polygon points="'+pts+'" fill="'+fill+'" stroke="rgba(255,255,255,.4)" stroke-width="1" stroke-linejoin="round"/>';
+  }
   function moduleSVG(kind,x){
     if(kind==="none") return "";
-    var y=(STATE.base==="yes")?FLOOR:0, c="#5A554C";
+    var y=(STATE.base==="yes")?FLOOR:0, c="#4a4a4a";
     if(kind==="drawer"){
       return box(x,y,-DEP/2,BW,MH,DEP,c)+line([x+14,y+MH*.55,DEP/2],[x+BW-14,y+MH*.55,DEP/2],"#16130F",2)+line([x+14,y+MH*.5,DEP/2],[x+BW-14,y+MH*.5,DEP/2],shade(c,1.4),1.4);
     }
@@ -252,23 +257,30 @@
              box(x,y+MH*.54,-DEP/2,BW,MH*.46,DEP,shade(c,1.1))+line([x+14,y+MH*.78,DEP/2],[x+BW-14,y+MH*.78,DEP/2],"#16130F",1.6);
     }
     if(kind==="fridge"){
-      var tray=box(x,y,-DEP/2,BW,MH*.36,DEP,"#46423B");
-      var fy=y+MH*.36, fr=box(x+8,fy,-DEP/2+12,BW-16,MH*.7,DEP-24,"#c1272d");
-      var lid=box(x+8,fy+MH*.7,-DEP/2+12,BW-16,4,DEP-24,"#EDEAE3");
-      return tray+fr+lid+line([x+16,fy+MH*.35,DEP/2-12],[x+BW-24,fy+MH*.35,DEP/2-12],shade("#c1272d",.6),1.6);
+      var tray=box(x,y,-DEP/2,BW,MH*.3,DEP,"#3a3a3a");
+      var fy=y+MH*.3, fh=MH*.85, fz=DEP/2-10;
+      var body=box(x+6,fy,-DEP/2+10,BW-12,fh,DEP-20,"#565656");
+      var face=panel(x+6,fy,fz,BW-12,fh,"#c1272d");
+      var handle=line([x+18,fy+fh*.78,fz+.5],[x+BW-18,fy+fh*.78,fz+.5],"#f0f0f0",2.4);
+      var v1=line([x+20,fy+fh*.2,fz+.5],[x+BW-34,fy+fh*.2,fz+.5],shade("#c1272d",.55),1.2);
+      var v2=line([x+20,fy+fh*.32,fz+.5],[x+BW-34,fy+fh*.32,fz+.5],shade("#c1272d",.55),1.2);
+      return tray+body+face+v1+v2+handle;
     }
     if(kind==="tower"){
-      var ty=box(x,y,-DEP/2,BW,MH*.3,DEP,"#46423B");
-      var hy=y+MH*.3, fr=box(x+6,hy,-DEP/2+10,BW-12,MH*1.25,DEP-20,"#c1272d");
-      var lid=box(x+6,hy+MH*1.25,-DEP/2+10,BW-12,5,DEP-20,"#EDEAE3");
-      return ty+fr+lid+line([x+14,hy+MH*.5,DEP/2-10],[x+BW-18,hy+MH*.5,DEP/2-10],shade("#c1272d",.6),1.6)+line([x+14,hy+MH*.95,DEP/2-10],[x+BW-18,hy+MH*.95,DEP/2-10],shade("#c1272d",.6),1.6);
+      var ty=box(x,y,-DEP/2,BW,MH*.24,DEP,"#3a3a3a");
+      var hy=y+MH*.24, th=MH*1.32, tz=DEP/2-8;
+      var bodyT=box(x+5,hy,-DEP/2+8,BW-10,th,DEP-16,"#565656");
+      var door=panel(x+5,hy,tz,BW-10,th,"#c1272d");
+      var vh=line([x+BW-22,hy+th*.18,tz+.5],[x+BW-22,hy+th*.62,tz+.5],"#f0f0f0",2.4);
+      var seam=line([x+12,hy+th*.5,tz+.5],[x+BW-16,hy+th*.5,tz+.5],shade("#c1272d",.55),1.2);
+      return ty+bodyT+door+seam+vh;
     }
     return "";
   }
   function powerSVG(kind){
     if(kind==="none") return "";
     var y=(STATE.base==="yes")?FLOOR:0, s={core:[44,26],frontier:[56,32],apex:[70,40]}[kind], w=s[0],h=s[1];
-    return box(-w/2,y,-DEP/2+6,w,h,28,"#27343C")+line([-w/2+6,y+h*.5,-DEP/2+34],[w/2-6,y+h*.5,-DEP/2+34],"#c1272d",2);
+    return box(-w/2,y,-DEP/2+6,w,h,28,"#37474f")+line([-w/2+6,y+h*.5,-DEP/2+34],[w/2-6,y+h*.5,-DEP/2+34],"#c1272d",2);
   }
 
   function render(){
@@ -285,7 +297,7 @@
      [[bx,bh,bz],[bx+bw,bh,bz]],[[bx+bw,bh,bz],[bx+bw,bh,bz+bd]],[[bx,bh,bz+bd],[bx,bh,bz]]
     ].forEach(function(e){ parts.push(line(e[0],e[1],"rgba(255,255,255,0.14)",1.4)); });
     var body='';
-    if(STATE.base==="yes") body+='<g class="mod">'+box(-(BW+GAP/2)-8,0,-DEP/2-8,(BW+GAP/2)*2+16,FLOOR,DEP+16,"#34302A")+'</g>';
+    if(STATE.base==="yes") body+='<g class="mod">'+box(-(BW+GAP/2)-8,0,-DEP/2-8,(BW+GAP/2)*2+16,FLOOR,DEP+16,"#2b2b2b")+'</g>';
     if(STATE.power!=="none") body+='<g class="mod">'+powerSVG(STATE.power)+'</g>';
     if(STATE.left!=="none") body+='<g class="mod">'+moduleSVG(STATE.left,LX)+'</g>';
     if(STATE.right!=="none") body+='<g class="mod">'+moduleSVG(STATE.right,RX)+'</g>';
