@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 640" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .plate  { fill: #c9d3dc; stroke: #37474f; stroke-width: 2; }
+    .plate2 { fill: #aebfcc; stroke: #37474f; stroke-width: 2; }
+    .label  { fill: #263238; font-size: 15px; }
+    .small  { fill: #455a64; font-size: 12px; }
+    .dim    { stroke: #d84315; stroke-width: 1; }
+    .dimtxt { fill: #d84315; font-size: 12px; }
+    .arrow  { fill: #d84315; }
+  </style>
+
+  <text x="20" y="30" class="label" font-size="20" font-weight="bold">Corner joint: side panel S1 → front bulkhead F1 (4mm plate, plan view of one seam segment)</text>
+
+  <!-- ================= LEFT: exploded, before click ================= -->
+  <text x="60" y="70" class="label" font-weight="bold">1. Before assembly (exploded)</text>
+
+  <!-- F1 flange with slots -->
+  <g>
+    <!-- flange body -->
+    <path class="plate2" d="M 90 100 L 130 100 L 130 480 L 90 480 Z"/>
+    <!-- slots (through-cut) -->
+    <rect x="96" y="130" width="28" height="42" fill="#ffffff" stroke="#37474f" stroke-width="1.5"/>
+    <rect x="96" y="230" width="28" height="42" fill="#ffffff" stroke="#37474f" stroke-width="1.5"/>
+    <rect x="96" y="410" width="28" height="42" fill="#ffffff" stroke="#37474f" stroke-width="1.5"/>
+    <!-- snap window -->
+    <rect x="96" y="315" width="28" height="52" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+    <text x="40" y="95" class="small">F1 return flange</text>
+    <text x="140" y="152" class="small">slot 40.2 × 4.2</text>
+    <text x="140" y="252" class="small">slot 40.2 × 4.2</text>
+    <text x="140" y="345" class="small" fill="#e65100">snap window 12.4 w</text>
+    <text x="140" y="432" class="small">slot 40.2 × 4.2</text>
+  </g>
+
+  <!-- S1 edge with fingers + snap tab, offset to the right -->
+  <g>
+    <path class="plate" d="M 330 100
+      L 330 132  L 300 132 L 300 170 L 330 170
+      L 330 232  L 300 232 L 300 270 L 330 270
+      L 330 300
+      L 312 300 L 312 362 L 330 362
+      L 330 412 L 300 412 L 300 450 L 330 450
+      L 330 480 L 420 480 L 420 100 Z"/>
+    <!-- snap tab cantilever drawn inside relief -->
+    <path d="M 330 306 L 330 356 L 296 356 L 290 346 L 296 336 L 296 314 Z"
+          fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+    <text x="340" y="95" class="small">S1 panel edge</text>
+    <text x="255" y="155" class="small" text-anchor="end">finger 40 × 25</text>
+    <text x="255" y="255" class="small" text-anchor="end">finger 40 × 25</text>
+    <text x="255" y="336" class="small" text-anchor="end" fill="#e65100">snap tab L=60,</text>
+    <text x="255" y="351" class="small" text-anchor="end" fill="#e65100">barb 1.2mm</text>
+    <text x="255" y="435" class="small" text-anchor="end">finger 40 × 25</text>
+  </g>
+
+  <!-- assembly direction arrow -->
+  <line x1="285" y1="290" x2="180" y2="290" class="dim" stroke-width="3"/>
+  <polygon class="arrow" points="180,290 196,282 196,298"/>
+  <text x="185" y="278" class="dimtxt" font-weight="bold">push</text>
+
+  <!-- ================= RIGHT: clicked home ================= -->
+  <text x="560" y="70" class="label" font-weight="bold">2. Clicked home (captive, ready for bond + rivets)</text>
+
+  <!-- F1 flange -->
+  <path class="plate2" d="M 590 100 L 630 100 L 630 480 L 590 480 Z"/>
+  <!-- S1 seated: fingers through slots -->
+  <path class="plate" d="M 630 100
+    L 630 132 L 590 132 L 590 170 L 630 170
+    L 630 232 L 590 232 L 590 270 L 630 270
+    L 630 300 L 612 300 L 612 362 L 630 362
+    L 630 412 L 590 412 L 590 450 L 630 450
+    L 630 480 L 720 480 L 720 100 Z"/>
+  <!-- snap tab sprung back, barb past far face of flange -->
+  <path d="M 630 306 L 630 356 L 584 356 L 578 346 L 584 336 L 584 314 Z"
+        fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <text x="500" y="350" class="small" fill="#e65100" text-anchor="end">barb lands past</text>
+  <text x="500" y="365" class="small" fill="#e65100" text-anchor="end">far face — CLICK</text>
+  <line x1="505" y1="345" x2="576" y2="345" class="dim"/>
+
+  <!-- rivet pilot holes -->
+  <circle cx="648" cy="200" r="4" fill="#ffffff" stroke="#37474f" stroke-width="1.5"/>
+  <circle cx="648" cy="290" r="4" fill="#ffffff" stroke="#37474f" stroke-width="1.5"/>
+  <circle cx="648" cy="385" r="4" fill="#ffffff" stroke="#37474f" stroke-width="1.5"/>
+  <text x="662" y="295" class="small">5.2mm rivet pilots @ 75</text>
+
+  <!-- adhesive port -->
+  <circle cx="610" cy="205" r="5" fill="#b2dfdb" stroke="#00695c" stroke-width="1.5"/>
+  <text x="662" y="205" class="small" fill="#00695c">6mm adhesive port</text>
+
+  <!-- ================= BOTTOM: snap tab detail ================= -->
+  <text x="60" y="540" class="label" font-weight="bold">3. Snap tab detail (section)</text>
+  <!-- cantilever -->
+  <rect x="230" y="555" width="240" height="16" fill="#ffcc80" stroke="#e65100" stroke-width="2"/>
+  <!-- barb -->
+  <path d="M 470 555 L 486 555 L 470 570 Z" fill="#e65100"/>
+  <!-- root fillet marker -->
+  <path d="M 230 555 q -10 0 -10 -10" fill="none" stroke="#37474f" stroke-width="2"/>
+  <text x="196" y="540" class="small">R3 root fillet</text>
+  <!-- dims -->
+  <line x1="230" y1="592" x2="470" y2="592" class="dim"/>
+  <text x="330" y="608" class="dimtxt">L = 60mm</text>
+  <line x1="500" y1="555" x2="500" y2="571" class="dim"/>
+  <text x="510" y="567" class="dimtxt">barb 1.2 (deflection 1.4 &lt; 1.6 elastic limit)</text>
+  <text x="230" y="632" class="small">ε = 1.5·t·y/L² = 1.5×4×1.6/60² = 0.27% = 5052-H32 elastic limit → barb set at 75% of limit</text>
+</svg>
