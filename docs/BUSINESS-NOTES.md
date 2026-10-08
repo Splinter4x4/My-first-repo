@@ -20,15 +20,13 @@ refresh/automate it.
 
 ## Open follow-ups
 
-- [ ] **ATO catch-up (URGENT — blocks home loan):** accountant to lodge
-      2024–25 income tax return + overdue BAS (Jul–Sep 25, Oct–Dec 25,
-      Jan–Mar 26) + sort $1,650 overdue ATO payment. Ask re penalty remission.
-      Meeting held ~23 Jun 2026, went well — 2025 tax return sent 23 Jun —
-      **confirm the 3 BAS have actually been lodged.**
-- [ ] **Broker Brett — document pack:** needs 2025 personal tax return,
-      current-FY P&L (cash), last 2 quarters BAS, driver's licence, savings
-      bank statement. P&L done; returns/BAS wait on accountant. Gift letter
-      from dad likely needed (gift, not loan — repaid informally via car work).
+- [x] **ATO catch-up — largely resolved:** accountant (Sheena, Wealth
+      Creation) sent the completed 2026 tax return 15 Aug. No unanswered
+      accountant/ATO mail as of the 8 Oct sweep. Residual: confirm the
+      overdue BAS are all lodged if it ever comes up.
+- [x] **Home loan SETTLED (~6 Oct 2026)** — Brett sent congratulations.
+      Document-pack follow-up closed. Brett has a soft ask for a
+      referral/review if Ethan's happy with the service.
 - [ ] **Dad's money:** record as personal contribution (equity), NOT income,
       no GST. Confirm account with accountant.
 - [ ] **Edgebander purchase (<$20k, paying cash, no finance):** keep invoice;
@@ -40,15 +38,30 @@ refresh/automate it.
 - [ ] **Forest One:** create COGS account, code 311 (Materials = 310).
 - [ ] **Super catch-up:** in progress ($19k this FY vs $4k last) — confirm
       remaining shortfall with accountant.
-- [ ] **Customer emails parked (as of 4 Jul 2026):** Trent Farnham ($3,800
-      LC80 build — said GO 14 Jun, still no reply, 20 days), Adam Hancock
-      (Prado 250, awaiting final price, 18 days), Paul Robinson (moved
-      meeting to 29 Jun, never confirmed, date passed — needs "did we catch
-      up?"), Jack Marley (new LC100 lead), Scott Howard/Inpex (Quote QU-0835,
-      hatch question, 2 days). Maddi Johnston — **resolved**, quoted
-      (QU-0846) via Xero 1 Jul. 8 cold build-form leads (20–26 days, auto-ack
-      only): Simon Hibble, Drew Harper, Ewan Harding, Derick Korff, Sean
-      Cosgriff, Jack Wellington, Martin Dolinschek, Heath Grant.
+- [ ] **Customer emails backlog (full sweep 8 Oct 2026, covering 1 Jul–8 Oct):**
+      Reply drafts created in Outlook Drafts 8 Oct for: Craig Tompsitt
+      (booking Mon–Wed), Tom Coulembier (accepted QU-0922 $3,320 — **invoice
+      still needs to be sent from Xero**), Caitlin van Haght (2-car quote
+      owed), Trent Farnham ($3,800 LC80, go-ahead 14 Jun, 116 days!), Jack
+      Marley (LC100), Ryan O'Callaghan (Y62, chased twice). Drafts have
+      [ETHAN: ...] placeholders for prices/dates — review before sending.
+      Also open: Adam Hancock (QU-0844 sent 1 Jul, no answer — follow up),
+      Brendyn Davis (Y62 pantry CAD status?), James Messervy (D-Max weight/fit
+      answer), Ben McQuilkin (LC300-style setup, 41 days), Christopher Katis
+      (false floor kit?), The 4x4 Mechanic (custom drawer quote from
+      screenshots), Zane Edmonds (owed build dates), Scott Howard/Inpex
+      (QU-0835 $4,550 — flagged complete 3 Sep, possibly handled by phone —
+      confirm with Ethan). Paul Robinson outcome still unknown.
+      **~35 cold web-form leads** got only the auto-ack (list in 8 Oct sweep);
+      Solomona Fonoti (Triton, 4 Aug) got nothing at all — auto-ack bounced.
+      **TNT/BigPost freight job 2779681 declared lost 7 Oct** — customer
+      call-back + claim needed.
+- [ ] **FB/Instagram DMs being missed:** Meta not connected and DMs aren't
+      reachable via API anyway. Fix suggested to Ethan 8 Oct: Meta Business
+      Suite → Settings → Notifications → email notifications ON (DMs then
+      land in Outlook where triage catches them) + set an Instant Reply.
+      Once flowing, teach inbox-triage to treat those notifications as
+      enquiries.
 - [ ] **Receivables:** ~$78k overdue across ~23 invoices — Ethan said to park
       this for now; don't push unless he raises it.
 - [ ] **Meta Ads connection:** not connected (network policy now allows
